@@ -68,7 +68,7 @@ const { execSync } = require('child_process');
             execSync(`cd server/seeders && node seed.js`, { stdio: 'inherit' });
             break;
         case 'pm2_run':
-            execSync(`cd server && pm2 index.js --name 'my-probus'`, { stdio: 'inherit' });
+            execSync(`cd server && pm2 start index.js --name 'my-probus'`, { stdio: 'inherit' });
             break;
         case 'install_init':
             execSync(`cd server && npm install'`, { stdio: 'inherit' });
