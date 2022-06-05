@@ -13,6 +13,7 @@ const { execSync } = require('child_process');
             name: 'action',
             message: 'What do you want to do?',
             choices: [
+                { title: 'flutter build web', value: 'build_web' },
                 { title: 'cmd server', value: 'cmd_server' },
                 { title: 'cmd client', value: 'cmd_client' },
                 { title: 'run server', value: 'run_server' },
@@ -30,6 +31,9 @@ const { execSync } = require('child_process');
     ]);
 
     switch (menu.action) {
+        case 'build_web':
+            execSync(`cd client && flutter build web --base-href '/my-probus/client/build/web/'`, { stdio: 'inherit' });
+            break;
         case 'cmd_server':
             const cmd = await prompts([
                 {
