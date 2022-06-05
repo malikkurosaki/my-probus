@@ -31,8 +31,13 @@ class HomeRequestForm extends StatelessWidget {
     'des': TextEditingController()
   };
 
+  _onLoad() async {
+    Conn().loadDepartement();
+  }
+
   @override
   Widget build(BuildContext context) {
+    _onLoad();
     return Material(
       child: ListView(
         children: [
