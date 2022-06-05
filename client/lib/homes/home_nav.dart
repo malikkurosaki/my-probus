@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:my_probus/conn.dart';
 import 'package:my_probus/routes.dart';
 import 'package:my_probus/val.dart';
 import 'package:get/get.dart';
@@ -27,16 +29,21 @@ class HomeNav extends StatelessWidget {
               Container(
                 color: Colors.white,
                 height: 200,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: Stack(
                   children: [
+                    CachedNetworkImage(imageUrl: '${Conn.host}/images/profile.png',
+                    width: double.infinity,
+                        fit: BoxFit.cover,
+                    ),
                     Visibility(visible: sizingInformation.isMobile, child: BackButton()),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        Val.user.value.val['name'] ?? "No Name - Reload",
-                        style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.black),
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          Val.user.value.val['name'].toString(),
+                          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.black),
+                        ),
                       ),
                     ),
                   ],

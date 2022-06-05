@@ -13,49 +13,60 @@ class HomeRequest extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ResponsiveBuilder(
-        builder: (context, sizingInformation) => Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Request",
-                    style: TextStyle(fontSize: 40),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      showBottomSheet(
-                        context: context,
-                        builder: (context) => HomeRequestForm(sizingInformation: sizingInformation),
-                      );
-                    },
-                    icon: Icon(Icons.add),
-                  )
-                ],
-              ),
-            ),
-            Flexible(
-              child: Obx(() => ListView(
-                    controller: ScrollController(),
-                    children: Val.listContent.value.val.map(
-                      (e) {
-                        return Card(
-                          child: ListTile(
-                            title: Text(e['title']),
-                            subtitle: Text(e['description']),
-                            onTap: () {},
-                          ),
-                        );
-                      },
-                    ).toList(),
-                  )),
-            ),
-          ],
+        body: ResponsiveBuilder(
+      builder: (context, sizingInformation) => Card(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: HomeRequestForm(
+            sizingInformation: sizingInformation,
+          ),
         ),
       ),
-    );
+    )
+        // ResponsiveBuilder(
+        //   builder: (context, sizingInformation) => Column(
+        //     children: [
+        //       Container(
+        //         color: Colors.grey.shade100,
+        //         padding: const EdgeInsets.all(8.0),
+        //         child: Row(
+        //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //           children: [
+        //             Text(
+        //               "Request",
+        //               style: TextStyle(fontSize: 40, color: Colors.grey.shade700),
+        //             ),
+        //             IconButton(
+        //               onPressed: () {
+        //                 showBottomSheet(
+        //                   context: context,
+        //                   builder: (context) => HomeRequestForm(sizingInformation: sizingInformation),
+        //                 );
+        //               },
+        //               icon: Icon(Icons.add),
+        //             )
+        //           ],
+        //         ),
+        //       ),
+        //       Flexible(
+        //         child: Obx(() => ListView(
+        //               controller: ScrollController(),
+        //               children: Val.listContent.value.val.map(
+        //                 (e) {
+        //                   return Card(
+        //                     child: ListTile(
+        //                       title: Text(e['title']),
+        //                       subtitle: Text(e['description']),
+        //                       onTap: () {},
+        //                     ),
+        //                   );
+        //                 },
+        //               ).toList(),
+        //             )),
+        //       ),
+        //     ],
+        //   ),
+        // ),
+        );
   }
 }

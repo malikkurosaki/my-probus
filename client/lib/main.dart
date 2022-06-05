@@ -7,27 +7,30 @@ import 'package:my_probus/routes.dart';
 
 import 'homes/home_page.dart';
 
-void main() async{
-  await GetStorage.init();
-  runApp(const MyApp());
+void main(){
+  GetStorage.init();
+  runApp(
+    GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'My Probus',
+      initialRoute: '/',
+      defaultTransition: Transition.noTransition,
+      getPages: Routes.listRoute,
+      builder: EasyLoading.init(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) =>
-  GetMaterialApp(
-    debugShowCheckedModeBanner: false,
-    title: 'GetX',
-    initialRoute: '/',
-    defaultTransition: Transition.noTransition,
-    getPages: Routes.listRoute,
-    builder: EasyLoading.init(),
-  );
+  Widget build(BuildContext context) => GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'My Probus',
+        initialRoute: '/',
+        defaultTransition: Transition.noTransition,
+        getPages: Routes.listRoute,
+        builder: EasyLoading.init(),
+      );
 }
-
-
-
-
-

@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:my_probus/conn.dart';
 import 'package:my_probus/homes/home_nav.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'home_request.dart';
 import 'home_todo.dart';
-import 'home_home.dart';
+import 'home_main.dart';
 import '../routes.dart';
 import '../val.dart';
 
@@ -20,7 +21,7 @@ class HomePage extends StatelessWidget {
       'index': 0,
       'title': 'Home',
       'icon': Icons.home,
-      'page': HomeHome(),
+      'page': HomeMain(),
     },
     {
       'index': 1,
@@ -37,10 +38,10 @@ class HomePage extends StatelessWidget {
   ];
 
   _onLoad() async {
-    await 1.delay();
-    if (Val.user.value.val.isEmpty) {
-      Routes.login().go();
-    }
+    Conn().loadUser();
+    // await 1.delay();
+    // final product = await Conn.productGet();
+    // Conn.loadFirst();
   }
 
   @override

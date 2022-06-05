@@ -1,7 +1,11 @@
+import 'dart:convert';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:my_probus/conn.dart';
 import 'package:my_probus/routes.dart';
 import 'package:my_probus/val.dart';
 import 'package:responsive_builder/responsive_builder.dart';
@@ -14,15 +18,35 @@ class LoginPage extends StatelessWidget {
     "password": TextEditingController(),
   };
 
+  _onload(){
+    
+  }
+
   @override
   Widget build(BuildContext context) {
+    _onload();
+
     return ResponsiveBuilder(
       builder: (context, sizingInformation) =>
           // login page with form
           Material(
-        child: Row(
+        child: Stack(
           children: [
-            Expanded(
+            Visibility(
+              visible: !sizingInformation.isMobile,
+              child: Container(
+                padding: EdgeInsets.all(20),
+                alignment: Alignment.centerLeft,
+                child: CachedNetworkImage(
+                  imageUrl:
+                      Conn.host + "/images/logo.png",
+                  fit: BoxFit.cover,
+                )
+              ),
+
+            ),
+            Align(
+              alignment: Alignment.topRight,
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.grey.shade100,
@@ -32,6 +56,8 @@ class LoginPage extends StatelessWidget {
                 child: ListView(
                   controller: ScrollController(),
                   children: [
+                    // Image.asset('assets/images/login.jpg'),
+                    CachedNetworkImage(imageUrl: '${Conn.host}/images/login.png'),
                     ListTile(
                       title:
                           Text("LOGIN", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.black)),
@@ -41,7 +67,9 @@ class LoginPage extends StatelessWidget {
                       subtitle: TextFormField(
                         controller: _controller["email"],
                         decoration: InputDecoration(
-                          border: OutlineInputBorder(),
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: InputBorder.none,
                         ),
                       ),
                     ),
@@ -50,7 +78,9 @@ class LoginPage extends StatelessWidget {
                       subtitle: TextFormField(
                         controller: _controller["password"],
                         decoration: InputDecoration(
-                          border: OutlineInputBorder(),
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: InputBorder.none,
                         ),
                       ),
                     ),
@@ -68,7 +98,7 @@ class LoginPage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        onPressed: () {
+                        onPressed: () async{
                           debugPrint(Val.users.value.val.toString());
             
                           final body = {
@@ -81,46 +111,40 @@ class LoginPage extends StatelessWidget {
                             return;
                           }
             
-                          final result = Val.users.value.val
-                              .where((user) => user["email"] == body["email"] && user["password"] == body["password"])
-                              .toList();
-            
-                          if (result.isNotEmpty) {
-                            Val.user.value.val = result.first;
-                            Routes.home().go();
-                          } else {
-                            EasyLoading.showError("User not found");
+                          final res = await Conn.login(body);
+                          if(res.statusCode == 200){
+                            Val.token.value.val = jsonDecode(res.body)['token'];
+                            Val.token.refresh();
+                            await Conn().loadFirst();
+                            Routes.home().goOff();
+                          }else{
+                            EasyLoading.showError(res.statusCode == 401? "wrong email or password": res.statusCode.toString());
                           }
                         },
                       ),
                     ),
-                    ListTile(
-                      title: Text("Don't have an account?"),
-                      subtitle: MaterialButton(
-                        color: Colors.blue,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            "Register",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        onPressed: () => Routes.register().go(),
-                      ),
-                    )
+                    // ListTile(
+                    //   title: Text("Don't have an account?"),
+                    //   subtitle: MaterialButton(
+                    //     color: Colors.blue,
+                    //     child: Padding(
+                    //       padding: const EdgeInsets.all(8.0),
+                    //       child: Text(
+                    //         "Register",
+                    //         style: TextStyle(
+                    //           color: Colors.white,
+                    //           fontSize: 20,
+                    //           fontWeight: FontWeight.bold,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //     onPressed: () => Routes.register().go(),
+                    //   ),
+                    // )
                   ],
                 ),
               ),
-            ),
-            Visibility(
-              visible: !sizingInformation.isMobile,
-              child: Container(
-                width: Get.width - 340,
-              )),
+            )
           ],
         ),
       ),

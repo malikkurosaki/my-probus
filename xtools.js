@@ -4,7 +4,7 @@ const path = require('path');
 const { execSync } = require('child_process');
 
 
-;(async () => {
+; (async () => {
     const menu = await prompts([
         {
             type: 'select',
@@ -16,6 +16,9 @@ const { execSync } = require('child_process');
                 { title: 'run server', value: 'run_server' },
                 { title: 'run client debug chrome', value: 'rcd' },
                 { title: 'git push', value: 'push' },
+                { title: 'migrate', value: 'migrate' },
+                { title: 'generate', value: 'gen' },
+                { title: 'seed', value: 'seed' },
             ],
         },
     ]);
@@ -50,6 +53,15 @@ const { execSync } = require('child_process');
             break;
         case 'push':
             execSync(`git add . && git commit -m "yo" && git push origin main`, { stdio: 'inherit' });
+            break;
+        case 'migrate':
+            execSync(`cd server && npx prisma migrate dev --name apa_aja`, { stdio: 'inherit' });
+            break;
+        case 'gen':
+            execSync(`cd server && npx prisma generate`, { stdio: 'inherit' });
+            break;
+        case 'seed':
+            execSync(`cd server/seeders && node seed.js`, { stdio: 'inherit' });
             break;
         default:
             console.log('Invalid action');

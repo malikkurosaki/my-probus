@@ -1,0 +1,164 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id               String             @id @default(uuid())
+  name             String
+  email            String
+  password         String
+  Profiles         Profiles?
+  IssueRejecteds   IssueRejecteds[]
+  IssueAssigneds   IssueAssigneds[]
+  Issues           Issues[]
+  IssueAccepts     IssueAccepts[]
+  IssueForwardedTo IssueForwardedTo[]
+}
+
+model Profiles {
+  id          String     @id @default(uuid())
+  first_name  String
+  last_name   String
+  bith_day    String
+  address     String
+  phone       String
+  User        Users?     @relation(fields: [usersId], references: [id])
+  usersId     String?    @unique
+  Position    Positions? @relation(fields: [positionsId], references: [id])
+  positionsId String?    @unique
+  Role        Roles?     @relation(fields: [rolesId], references: [id])
+  rolesId     String?
+}
+
+model Positions {
+  id             String        @id @default(uuid())
+  name           String
+  Profiles       Profiles?
+  Departement    Departements? @relation(fields: [departementsId], references: [id])
+  departementsId String?
+}
+
+model Departements {
+  id        String      @id @default(uuid())
+  name      String
+  Positions Positions[]
+  Issues    Issues[]
+}
+
+model Roles {
+  id          String     @id @default(uuid())
+  name        String
+  description String?
+  Profiles    Profiles[]
+}
+
+model Issues {
+  id                String             @id @default(uuid())
+  name              String
+  des               String
+  IssueType         IssueTypes?        @relation(fields: [issueTypesId], references: [id])
+  issueTypesId      String?
+  IssuesStatus      IssueStatuses?     @relation(fields: [issueStatusesId], references: [id])
+  issueStatusesId   String?
+  Client            Clients?           @relation(fields: [clientsId], references: [id])
+  clientsId         String?
+  Product           Products?          @relation(fields: [productsId], references: [id])
+  productsId        String?
+  CreatedBy         Users?             @relation(fields: [usersId], references: [id])
+  IssueRejecteds    IssueRejecteds[]
+  IssueAssigneds    IssueAssigneds[]
+  createdAt         DateTime?          @default(now())
+  updatedAt         DateTime?          @default(now())
+  usersId           String?
+  IssueAccets       IssueAccepts[]
+  IssueForwardedTo  IssueForwardedTo[]
+  IssuePriority     IssuePriorities?   @relation(fields: [issuePrioritiesId], references: [id])
+  issuePrioritiesId String?
+  Departement       Departements?      @relation(fields: [departementsId], references: [id])
+  departementsId    String?
+}
+
+model IssueAccepts {
+  id         String    @id @default(uuid())
+  Issue      Issues?   @relation(fields: [issuesId], references: [id])
+  issuesId   String?
+  AcceptedBy Users?    @relation(fields: [usersId], references: [id])
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @default(now())
+  usersId    String?
+}
+
+model IssueForwardedTo {
+  id          String    @id @default(uuid())
+  Issue       Issues?   @relation(fields: [issuesId], references: [id])
+  ForwardedTo Users?    @relation(fields: [usersId], references: [id])
+  createdAt   DateTime? @default(now())
+  updatedAt   DateTime? @default(now())
+  usersId     String?
+  issuesId    String?
+}
+
+model IssueTypes {
+  id     String   @id @default(uuid())
+  name   String
+  Issues Issues[]
+}
+
+model IssueStatuses {
+  id     String   @id @default(uuid())
+  name   String
+  Issues Issues[]
+}
+
+model Clients {
+  id      String   @id @default(uuid())
+  name    String
+  email   String?
+  phone   String?
+  address String?
+  Issues  Issues[]
+}
+
+model Products {
+  id     String   @id @default(uuid())
+  name   String
+  Issues Issues[]
+}
+
+model IssueRejecteds {
+  id        String    @id @default(uuid())
+  note      String
+  Issues    Issues?   @relation(fields: [issuesId], references: [id])
+  issuesId  String?
+  RejectBy  Users?    @relation(fields: [usersId], references: [id])
+  usersId   String?
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @default(now())
+}
+
+model IssuePriorities {
+  id     String   @id @default(uuid())
+  name   String
+  value  Int
+  des    String?
+  Issues Issues[]
+}
+
+model IssueAssigneds {
+  id        String    @id @default(uuid())
+  note      String
+  Issues    Issues?   @relation(fields: [issuesId], references: [id])
+  issuesId  String?
+  AssignBy  Users?    @relation(fields: [usersId], references: [id])
+  usersId   String?
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @default(now())
+}

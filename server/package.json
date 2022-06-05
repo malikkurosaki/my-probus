@@ -13,7 +13,9 @@
     "@prisma/client": "^3.14.0",
     "colors": "^1.4.0",
     "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
     "express-async-handler": "^1.2.0",
+    "jsonwebtoken": "^8.5.1",
     "prisma": "^3.14.0",
     "prompts": "^2.4.2",
     "xpress": "^2.4.6"
