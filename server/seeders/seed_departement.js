@@ -39,7 +39,7 @@ const SeedDepartement = async () => {
             },
             create: {
                 id: departement.id,
-                name: departement.id
+                name: departement.name
             }
         })
     }

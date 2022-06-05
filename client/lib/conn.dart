@@ -9,7 +9,7 @@ import 'package:my_probus/val.dart';
 import 'package:get/get.dart';
 
 class Conn {
-  static const String _host = "http://localhost:3000";
+  static const String _host = "http://103.171.85.55:3000";
   static const String host = _host;
   static const String _api = "/api/v1";
   static const String _url = _host + _api;
