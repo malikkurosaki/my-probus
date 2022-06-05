@@ -19,6 +19,8 @@ const { execSync } = require('child_process');
                 { title: 'migrate', value: 'migrate' },
                 { title: 'generate', value: 'gen' },
                 { title: 'seed', value: 'seed' },
+                { title: 'run server pm2', value: 'pm2_run' },
+                { title: 'install init', value: 'install_init' },
             ],
         },
     ]);
@@ -62,6 +64,12 @@ const { execSync } = require('child_process');
             break;
         case 'seed':
             execSync(`cd server/seeders && node seed.js`, { stdio: 'inherit' });
+            break;
+        case 'pm2_run':
+            execSync(`cd server && pm2 index.js --name 'my-probus'`, { stdio: 'inherit' });
+            break;
+        case 'install_init':
+            execSync(`cd server && npm install'`, { stdio: 'inherit' });
             break;
         default:
             console.log('Invalid action');
