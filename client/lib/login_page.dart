@@ -18,9 +18,7 @@ class LoginPage extends StatelessWidget {
     "password": TextEditingController(),
   };
 
-  _onload(){
-    
-  }
+  _onload() {}
 
   @override
   Widget build(BuildContext context) {
@@ -35,113 +33,113 @@ class LoginPage extends StatelessWidget {
             Visibility(
               visible: !sizingInformation.isMobile,
               child: Container(
-                padding: EdgeInsets.all(20),
-                alignment: Alignment.centerLeft,
-                child: CachedNetworkImage(
-                  imageUrl:
-                      Conn.host + "/images/logo.png",
-                  fit: BoxFit.cover,
-                )
-              ),
-
+                  padding: EdgeInsets.all(20),
+                  alignment: Alignment.centerLeft,
+                  child: CachedNetworkImage(
+                    imageUrl: Conn.host + "/images/logo.png",
+                    fit: BoxFit.cover,
+                  )),
             ),
             Align(
               alignment: Alignment.topRight,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade100,
-                ),
-                padding: EdgeInsets.all(16),
-                width: sizingInformation.isMobile ? double.infinity : 340,
-                child: ListView(
-                  controller: ScrollController(),
-                  children: [
-                    // Image.asset('assets/images/login.jpg'),
-                    CachedNetworkImage(imageUrl: '${Conn.host}/images/login.png'),
-                    ListTile(
-                      title:
-                          Text("LOGIN", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.black)),
-                    ),
-                    ListTile(
-                      title: Text("Email"),
-                      subtitle: TextFormField(
-                        controller: _controller["email"],
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: InputBorder.none,
-                        ),
+              child: SingleChildScrollView(
+                controller: ScrollController(),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade100,
+                  ),
+                  padding: EdgeInsets.all(16),
+                  width: sizingInformation.isMobile ? double.infinity : 340,
+                  child: Column(
+                    children: [
+                      // Image.asset('assets/images/login.jpg'),
+                      CachedNetworkImage(imageUrl: '${Conn.host}/images/login.png'),
+                      ListTile(
+                        title: Text("LOGIN",
+                            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.black)),
                       ),
-                    ),
-                    ListTile(
-                      title: Text("Password"),
-                      subtitle: TextFormField(
-                        controller: _controller["password"],
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: InputBorder.none,
-                        ),
-                      ),
-                    ),
-                    ListTile(
-                      subtitle: MaterialButton(
-                        color: Colors.blue,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            "Login",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
+                      ListTile(
+                        title: Text("Email"),
+                        subtitle: TextFormField(
+                          controller: _controller["email"],
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
+                            border: InputBorder.none,
                           ),
                         ),
-                        onPressed: () async{
-                          debugPrint(Val.users.value.val.toString());
-            
-                          final body = {
-                            "email": _controller["email"]!.text,
-                            "password": _controller["password"]!.text,
-                          };
-            
-                          if (body.values.contains("")) {
-                            EasyLoading.showError("Please fill all the fields");
-                            return;
-                          }
-            
-                          final res = await Conn.login(body);
-                          if(res.statusCode == 200){
-                            Val.token.value.val = jsonDecode(res.body)['token'];
-                            Val.token.refresh();
-                            await Conn().loadFirst();
-                            Routes.home().goOff();
-                          }else{
-                            EasyLoading.showError(res.statusCode == 401? "wrong email or password": res.statusCode.toString());
-                          }
-                        },
                       ),
-                    ),
-                    // ListTile(
-                    //   title: Text("Don't have an account?"),
-                    //   subtitle: MaterialButton(
-                    //     color: Colors.blue,
-                    //     child: Padding(
-                    //       padding: const EdgeInsets.all(8.0),
-                    //       child: Text(
-                    //         "Register",
-                    //         style: TextStyle(
-                    //           color: Colors.white,
-                    //           fontSize: 20,
-                    //           fontWeight: FontWeight.bold,
-                    //         ),
-                    //       ),
-                    //     ),
-                    //     onPressed: () => Routes.register().go(),
-                    //   ),
-                    // )
-                  ],
+                      ListTile(
+                        title: Text("Password"),
+                        subtitle: TextFormField(
+                          controller: _controller["password"],
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                      ListTile(
+                        subtitle: MaterialButton(
+                          color: Colors.blue,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              "Login",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          onPressed: () async {
+                            debugPrint(Val.users.value.val.toString());
+              
+                            final body = {
+                              "email": _controller["email"]!.text,
+                              "password": _controller["password"]!.text,
+                            };
+              
+                            if (body.values.contains("")) {
+                              EasyLoading.showError("Please fill all the fields");
+                              return;
+                            }
+              
+                            final res = await Conn.login(body);
+                            if (res.statusCode == 200) {
+                              Val.token.value.val = jsonDecode(res.body)['token'];
+                              Val.token.refresh();
+                              await Conn().loadFirst();
+                              Routes.home().goOff();
+                            } else {
+                              EasyLoading.showError(
+                                  res.statusCode == 401 ? "wrong email or password" : res.statusCode.toString());
+                            }
+                          },
+                        ),
+                      ),
+                      // ListTile(
+                      //   title: Text("Don't have an account?"),
+                      //   subtitle: MaterialButton(
+                      //     color: Colors.blue,
+                      //     child: Padding(
+                      //       padding: const EdgeInsets.all(8.0),
+                      //       child: Text(
+                      //         "Register",
+                      //         style: TextStyle(
+                      //           color: Colors.white,
+                      //           fontSize: 20,
+                      //           fontWeight: FontWeight.bold,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     onPressed: () => Routes.register().go(),
+                      //   ),
+                      // )
+                    ],
+                  ),
                 ),
               ),
             )
