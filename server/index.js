@@ -9,7 +9,7 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const { routeImage } = require('./controllers/image');
 // const fs = require('fs');
-// const https = require('https');
+const https = require('https');
 // var selfsigned = require('selfsigned');
 // var attrs = [{ name: 'makuro', value: 'google.com' }];
 // var pems = selfsigned.generate(attrs, { days: 365 });
@@ -51,7 +51,10 @@ app.use(apiRoot, (req, res, next) => {
 
 app.use(apiRoot, api);
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+// app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+
+https.createServer({}, app).listen(port, () => console.log(`Example app listening on port ${port}!`));
+
 
 
 // selfsigned.generate([{ name: "makuro", value: "makurostudio.my.id",  }], { days: 365 }, function (err, pems) {
