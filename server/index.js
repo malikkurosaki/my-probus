@@ -10,11 +10,18 @@ const jwt = require('jsonwebtoken');
 const { routeImage } = require('./controllers/image');
 // const fs = require('fs');
 const https = require('https');
-// var selfsigned = require('selfsigned');
+var selfsigned = require('selfsigned');
 // var attrs = [{ name: 'makuro', value: 'google.com' }];
 // var pems = selfsigned.generate(attrs, { days: 365 });
 
-app.use(cors());
+app.use(cors({
+    origin: '*',
+    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With', 'Access-Control-Allow-Origin', 'Access-Control-Allow-Credentials'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}));
+
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
 app.use(express.static('assets'));
@@ -51,15 +58,18 @@ app.use(apiRoot, (req, res, next) => {
 
 app.use(apiRoot, api);
 
-// app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
-https.createServer({}, app).listen(port, () => console.log(`Example app listening on port ${port}!`));
+// https.createServer({
+//     key: fs.readFileSync('./server/ssl/key.pem'),
+//     cert: fs.readFileSync('./server/ssl/cert.pem')
+// }, app).listen(port, () => console.log(`Example ssl app listening on port ${port}!`));
 
 
 
-// selfsigned.generate([{ name: "makuro", value: "makurostudio.my.id",  }], { days: 365 }, function (err, pems) {
+// selfsigned.generate([{ name: "makuro", value: "localhost",  }], { days: 365 }, function (err, pems) {
 //     https.createServer({
-//         key: pems.public,
+//         key: pems.private,
 //         cert: pems.cert
 //     }, app).listen(port, () => console.log(`Example app listening on port ${port}!`));
 // });
