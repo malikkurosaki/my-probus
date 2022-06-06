@@ -7,20 +7,14 @@ const { routeLogin } = require('./controllers/login');
 const apiRoot = '/api/v1';
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
-const { routeImage } = require('./controllers/image');
+// const { routeImage } = require('./controllers/image');
 // const fs = require('fs');
-const https = require('https');
-var selfsigned = require('selfsigned');
+// const https = require('https');
+// var selfsigned = require('selfsigned');
 // var attrs = [{ name: 'makuro', value: 'google.com' }];
 // var pems = selfsigned.generate(attrs, { days: 365 });
 
-app.use(cors({
-    origin: '*',
-    credentials: true,
-    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With', 'Access-Control-Allow-Origin', 'Access-Control-Allow-Credentials'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}));
+app.use(cors());
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
