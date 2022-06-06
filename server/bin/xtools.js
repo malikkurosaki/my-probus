@@ -4,6 +4,27 @@ const prompts = require('prompts');
 const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
+// 103.171.85.55
+
+// backup
+// 139.99.114.113
+
+function devMode(){
+    let patDir = path.join(__dirname, '../../');
+    let connFile = path.join(patDir, 'client/lib/conn.dart');
+    let fl = fs.readFileSync(connFile, 'utf8');
+    fl = fl.replace('103.171.85.55', 'localhost');
+    fs.writeFileSync(connFile, fl);
+
+}
+
+function proMode(){
+    let patDir = path.join(__dirname, '../../');
+    let connFile = path.join(patDir, 'client/lib/conn.dart');
+    let fl = fs.readFileSync(connFile, 'utf8');
+    fl = fl.replace('localhost:3000', 'makurostudio.my.id');
+    fs.writeFileSync(connFile, fl);
+}
 
 
 ; (async () => {
@@ -15,8 +36,10 @@ const { execSync } = require('child_process');
             choices: [
                 { title: 'flutter build web', value: 'build_web' },
                 { title: 'cmd server', value: 'cmd_server' },
+                { title: 'client mode development', value: 'cdev_mode' },
+                { title: 'client mode production', value: 'cpro_mode' },
                 { title: 'cmd client', value: 'cmd_client' },
-                { title: 'run server', value: 'run_server' },
+                { title: 'run server development', value: 'run_server' },
                 { title: 'run client debug chrome', value: 'rcd' },
                 { title: 'git push', value: 'push' },
                 { title: 'migrate', value: 'migrate' },
@@ -60,6 +83,12 @@ const { execSync } = require('child_process');
             break;
         case 'rcd':
             execSync(`cd client && flutter run -d chrome`, { stdio: 'inherit' });
+            break;
+        case 'cdev_mode':
+            execSync(`node -e ${devMode()}`, { stdio: 'inherit' });
+            break;
+        case 'cpro_mode':
+            execSync(`node -e ${proMode()}`, { stdio: 'inherit' });
             break;
         case 'push':
             execSync(`git add . && git commit -m "yo" && git push origin main`, { stdio: 'inherit' });
