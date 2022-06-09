@@ -54,8 +54,9 @@ CREATE TABLE `Roles` (
 -- CreateTable
 CREATE TABLE `Issues` (
     `id` VARCHAR(191) NOT NULL,
+    `idx` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(191) NOT NULL,
-    `des` VARCHAR(191) NOT NULL,
+    `des` TEXT NOT NULL,
     `issueTypesId` VARCHAR(191) NULL,
     `issueStatusesId` VARCHAR(191) NULL,
     `clientsId` VARCHAR(191) NULL,
@@ -65,6 +66,20 @@ CREATE TABLE `Issues` (
     `usersId` VARCHAR(191) NULL,
     `issuePrioritiesId` VARCHAR(191) NULL,
     `departementsId` VARCHAR(191) NULL,
+
+    UNIQUE INDEX `Issues_idx_key`(`idx`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Discussion` (
+    `id` VARCHAR(191) NOT NULL,
+    `content` VARCHAR(191) NULL,
+    `images` VARCHAR(191) NULL,
+    `issuesId` VARCHAR(191) NULL,
+    `usersId` VARCHAR(191) NULL,
+    `createdAt` DATETIME(3) NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -114,6 +129,18 @@ CREATE TABLE `Clients` (
     `email` VARCHAR(191) NULL,
     `phone` VARCHAR(191) NULL,
     `address` VARCHAR(191) NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `ContactPersons` (
+    `id` VARCHAR(191) NOT NULL,
+    `name` VARCHAR(191) NOT NULL,
+    `email` VARCHAR(191) NULL,
+    `phone` VARCHAR(191) NULL,
+    `address` VARCHAR(191) NULL,
+    `clientsId` VARCHAR(191) NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -194,6 +221,12 @@ ALTER TABLE `Issues` ADD CONSTRAINT `Issues_productsId_fkey` FOREIGN KEY (`produ
 ALTER TABLE `Issues` ADD CONSTRAINT `Issues_issuePrioritiesId_fkey` FOREIGN KEY (`issuePrioritiesId`) REFERENCES `IssuePriorities`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE `Discussion` ADD CONSTRAINT `Discussion_usersId_fkey` FOREIGN KEY (`usersId`) REFERENCES `Users`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Discussion` ADD CONSTRAINT `Discussion_issuesId_fkey` FOREIGN KEY (`issuesId`) REFERENCES `Issues`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE `IssueAccepts` ADD CONSTRAINT `IssueAccepts_usersId_fkey` FOREIGN KEY (`usersId`) REFERENCES `Users`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -204,6 +237,9 @@ ALTER TABLE `IssueForwardedTo` ADD CONSTRAINT `IssueForwardedTo_usersId_fkey` FO
 
 -- AddForeignKey
 ALTER TABLE `IssueForwardedTo` ADD CONSTRAINT `IssueForwardedTo_issuesId_fkey` FOREIGN KEY (`issuesId`) REFERENCES `Issues`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `ContactPersons` ADD CONSTRAINT `ContactPersons_clientsId_fkey` FOREIGN KEY (`clientsId`) REFERENCES `Clients`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `IssueRejecteds` ADD CONSTRAINT `IssueRejecteds_usersId_fkey` FOREIGN KEY (`usersId`) REFERENCES `Users`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;

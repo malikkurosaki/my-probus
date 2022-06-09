@@ -4,13 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get_connect.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'package:my_probus/routes.dart';
 import 'package:my_probus/val.dart';
 import 'package:get/get.dart';
+import 'dart:io';
 
 class Conn {
-  static const String _host = "https://makurostudio.my.id";
+  static const String _host = "http://localhost:3000";
   static const String host = _host;
+  static const String hostImage = "$_host/image";
   static const String _api = "/api/v1";
   static const String _url = _host + _api;
   static const String _client = '$_url/client';
@@ -22,6 +25,10 @@ class Conn {
   static const String _user = '$_url/user';
   static const String _issuePriority = '$_url/issue-priority';
   static const String _issue = '$_url/issue';
+  static const String _upload = '$_url/upload';
+  static const String _imageDeleteFile = '$_url/file/delete-file';
+  static const String _imageDeleteDb = '$_url/file/delete-db';
+  static const String _discus = '$_url/discus';
 
   static const String _login = '$_host/login';
 
@@ -40,6 +47,27 @@ class Conn {
       return res;
     }
   }
+
+  // image handler
+  static Future<List?> imageHandler() async {
+    final upload = http.MultipartRequest('POST', Uri.parse(_upload));
+    final image = await ImagePicker().pickMultiImage(maxHeight: 500, maxWidth: 500);
+    if (image!.isNotEmpty) {
+      for (var img in image) {
+        upload.files.add(http.MultipartFile.fromBytes("image", await img.readAsBytes(), filename: ".png"));
+      }
+
+      upload.headers.addAll(_header);
+      final res = await upload.send().then((value) => value.stream.bytesToString());
+      return jsonDecode(res)['data'];
+    } else {
+      return null;
+    }
+  }
+
+  // image delete
+  static Future<http.Response> imageDeleteFile(String name) =>
+      http.delete(Uri.parse("$_imageDeleteFile/$name"), headers: _header);
 
   // client
   static Future<http.Response> clientGet() async => cek(
@@ -66,6 +94,23 @@ class Conn {
   static Future<http.Response> clientDelete(Map<String, dynamic> data) async => cek(
         await http.delete(
           Uri.parse(_client),
+          body: data,
+          headers: _header,
+        ),
+      );
+
+  // discus get by issue id
+  static Future<http.Response> discusGet(String id) async => cek(
+        await http.get(
+          Uri.parse("$_discus/$id"),
+          headers: _header,
+        ),
+      );
+  
+  // discus post
+  static Future<http.Response> discusPost(Map<String, dynamic> data) async => cek(
+        await http.post(
+          Uri.parse(_discus),
           body: data,
           headers: _header,
         ),
@@ -269,115 +314,115 @@ class Conn {
     }
   }
 
-  loadFirst() async {
-    await loadUser();
-    await loadIssuePriority();
-    await loadIssue();
-    await loadIssueTpe();
-    await loadRole();
-    await loadDepartement();
-    await loadPosition();
-    await loadProduct();
-    await loadClient();
+  loadFirst({bool alert = false}) async {
+    await loadUser(alert: alert);
+    await loadIssuePriority(alert: alert);
+    await loadIssue(alert: alert);
+    await loadIssueTpe(alert: alert);
+    await loadRole(alert: alert);
+    await loadDepartement(alert: alert);
+    await loadPosition(alert: alert);
+    await loadProduct(alert: alert);
+    await loadClient(alert: alert);
   }
 
-  loadClient() async {
+  loadDiscution() async {
+    _pengolahList(await Conn.discusGet(Val.issueDetail.value.val["id"]), (value, ada) {
+      if(ada){
+        Val.discussion.value.val = value;
+        Val.discussion.refresh();
+      }
+    });
+  }
+
+  loadClient({bool alert = false}) async {
     _pengolahList(await clientGet(), (value, ada) async {
       if (ada) {
         Val.clients.value.val = value;
         Val.clients.refresh();
-        EasyLoading.showInfo("client laoded");
-        await 1.delay();
+        if (alert) EasyLoading.showInfo("client laoded");
       }
     });
   }
 
-  loadProduct() async {
+  loadProduct({bool alert = false}) async {
     _pengolahList(await productGet(), (value, ada) async {
       if (ada) {
         Val.products.value.val = value;
         Val.products.refresh();
-        EasyLoading.showInfo("product laoded");
-        await 1.delay();
+        if (alert) EasyLoading.showInfo("product laoded");
       }
     });
   }
 
-  loadPosition() async {
+  loadPosition({bool alert = false}) async {
     _pengolahList(await positionGet(), (value, ada) async {
       if (ada) {
         Val.positions.value.val = value;
         Val.positions.refresh();
-        EasyLoading.showInfo("position laoded");
-        await 1.delay();
+        if (alert) EasyLoading.showInfo("position laoded");
       }
     });
   }
 
-  loadDepartement() async {
+  loadDepartement({bool alert = false}) async {
     _pengolahList(await departementGet(), (value, ada) async {
       if (ada) {
         Val.departements.value.val = value;
         Val.departements.refresh();
-        EasyLoading.showInfo("departement laoded");
-        await 1.delay();
+        if (alert) EasyLoading.showInfo("departement laoded");
       }
     });
   }
 
-  loadRole() async {
+  loadRole({bool alert = false}) async {
     _pengolahList(await roleGet(), (value, ada) async {
       if (ada) {
         Val.roles.value.val = value;
         Val.roles.refresh();
-        EasyLoading.showInfo("role laoded");
-        await 1.delay();
+        if (alert) EasyLoading.showInfo("role laoded");
       }
     });
   }
 
-  loadIssueTpe() async {
+  loadIssueTpe({bool alert = false}) async {
     _pengolahList(await issueTypeGet(), (value, ada) async {
       if (ada) {
         Val.issueTypes.value.val = value;
         Val.issueTypes.refresh();
-        EasyLoading.showInfo("issue tpe laoded");
-        await 1.delay();
+        if (alert) EasyLoading.showInfo("issue type laoded");
       }
     });
   }
 
   // load user
-  loadUser() async {
+  loadUser({bool alert = false}) async {
     _pengolahMap(await userGet(), (value, ada) async {
       if (ada) {
         Val.user.value.val = value;
         Val.user.refresh();
-        EasyLoading.showInfo("user laoded");
-        await 1.delay();
+        if (alert) EasyLoading.showInfo("user laoded");
       }
     });
   }
 
   // load issue priority
-  loadIssuePriority() async {
+  loadIssuePriority({bool alert = false}) async {
     _pengolahList(await issuePriorityGet(), (value, ada) async {
       if (ada) {
         Val.issuePriorities.value.val = value;
         Val.issuePriorities.refresh();
-        EasyLoading.showInfo("issue priority laoded");
-        await 1.delay();
+        if (alert) EasyLoading.showInfo("issue priority laoded");
       }
     });
   }
 
-  loadIssue()async{
+  loadIssue({bool alert = false}) async {
     _pengolahList(await issueGet(), (value, ada) async {
       if (ada) {
         Val.issues.value.val = value;
         Val.issues.refresh();
-        EasyLoading.showInfo("issue laoded");
-        await 1.delay();
+        if (alert) EasyLoading.showInfo("issue laoded");
       }
     });
   }

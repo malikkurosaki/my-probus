@@ -7,6 +7,28 @@ const { routeLogin } = require('./controllers/login');
 const apiRoot = '/api/v1';
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
+const { Server } = require('socket.io');
+const { createServer } = require("http");
+const httpServer = createServer(app);
+const io = new Server(httpServer, {
+    allowEIO3: true,
+    cors: {
+        origin: true,
+        credentials: true
+    },
+});
+const fs = require('fs');
+
+// const { routeImage } = require('./controllers/image');
+
+io.on('connection', (socket) => {
+    console.log('a user connected');
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
+    });
+});
+
+
 // const { routeImage } = require('./controllers/image');
 // const fs = require('fs');
 // const https = require('https');
@@ -18,14 +40,28 @@ app.use(cors());
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
-app.use(express.static('assets'));
+//app.use(express.static('assets'));
 app.get('/', (req, res) => res.send('Hello World!'));
 app.use('/login', routeLogin);
-app.get('/images/:name', (req, res) => {
-    if (fs.existsSync(__dirname + './assets/images/' + req.params.name + '.png')) {
-        res.sendFile(__dirname + './assets/images/' + req.params.name + '.png', { root: __dirname });
+// app.use('/images', routeImage);
+
+
+// dafri upload image
+app.get('/image/:name', (req, res) => {
+    if (fs.existsSync(__dirname + '/uploads/' + req.params.name )) {
+        res.sendFile('/uploads/' + req.params.name , { root: __dirname });
     } else {
-        res.type('image/png').sendFile('./assets/images/no-image.png', { root: __dirname });
+        res.type('image/png').sendFile('./assets/images/noimage.png', { root: __dirname });
+    }
+});
+
+
+// dari assets
+app.get('/images/:name', (req, res) => {
+    if (fs.existsSync(__dirname + '/assets/images/' + req.params.name)) {
+        res.sendFile('/assets/images/' + req.params.name, { root: __dirname });
+    } else {
+        res.type('image/png').sendFile('./assets/images/noimage.png', { root: __dirname });
     }
 });
 
@@ -52,7 +88,9 @@ app.use(apiRoot, (req, res, next) => {
 
 app.use(apiRoot, api);
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+httpServer.listen(port, () => console.log(`Example app listening on port ${port}!`));
+
+// app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
 // https.createServer({
 //     key: fs.readFileSync('./server/ssl/key.pem'),

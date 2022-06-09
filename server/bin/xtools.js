@@ -13,7 +13,7 @@ function devMode(){
     let patDir = path.join(__dirname, '../../');
     let connFile = path.join(patDir, 'client/lib/conn.dart');
     let fl = fs.readFileSync(connFile, 'utf8');
-    fl = fl.replace('103.171.85.55', 'localhost');
+    fl = fl.replace('https://makurostudio.my.id', 'http://localhost:3000');
     fs.writeFileSync(connFile, fl);
 
 }
@@ -22,7 +22,7 @@ function proMode(){
     let patDir = path.join(__dirname, '../../');
     let connFile = path.join(patDir, 'client/lib/conn.dart');
     let fl = fs.readFileSync(connFile, 'utf8');
-    fl = fl.replace('localhost:3000', 'makurostudio.my.id');
+    fl = fl.replace('http://localhost:3000', 'https://makurostudio.my.id');
     fs.writeFileSync(connFile, fl);
 }
 
@@ -41,6 +41,7 @@ function proMode(){
                 { title: 'cmd client', value: 'cmd_client' },
                 { title: 'run server development', value: 'run_server' },
                 { title: 'run client debug chrome', value: 'rcd' },
+                { title: 'run client debug mobile', value: 'run_mobile' },
                 { title: 'git push', value: 'push' },
                 { title: 'migrate', value: 'migrate' },
                 { title: 'generate', value: 'gen' },
@@ -83,6 +84,9 @@ function proMode(){
             break;
         case 'rcd':
             execSync(`cd client && flutter run -d chrome`, { stdio: 'inherit' });
+            break;
+        case 'run_mobile':
+            execSync(`cd client && flutter run`, { stdio: 'inherit' });
             break;
         case 'cdev_mode':
             execSync(`node -e ${devMode()}`, { stdio: 'inherit' });

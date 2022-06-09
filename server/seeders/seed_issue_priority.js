@@ -4,12 +4,12 @@ const routeIssuePriorit = require('express').Router();
 
 
 const _item = [
-    { "value": 1, "name": "light", "des": "pilih jika anda rasa adalah yang ringan" },
-    { "value": 2, "name": "info", "des": "pilih jika anda rasa adalah sejenis issue info untuk diketahui" },
-    { "value": 3, "name": "primary", "des": "pilih jika anda rasa adalah issue penting " },
-    { "value": 4, "name": "warning", "des": "pilih jika anda rasa adalah butuh diperhatikan dan tanggapan segera" },
-    { "value": 5, "name": "danger", "des": "pilih jika anda rasa adalah issue butuh ditangani sesegera mungkin" },
-    { "value": 6, "name": "dark", "des": "pilih jika anda rasa adalah issue sangat serius " },
+    { "value": 1, "name": "primary", "des": "pilih jika anda rasa adalah yang ringan" },
+    { "value": 2, "name": "warning", "des": "pilih jika anda rasa adalah sejenis issue info untuk diketahui" },
+    { "value": 3, "name": "danger", "des": "pilih jika anda rasa adalah issue penting " },
+    // { "value": 4, "name": "warning", "des": "pilih jika anda rasa adalah butuh diperhatikan dan tanggapan segera" },
+    // { "value": 5, "name": "danger", "des": "pilih jika anda rasa adalah issue butuh ditangani sesegera mungkin" },
+    // { "value": 6, "name": "dark", "des": "pilih jika anda rasa adalah issue sangat serius " },
 ]
 
 const SeedIssuePriorit = async () => {

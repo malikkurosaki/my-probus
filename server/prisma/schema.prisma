@@ -21,6 +21,8 @@ model Users {
   Issues           Issues[]
   IssueAccepts     IssueAccepts[]
   IssueForwardedTo IssueForwardedTo[]
+  Discussion       Discussion[]
+  Images           Images[]
 }
 
 model Profiles {
@@ -62,8 +64,9 @@ model Roles {
 
 model Issues {
   id                String             @id @default(uuid())
+  idx               Int                @unique @default(autoincrement())
   name              String
-  des               String
+  des               String             @db.Text
   IssueType         IssueTypes?        @relation(fields: [issueTypesId], references: [id])
   issueTypesId      String?
   IssuesStatus      IssueStatuses?     @relation(fields: [issueStatusesId], references: [id])
@@ -78,12 +81,38 @@ model Issues {
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now())
   usersId           String?
-  IssueAccets       IssueAccepts[]
+  IssueAccepts      IssueAccepts[]
   IssueForwardedTo  IssueForwardedTo[]
   IssuePriority     IssuePriorities?   @relation(fields: [issuePrioritiesId], references: [id])
   issuePrioritiesId String?
   Departement       Departements?      @relation(fields: [departementsId], references: [id])
   departementsId    String?
+  Discussion        Discussion[]
+  Images            Images[]
+}
+
+model Images {
+  id         String       @id @default(uuid())
+  name       String
+  url        String?
+  Issue      Issues?      @relation(fields: [issuesId], references: [id])
+  issuesId   String?
+  Users      Users?       @relation(fields: [usersId], references: [id])
+  usersId    String?
+  Discussion Discussion[]
+}
+
+model Discussion {
+  id        String    @id @default(uuid())
+  User      Users?    @relation(fields: [usersId], references: [id])
+  Issue     Issues?   @relation(fields: [issuesId], references: [id])
+  content   String?
+  Image     Images?   @relation(fields: [imagesId], references: [id])
+  issuesId  String?
+  usersId   String?
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+  imagesId  String?
 }
 
 model IssueAccepts {
@@ -119,12 +148,23 @@ model IssueStatuses {
 }
 
 model Clients {
-  id      String   @id @default(uuid())
-  name    String
-  email   String?
-  phone   String?
-  address String?
-  Issues  Issues[]
+  id            String           @id @default(uuid())
+  name          String
+  email         String?
+  phone         String?
+  address       String?
+  Issues        Issues[]
+  ContacPersons ContactPersons[]
+}
+
+model ContactPersons {
+  id        String   @id @default(uuid())
+  name      String
+  email     String?
+  phone     String?
+  address   String?
+  Client    Clients? @relation(fields: [clientsId], references: [id])
+  clientsId String?
 }
 
 model Products {

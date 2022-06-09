@@ -10,11 +10,12 @@ import 'package:get/get.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 class HomeNav extends StatelessWidget {
-  const HomeNav({Key? key, required this.subPages, required this.indexhome, required this.sizingInformation})
-      : super(key: key);
+  const HomeNav({Key? key, required this.subPages, required this.indexhome, required this.sizingInformation, this.scrollController }) : super(key: key);
+
   final List<Map<String, Object>> subPages;
   final Rx<ReadWriteValue<int>> indexhome;
   final SizingInformation sizingInformation;
+  final ScrollController? scrollController;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class HomeNav extends StatelessWidget {
           color: Colors.grey.shade100,
           width: sizingInformation.isMobile ? double.infinity : 340,
           child: ListView(
-            controller: ScrollController(),
+            controller: scrollController,
             children: [
               Container(
                 color: Colors.white,
@@ -36,13 +37,18 @@ class HomeNav extends StatelessWidget {
                         fit: BoxFit.cover,
                     ),
                     Visibility(visible: sizingInformation.isMobile, child: BackButton()),
+                    Container(
+                      width: double.infinity,
+                      height: double.infinity,
+                      color: Colors.black.withOpacity(0.2),
+                    ),
                     Align(
                       alignment: Alignment.bottomRight,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           Val.user.value.val['name'].toString(),
-                          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.black),
+                          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
                         ),
                       ),
                     ),
@@ -54,21 +60,24 @@ class HomeNav extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: subPages.map(
                     (e) {
-                      return ListTile(
-                        selected: indexhome.value.val == e['index'],
-                        leading: Icon(e['icon'] as IconData),
-                        title: Text(e['title'] as String),
-                        onTap: () {
-                          indexhome.value.val = e['index'] as int;
-                          indexhome.refresh();
-      
-                          debugPrint(e['index'].toString());
-                          debugPrint(indexhome.value.val.toString());
-      
-                          if (sizingInformation.isMobile) {
-                            Get.back();
-                          }
-                        },
+                      return Visibility(
+                        visible: e['menu'] as bool,
+                        child: ListTile(
+                          selected: indexhome.value.val == e['index'],
+                          leading: Icon(e['icon'] as IconData),
+                          title: Text(e['title'] as String),
+                          onTap: () {
+                            indexhome.value.val = e['index'] as int;
+                            indexhome.refresh();
+                            
+                            debugPrint(e['index'].toString());
+                            debugPrint(indexhome.value.val.toString());
+                            
+                            if (sizingInformation.isMobile) {
+                              Get.back();
+                            }
+                          },
+                        ),
                       );
                     },
                   ).toList(),
@@ -83,7 +92,22 @@ class HomeNav extends StatelessWidget {
                   Get.dialog(
                     AlertDialog(
                       title: Text("Logout"),
-                      content: Text("Are you sure?"),
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          CachedNetworkImage(imageUrl: '${Conn.host}/images/logout.png',
+                            height: 200,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text("Are you sure?",
+                            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
+
+
+                            ),
+                          ),
+                        ],
+                      ),
                       actions: [
                         MaterialButton(
                           child: Text("Yes"),

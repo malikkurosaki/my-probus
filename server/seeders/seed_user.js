@@ -1,52 +1,29 @@
 const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
 
-const users = [
-    {
-        id: "1",
-        name: "ayu",
-        email: "ayu@gmail.com",
-        password: "123456"
-    },
-    {
-        id: "2",
-        name: "ahmad",
-        email: "ahmad@gmail.com",
-        password: "123456"
-    },
-    {
-        id: "3",
-        name: "guntur",
-        email: "guntur@gmail.com",
-        password: "123456"
-    },
-    {
-        id: "4",
-        name: "dewi",
-        email: "dewi@gmail.com",
-        password: "123456"
-    }
-]
+const users = ["ayu", "guntur", "apit", "ariska", "bayu", "dewi", "ahmad", "gede", "david", "widia", "ayu ari", "yuni"]
 
 const SeedUser = async () => {
+    let id = 1;
     for (let user of users){
         await prisma.users.upsert({
             where: {
-                id: user.id
+                id: id.toString()
             },
             update: {
-                name: user.name,
-                email: user.email,
-                password: user.password
+                name: user,
+                email: user + "@gmail.com",
+                password: "123456",
             },
             create: {
-                id: user.id,
-                email: user.email,
-                password: user.password,
-                name: user.name
+                id: id.toString(),
+                email: user + "@gmail.com",
+                password: "123456",
+                name: user,
             }
             
         })
+        id++;
     }
 
     console.log("seed user success")

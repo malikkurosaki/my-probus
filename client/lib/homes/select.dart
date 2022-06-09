@@ -7,56 +7,99 @@ import 'package:my_probus/val.dart';
 import 'package:animate_do/animate_do.dart' as animate;
 
 class Select extends StatelessWidget {
-  Select({Key? key, required this.onSelect, required this.item, required this.title}) : super(key: key);
+  const Select({
+    Key? key,
+    required this.onSelect,
+    required this.item,
+    required this.title,
+    required this.value,
+    required this.subtitle,
+  }) : super(key: key);
 
   final Function(Map value) onSelect;
-  final Map _value = {}.obs;
+  final Map value;
   final List item;
   final String title;
+  final String subtitle;
 
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton(
-      child: 
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: Text(title),
-                ),
-                Obx(
-                  () => Visibility(
-                    visible: _value.isNotEmpty,
-                    child: Text(
-                      (_value['name'] ?? "").toString().toUpperCase(),
-                      style: TextStyle(color: Colors.grey.shade400, fontSize: 24),
+      tooltip: title,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(
+                Icons.check_box,
+                color: value.isNotEmpty ? Colors.green : Colors.grey,
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 8),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 8),
+                            child: Text(
+                              title,
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          Text(
+                            subtitle,
+                            style: TextStyle(
+                              color: Colors.grey.shade600,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
+                    Visibility(
+                      visible: value.isNotEmpty,
+                      child: Text(
+                        (value['name'] ?? "").toString().toUpperCase(),
+                        style: TextStyle(
+                          color: Colors.blue.shade600,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 24,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(12),
-            child: Center(
-              child: Icon(Icons.arrow_drop_down),
+            Padding(
+              padding: const EdgeInsets.all(12),
+              child: Center(
+                child: Icon(Icons.arrow_drop_down),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       itemBuilder: (context) => [
         for (final ist in item)
           PopupMenuItem(
             onTap: () {
-              _value.assignAll(ist);
+              value.assignAll(ist);
               onSelect(ist);
             },
             value: ist,
@@ -64,52 +107,5 @@ class Select extends StatelessWidget {
           ),
       ],
     );
-    //  Obx(
-    //   () =>
-
-    //   // Column(
-    //   //   children: [
-    //   //     MaterialButton(
-    //   //       color: Colors.blue,
-    //   //       child: Container(
-    //   //         padding: EdgeInsets.all(12),
-    //   //         child: Row(
-    //   //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //   //           children: [
-    //   //             Text(_value['name']?? "Select Issue",
-    //   //               style: TextStyle(fontSize: 24, color: Colors.white),
-    //   //             ),
-    //   //             Icon(_isShow.value? Icons.arrow_drop_down: Icons.arrow_drop_up,color: Colors.white,),
-    //   //           ],
-    //   //         ),
-    //   //       ),
-    //   //       onPressed: () {
-    //   //         _isShow.value = !_isShow.value;
-    //   //       },
-    //   //     ),
-    //   //     Visibility(
-    //   //       visible: _isShow.value,
-    //   //       child: Material(
-    //   //         color: Colors.white,
-    //   //         child: Column(
-    //   //           children: [
-    //   //             for(final itm in item)
-    //   //             ListTile(
-    //   //               onTap: () {
-    //   //                 _value.assignAll(itm);
-    //   //                 _isShow.value = false;
-    //   //                 onSelect(itm);
-
-    //   //               },
-    //   //               title: Text(itm['name']),
-    //   //             )
-    //   //           ],
-    //   //         ),
-    //   //       )
-    //   //     )
-    //   //   ],
-    //   // )
-    //   ,
-    // );
   }
 }

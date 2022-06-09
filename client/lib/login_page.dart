@@ -24,94 +24,137 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     _onload();
 
-    return ResponsiveBuilder(
-      builder: (context, sizingInformation) =>
-          // login page with form
-          Material(
-        child: Stack(
-          children: [
-            Visibility(
-              visible: !sizingInformation.isMobile,
-              child: Container(
-                  padding: EdgeInsets.all(20),
-                  alignment: Alignment.centerLeft,
-                  child: CachedNetworkImage(
-                    imageUrl: Conn.host + "/images/logo.png",
-                    fit: BoxFit.cover,
-                  )),
-            ),
-            Align(
-              alignment: Alignment.topRight,
-              child: SingleChildScrollView(
-                controller: ScrollController(),
+    return Scaffold(
+      body: ResponsiveBuilder(
+        builder: (context, sizingInformation) =>
+            // login page with form
+            Material(
+          child: Row(
+            children: [
+              Visibility(
+                visible: !sizingInformation.isMobile,
                 child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade100,
-                  ),
-                  padding: EdgeInsets.all(16),
-                  width: sizingInformation.isMobile ? double.infinity : 340,
+                    width: Get.width - 460,
+                    padding: EdgeInsets.all(20),
+                    alignment: Alignment.center,
+                    child: CachedNetworkImage(
+                      imageUrl: Conn.host + "/images/logo.png",
+                      fit: BoxFit.cover,
+                    )),
+              ),
+              Container(
+                color: Colors.blueGrey.shade100,
+                width: sizingInformation.isMobile ? Get.width : 460,
+                height: Get.height,
+                child: SingleChildScrollView(
+                  controller: ScrollController(),
                   child: Column(
                     children: [
                       // Image.asset('assets/images/login.jpg'),
-                      CachedNetworkImage(imageUrl: '${Conn.host}/images/login.png'),
+                      SizedBox(
+                        height: 300,
+                        child: CachedNetworkImage(imageUrl: '${Conn.host}/images/login.png'),
+                      ),
                       ListTile(
                         title: Text("LOGIN",
                             style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.black)),
                       ),
-                      ListTile(
-                        title: Text("Email"),
-                        subtitle: TextFormField(
+                      Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: TextFormField(
                           controller: _controller["email"],
                           decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.email),
+                            label: Text("Email"),
                             filled: true,
-                            fillColor: Colors.white,
+                            fillColor: Colors.white54,
                             border: InputBorder.none,
                           ),
                         ),
                       ),
-                      ListTile(
-                        title: Text("Password"),
-                        subtitle: TextFormField(
+                      Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: TextFormField(
                           controller: _controller["password"],
                           decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.lock),
+                            label: Text("Password"),
                             filled: true,
-                            fillColor: Colors.white,
+                            fillColor: Colors.white54,
                             border: InputBorder.none,
                           ),
                         ),
+                      ),
+                      SizedBox(
+                        height: 70,
                       ),
                       ListTile(
                         subtitle: MaterialButton(
-                          color: Colors.blue,
+                          color: Colors.blueGrey,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "Login",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: Text(
+                                "Login",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ),
                           onPressed: () async {
                             debugPrint(Val.users.value.val.toString());
-              
+
                             final body = {
                               "email": _controller["email"]!.text,
                               "password": _controller["password"]!.text,
                             };
-              
+
                             if (body.values.contains("")) {
                               EasyLoading.showError("Please fill all the fields");
                               return;
                             }
-              
+
                             final res = await Conn.login(body);
                             if (res.statusCode == 200) {
-                              Val.token.value.val = jsonDecode(res.body)['token'];
+                              Val.token.value.val = jsonDecode(res.body)['token'].toString();
                               Val.token.refresh();
                               await Conn().loadFirst();
+                              await Get.dialog(
+                                AlertDialog(
+                                  title: Text("Login Successful"),
+                                  content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      CachedNetworkImage(imageUrl: Conn.host + "/images/tos.png",
+                                        height: Get.height * 0.3,
+                                        fit: BoxFit.cover,
+                                      ),
+                                      Text("Welcome back, ${Val.user.value.val['name']}", 
+                                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                      ),
+                                      Text("You are now logged in",
+                                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+
+                                      ),
+                                    ],
+                                  ),
+                                  actions: [
+                                    MaterialButton(
+                                      child: Text("OK"),
+                                      onPressed: () {
+                                        Get.back();
+                                      },
+                                    ),
+                                  ],
+                                ),
+                                barrierDismissible: false,
+                              );
+
+                             
                               Routes.home().goOff();
                             } else {
                               EasyLoading.showError(
@@ -141,11 +184,113 @@ class LoginPage extends StatelessWidget {
                     ],
                   ),
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );
   }
+
+  Widget loginMobile(SizingInformation sizingInformation) => SingleChildScrollView(
+        controller: ScrollController(),
+        child: Container(
+          height: 1000,
+          decoration: BoxDecoration(
+            color: Colors.grey.shade100,
+          ),
+          padding: EdgeInsets.all(16),
+          width: sizingInformation.isMobile ? double.infinity : 340,
+          child: Column(
+            children: [
+              Text("Mobile"),
+              // Image.asset('assets/images/login.jpg'),
+              CachedNetworkImage(imageUrl: '${Conn.host}/images/login.png'),
+              ListTile(
+                title: Text("LOGIN", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.black)),
+              ),
+              ListTile(
+                title: Text("Email"),
+                subtitle: TextFormField(
+                  controller: _controller["email"],
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: InputBorder.none,
+                  ),
+                ),
+              ),
+              ListTile(
+                title: Text("Password"),
+                subtitle: TextFormField(
+                  controller: _controller["password"],
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: InputBorder.none,
+                  ),
+                ),
+              ),
+              ListTile(
+                subtitle: MaterialButton(
+                  color: Colors.blue,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Login",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  onPressed: () async {
+                    debugPrint(Val.users.value.val.toString());
+
+                    final body = {
+                      "email": _controller["email"]!.text,
+                      "password": _controller["password"]!.text,
+                    };
+
+                    if (body.values.contains("")) {
+                      EasyLoading.showError("Please fill all the fields");
+                      return;
+                    }
+
+                    final res = await Conn.login(body);
+                    if (res.statusCode == 200) {
+                      Val.token.value.val = jsonDecode(res.body)['token'];
+                      Val.token.refresh();
+                      await Conn().loadFirst();
+                      Routes.home().goOff();
+                    } else {
+                      EasyLoading.showError(
+                          res.statusCode == 401 ? "wrong email or password" : res.statusCode.toString());
+                    }
+                  },
+                ),
+              ),
+              // ListTile(
+              //   title: Text("Don't have an account?"),
+              //   subtitle: MaterialButton(
+              //     color: Colors.blue,
+              //     child: Padding(
+              //       padding: const EdgeInsets.all(8.0),
+              //       child: Text(
+              //         "Register",
+              //         style: TextStyle(
+              //           color: Colors.white,
+              //           fontSize: 20,
+              //           fontWeight: FontWeight.bold,
+              //         ),
+              //       ),
+              //     ),
+              //     onPressed: () => Routes.register().go(),
+              //   ),
+              // )
+            ],
+          ),
+        ),
+      );
 }

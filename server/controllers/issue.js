@@ -5,9 +5,11 @@ const routeIssue = require('express').Router();
 
 
 const IssueGet = expressAsyncHandler(async (req, res) => {
+
     const issues = await prisma.issues.findMany({
         select: {
             name: true,
+            des: true,
             id: true,
             createdAt: true,
             IssuePriority: {
@@ -19,25 +21,44 @@ const IssueGet = expressAsyncHandler(async (req, res) => {
             },
             IssueType: {
                 select: {
+                    id: true,
+                    name: true,
+                }
+            },
+            Product: {
+                select: {
+                    id: true,
                     name: true,
                 }
             },
             Departement: {
                 select: {
+                    id: true,
                     name: true,
                 }
             },
             CreatedBy: {
                 select: {
+                    id: true,
                     name: true,
                 }
             },
             Client: {
                 select: {
+                    id: true,
+                    name: true,
+                }
+            },
+            Images: {
+                select: {
+                    id: true,
                     name: true,
                 }
             }
 
+        },
+        orderBy: {
+            createdAt: 'desc'
         },
     });
     res.status(200).json({
@@ -47,11 +68,26 @@ const IssueGet = expressAsyncHandler(async (req, res) => {
 });
 
 const IssuePost = expressAsyncHandler(async (req, res) => {
+    const {data, files} = req.body;
     const issue = await prisma.issues.create({
         data: {
-            ...req.body
+            ...JSON.parse(data),
         }
     });
+
+    for (let file of JSON.parse(files)) {
+        await prisma.images.create({
+            data: {
+                name: file.name,
+                Issue: {
+                    connect: {
+                        id: issue.id
+                    }
+                }
+            }
+        });
+    }
+
     res.status(201).json({
         message: 'Create issue success',
         data: issue

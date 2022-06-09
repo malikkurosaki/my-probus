@@ -12,9 +12,9 @@ class RootPage extends StatelessWidget {
   _onLoad()async{
     await 2.delay();
     if(Val.user.value.val.isEmpty){
-      Routes.login().go();
+      Routes.login().goOff();
     }else{
-      Routes.home().go();
+      Routes.home().goOff();
     }
   }
   @override

@@ -14,13 +14,8 @@ class HomeRequest extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: ResponsiveBuilder(
-      builder: (context, sizingInformation) => Card(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: HomeRequestForm(
-            sizingInformation: sizingInformation,
-          ),
-        ),
+      builder: (context, sizingInformation) => HomeRequestForm(
+        sizingInformation: sizingInformation,
       ),
     )
         // ResponsiveBuilder(

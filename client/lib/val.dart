@@ -2,6 +2,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
 
 class Val {
+  static final indexHome = 0.val('indexhome').obs;
   static final users = [].val('users').obs;
   static final user = {}.val("user").obs;
   static final token = "".val("token").obs;
@@ -17,5 +18,7 @@ class Val {
   static final issueTypes = [].val("issuesTypes").obs;
   static final issuePriorities = [].val("issuePriorities").obs;
   static final issues = [].val("issues").obs;
+  static final issueDetail = {}.val("issueDetail").obs;
+  static final discussion = [].val("discussion").obs;
 
 }
