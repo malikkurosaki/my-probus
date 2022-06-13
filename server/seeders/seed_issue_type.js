@@ -1,7 +1,14 @@
-const {PrismaClient} = require('@prisma/client');
-const prisma = new PrismaClient()
+const { PrismaClient } = require("@prisma/client");
+const prisma = new PrismaClient();
 
-const issueTypes = ["bug", "feature", "improvement", "task", "request", "other"]
+const issueTypes = [
+  "bug",
+  "feature",
+  "improvement",
+  "task",
+  "request",
+  "other",
+];
 //     {
 //         id: "1",
 //         name: "request"
@@ -13,24 +20,24 @@ const issueTypes = ["bug", "feature", "improvement", "task", "request", "other"]
 // ]
 
 const SeedIssueType = async () => {
-    let id = 1;
-    for(let issueType of issueTypes){
-        await prisma.issueTypes.upsert({
-            where: {
-                id: id.toString()
-            },
-            update: {
-                name: issueType,
-            },
-            create: {
-                id: id.toString(),
-                name: issueType,
-            }
-        })
-        id++;
-    }
+  let id = 1;
+  for (let issueType of issueTypes) {
+    await prisma.issueTypes.upsert({
+      where: {
+        id: id.toString(),
+      },
+      update: {
+        name: issueType,
+      },
+      create: {
+        id: id.toString(),
+        name: issueType,
+      },
+    });
+    id++;
+  }
 
-    console.log('seed issue type success')
-}
+  console.log("seed issue type success");
+};
 
-module.exports = {SeedIssueType}
+module.exports = { SeedIssueType };

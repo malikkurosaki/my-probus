@@ -63,7 +63,7 @@ class HomeRequestForm extends StatelessWidget {
             SizedBox(
               height: 200,
               child: CachedNetworkImage(
-                imageUrl: '${Conn.host}/images/contribution.png',
+                imageUrl: '${Conn().host}/images/contribution.png',
                 fit: BoxFit.cover,
               ),
             ),
@@ -79,7 +79,7 @@ class HomeRequestForm extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: CachedNetworkImage(
-                            imageUrl: '${Conn.host}/images/form.png',
+                            imageUrl: '${Conn().host}/images/form.png',
                             fit: BoxFit.cover,
                             height: 70,
                           ),
@@ -272,6 +272,7 @@ class HomeRequestForm extends StatelessWidget {
                             "usersId": Val.user.value.val['id'],
                             // "issuePrioritiesId": _issuePriority.value.val['id'],
                             "departementsId": _departement.value.val['id'],
+                            "issueStatusesId": "1",
                           };
 
                           if (bodyData.values.contains("")) {
@@ -288,7 +289,7 @@ class HomeRequestForm extends StatelessWidget {
                           };
                           
 
-                          final issue = await Conn.issuePost(body);
+                          final issue = await Conn().issuePost(body);
                           
                           if (issue.statusCode == 201) {
                             await Get.dialog(
@@ -298,7 +299,7 @@ class HomeRequestForm extends StatelessWidget {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     CachedNetworkImage(
-                                      imageUrl: '${Conn.host}/images/jempol.png',
+                                      imageUrl: '${Conn().host}/images/jempol.png',
                                       fit: BoxFit.cover,
                                       height: 200,
                                     ),

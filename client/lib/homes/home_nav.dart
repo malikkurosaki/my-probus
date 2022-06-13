@@ -10,12 +10,20 @@ import 'package:get/get.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 class HomeNav extends StatelessWidget {
-  const HomeNav({Key? key, required this.subPages, required this.indexhome, required this.sizingInformation, this.scrollController }) : super(key: key);
+  const HomeNav({
+    Key? key,
+    required this.subPages,
+    required this.indexhome,
+    required this.sizingInformation,
+    required this.selectedpage,
+    this.scrollController,
+  }) : super(key: key);
 
   final List<Map<String, Object>> subPages;
   final Rx<ReadWriteValue<int>> indexhome;
   final SizingInformation sizingInformation;
   final ScrollController? scrollController;
+  final Rx<ReadWriteValue<String>> selectedpage;
 
   @override
   Widget build(BuildContext context) {
@@ -32,11 +40,12 @@ class HomeNav extends StatelessWidget {
                 height: 200,
                 child: Stack(
                   children: [
-                    CachedNetworkImage(imageUrl: '${Conn.host}/images/profile.png',
-                    width: double.infinity,
-                        fit: BoxFit.cover,
+                    CachedNetworkImage(
+                      imageUrl: '${Conn().host}/images/profile.png',
+                      width: double.infinity,
+                      fit: BoxFit.cover,
                     ),
-                    Visibility(visible: sizingInformation.isMobile, child: BackButton()),
+                    // Visibility(visible: sizingInformation.isMobile, child: BackButton()),
                     Container(
                       width: double.infinity,
                       height: double.infinity,
@@ -46,9 +55,22 @@ class HomeNav extends StatelessWidget {
                       alignment: Alignment.bottomRight,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          Val.user.value.val['name'].toString(),
-                          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                Val.user.value.val['name'].toString(),
+                                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
+                              ),
+                            ),
+                            Chip(
+                              backgroundColor: Colors.green,
+                              label: Text(
+                                (Val.user.value.val['Role']?['name'] ?? "User").toString(),
+                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+                              ),
+                            )
+                          ],
                         ),
                       ),
                     ),
@@ -63,16 +85,17 @@ class HomeNav extends StatelessWidget {
                       return Visibility(
                         visible: e['menu'] as bool,
                         child: ListTile(
-                          selected: indexhome.value.val == e['index'],
+                          // selected: indexhome.value.val == e['index'],
+                          selected: selectedpage.value.val == e['title'],
                           leading: Icon(e['icon'] as IconData),
                           title: Text(e['title'] as String),
                           onTap: () {
                             indexhome.value.val = e['index'] as int;
                             indexhome.refresh();
-                            
-                            debugPrint(e['index'].toString());
-                            debugPrint(indexhome.value.val.toString());
-                            
+
+                            selectedpage.value.val = e['title'] as String;
+                            selectedpage.refresh();
+
                             if (sizingInformation.isMobile) {
                               Get.back();
                             }
@@ -83,7 +106,7 @@ class HomeNav extends StatelessWidget {
                   ).toList(),
                 ),
               ),
-      
+
               // logout button
               ListTile(
                 leading: Icon(Icons.logout),
@@ -95,15 +118,15 @@ class HomeNav extends StatelessWidget {
                       content: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          CachedNetworkImage(imageUrl: '${Conn.host}/images/logout.png',
+                          CachedNetworkImage(
+                            imageUrl: '${Conn().host}/images/logout.png',
                             height: 200,
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text("Are you sure?",
-                            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
-
-
+                            child: Text(
+                              "Are you sure?",
+                              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
                             ),
                           ),
                         ],
@@ -111,8 +134,8 @@ class HomeNav extends StatelessWidget {
                       actions: [
                         MaterialButton(
                           child: Text("Yes"),
-                          onPressed: () {
-                            Val.user.value.val = {};
+                          onPressed: () async {
+                            await Val.logout();
                             Routes.root().goOff();
                           },
                         ),

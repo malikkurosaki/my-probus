@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class Priority extends StatelessWidget {
   const Priority(
       {Key? key,
       required this.title,
-      required this.onSelect,
+      // required this.onSelect,
       required this.item,
       required this.value,
       required this.subtitle})
@@ -19,8 +20,8 @@ class Priority extends StatelessWidget {
   //   {"value": 6, "name": "dark", "des": "pilih jika anda rasa adalah issue sangat serius "},
   // ];
   final String title;
-  final Map value;
-  final Function(Map value) onSelect;
+  final Rx<ReadWriteValue<Map<dynamic, dynamic>>> value;
+  // final Function(Map value) onSelect;
   final List item;
   final String subtitle;
 
@@ -34,13 +35,13 @@ class Priority extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Icon(
-                Icons.check_box,
-                color: value.isNotEmpty ? Colors.green : Colors.grey,
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   child: Icon(
+            //     Icons.check_box,
+            //     color: value.value.val.isNotEmpty ? Colors.green : Colors.grey,
+            //   ),
+            // ),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(12),
@@ -55,13 +56,17 @@ class Priority extends StatelessWidget {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(bottom: 8),
-                            child: Text(
-                              title,
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                            child: Obx(
+                              () => 
+                              Text(
+                                  (value.value.val['name']??title).toString().toUpperCase(),
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                )
+                            )
+                            ,
                           ),
                           Text(
                             subtitle,
@@ -73,17 +78,17 @@ class Priority extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Visibility(
-                      visible: value.isNotEmpty,
-                      child: Text(
-                        (value['name'] ?? "").toString().toUpperCase(),
-                        style: TextStyle(
-                          color: Colors.blue.shade600,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24,
-                        ),
-                      ),
-                    )
+                    // Visibility(
+                    //   visible: value.value.val.isNotEmpty,
+                    //   child: Text(
+                    //     (value.value.val['name'] ?? "").toString().toUpperCase(),
+                    //     style: TextStyle(
+                    //       color: Colors.blue.shade600,
+                    //       fontWeight: FontWeight.bold,
+                    //       fontSize: 24,
+                    //     ),
+                    //   ),
+                    // )
                   ],
                 ),
               ),
@@ -101,8 +106,9 @@ class Priority extends StatelessWidget {
         for (final itm in item)
           PopupMenuItem(
             onTap: () {
-              value.assignAll(itm);
-              onSelect(itm);
+              value.value.val = itm;
+              value.refresh();
+              // onSelect(itm);
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

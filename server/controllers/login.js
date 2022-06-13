@@ -10,7 +10,7 @@ const jwt = require('jsonwebtoken');
 const LoginPost = expressAsyncHandler(async (req, res) => {
     const { email, password } = req.body;
 
-    const user = await prisma.users.findFirst({
+    const [user] = await prisma.users.findMany({
         where: {
             AND: {
                 email: {
@@ -24,16 +24,35 @@ const LoginPost = expressAsyncHandler(async (req, res) => {
     })
 
     if (user) {
-        let token = jwt.sign({ userId: user.id }, process.env.TOKEN_API);
+        // let token = jwt.sign({ userId: user.id }, process.env.TOKEN_API);
+        // res.status(200).json({
+        //     success: true,
+        //     message: "berhasil login",
+        //     token: token
+        // })
+
+        const auth = await prisma.authToken.create({
+            data: {
+                User: {
+                    connect: {
+                        id: user.id
+                    }
+                }
+            }
+        })
+
         res.status(200).json({
             success: true,
             message: "berhasil login",
-            token: token
+            token: auth.id
         })
+
+       
+
     } else {
         res.status(401).json({
             success: false,
-            message: "wrong email or password"
+            message: "gagal login"
         })
     }
 })

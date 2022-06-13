@@ -1,10 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:http/http.dart' as http;
-import 'package:my_probus/conn.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:my_probus/conn.dart';
 
 class AmbilGambar extends StatelessWidget {
   const AmbilGambar({Key? key, required this.values}) : super(key: key);
@@ -18,7 +16,7 @@ class AmbilGambar extends StatelessWidget {
       children: [
         InkWell(
           onTap: () async {
-            final gam = await Conn.imageHandler();
+            final gam = await Conn().imageHandler();
             if (gam != null) {
               final ls = List.from(values.value.val);
               ls.addAll(gam);
@@ -30,32 +28,33 @@ class AmbilGambar extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Row(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
+                 Padding(
+                  padding: EdgeInsets.all(8.0),
                   child: Icon(
                     Icons.check_box,
-                    // color: value.isNotEmpty ? Colors.green : Colors.grey,
+                    color: values.value.val.isNotEmpty ? Colors.green : Colors.grey,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
-                    children: [
-                      Icon(Icons.image),
+                    children: const [
+                      Icon(Icons.image,
+                        color: Colors.grey,
+                      ),
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text("Select Image"),
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child:  Text("Select Image"),
                 )
               ],
             ),
           ),
         ),
         Obx(
-          () => 
-          Wrap(
+          () => Wrap(
             children: [
               for (var gam in values.value.val)
                 SizedBox(
@@ -66,16 +65,16 @@ class AmbilGambar extends StatelessWidget {
                       Align(
                         alignment: Alignment.topRight,
                         child: IconButton(
-                          icon: Icon(Icons.cancel),
+                          icon: const Icon(Icons.cancel),
                           onPressed: () async {
-                            final del = await Conn.imageDeleteFile(gam['name']);
+                            final del = await Conn().imageDeleteFile(gam['name']);
                             debugPrint(del.body.toString());
                             if (del.statusCode == 201 || del.statusCode == 200) {
                               final listasil = List.from(values.value.val);
                               listasil.remove(gam);
                               values.value.val = listasil;
                               values.refresh();
-                            }else{
+                            } else {
                               debugPrint("gagal delete");
                             }
                           },
@@ -83,15 +82,15 @@ class AmbilGambar extends StatelessWidget {
                       ),
                       Flexible(
                         child: Container(
-                          margin: EdgeInsets.all(8),
+                          margin: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
                             color: Colors.grey.shade100,
                           ),
                           child: CachedNetworkImage(
-                            imageUrl: "${Conn.hostImage}/${gam['name']}",
-                            placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-                            errorWidget: (context, url, error) => Icon(Icons.error),
+                            imageUrl: "${Conn().hostImage}/${gam['name']}",
+                            placeholder: (context, url) => const Center(child: const CircularProgressIndicator()),
+                            errorWidget: (context, url, error) => const Icon(Icons.error),
                           ),
                         ),
                       ),

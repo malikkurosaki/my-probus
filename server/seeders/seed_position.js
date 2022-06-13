@@ -1,7 +1,25 @@
-const {PrismaClient} = require('@prisma/client')
+const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
-const positions = ["helper", "trainer", "customer service", "admin", "programer", "leader", "manager", "director"]
+const positions = [
+  "helper",
+  "trainer",
+  "customer service",
+  "admin",
+  "programer",
+  "leader",
+  "manager",
+  "director",
+  "spv",
+  "leader",
+  "id",
+  "it manager",
+  "production manager",
+  "customer service leader",
+  "trainer leader",
+  "trainer manager",
+  "customer service manager",
+];
 //     {
 //         id: "1",
 //         name: "helper"
@@ -57,25 +75,25 @@ const positions = ["helper", "trainer", "customer service", "admin", "programer"
 // ]
 
 const SeedPosition = async () => {
-    let id = 1;
-    for(let position of positions){
-        await prisma.positions.upsert({
-            where: {
-                id: id.toString()
-            },
-            update: {
-                name: position,
-            },
-            create: {
-                id: id.toString(),
-                name: position,
-            }
-        })
+  let id = 1;
+  for (let position of positions) {
+    await prisma.positions.upsert({
+      where: {
+        id: id.toString(),
+      },
+      update: {
+        name: position,
+      },
+      create: {
+        id: id.toString(),
+        name: position,
+      },
+    });
 
-        id++;
-    }
+    id++;
+  }
 
-    console.log("seed position success")
-}
+  console.log("seed position success");
+};
 
-module.exports = {SeedPosition}
+module.exports = { SeedPosition };

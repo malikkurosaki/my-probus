@@ -1,7 +1,19 @@
-const {PrismaClient} = require('@prisma/client');
+const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
-const departements = ["IT", "HR", "Finance", "Marketing", "Sales", "Production", "Admin", "Accounting", "Customer Service", "Sales", "Front Office"]
+const departements = [
+  "IT",
+  "HR",
+  "Finance",
+  "Marketing",
+  "Sales",
+  "Production",
+  "Admin",
+  "Accounting",
+  "Customer Service",
+  "Sales",
+  "Front Office",
+];
 //     {
 //         id: "1",
 //         name: "fo"
@@ -29,24 +41,23 @@ const departements = ["IT", "HR", "Finance", "Marketing", "Sales", "Production",
 // ]
 
 const SeedDepartement = async () => {
-    let id = 1;
-    for(let departement of departements){
-        await prisma.departements.upsert({
-            where: {
-                id: id.toString()
-            },
-            update: {
-                name: departement,
-            },
-            create: {
-                id: id.toString(),
-                name: departement,
-            }
-        })
-    }
+  let id = 1;
+  for (let departement of departements) {
+    await prisma.departements.upsert({
+      where: {
+        id: id.toString(),
+      },
+      update: {
+        name: departement,
+      },
+      create: {
+        id: id.toString(),
+        name: departement,
+      },
+    });
+  }
 
-    console.log("seed sdepartement success")
-}
+  console.log("seed sdepartement success");
+};
 
-module.exports = {SeedDepartement}
-
+module.exports = { SeedDepartement };

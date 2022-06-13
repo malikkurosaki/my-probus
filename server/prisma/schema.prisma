@@ -11,18 +11,23 @@ datasource db {
 }
 
 model Users {
-  id               String             @id @default(uuid())
-  name             String
-  email            String
-  password         String
-  Profiles         Profiles?
-  IssueRejecteds   IssueRejecteds[]
-  IssueAssigneds   IssueAssigneds[]
-  Issues           Issues[]
-  IssueAccepts     IssueAccepts[]
-  IssueForwardedTo IssueForwardedTo[]
-  Discussion       Discussion[]
-  Images           Images[]
+  id         String       @id @default(uuid())
+  name       String
+  email      String
+  password   String
+  Profiles   Profiles?
+  // IssueRejecteds   IssueRejecteds[]
+  // IssueAssigneds   IssueAssigneds[]
+  Issues     Issues[]
+  // IssueAccepts     IssueAccepts[]
+  // IssueForwardedTo IssueForwardedTo[]
+  Discussion Discussion[]
+  Images     Images[]
+  Role       Roles?       @relation(fields: [rolesId], references: [id])
+  rolesId    String?
+
+  AuthToken    AuthToken[]
+  IssueHistory IssueHistories[]
 }
 
 model Profiles {
@@ -60,35 +65,50 @@ model Roles {
   name        String
   description String?
   Profiles    Profiles[]
+  Users       Users[]
 }
 
 model Issues {
-  id                String             @id @default(uuid())
-  idx               Int                @unique @default(autoincrement())
+  id                String           @id @default(uuid())
+  idx               Int              @unique @default(autoincrement())
   name              String
-  des               String             @db.Text
-  IssueType         IssueTypes?        @relation(fields: [issueTypesId], references: [id])
+  des               String           @db.Text
+  IssueType         IssueTypes?      @relation(fields: [issueTypesId], references: [id])
   issueTypesId      String?
-  IssuesStatus      IssueStatuses?     @relation(fields: [issueStatusesId], references: [id])
+  IssuesStatus      IssueStatuses?   @relation(fields: [issueStatusesId], references: [id])
   issueStatusesId   String?
-  Client            Clients?           @relation(fields: [clientsId], references: [id])
+  Client            Clients?         @relation(fields: [clientsId], references: [id])
   clientsId         String?
-  Product           Products?          @relation(fields: [productsId], references: [id])
+  Product           Products?        @relation(fields: [productsId], references: [id])
   productsId        String?
-  CreatedBy         Users?             @relation(fields: [usersId], references: [id])
-  IssueRejecteds    IssueRejecteds[]
-  IssueAssigneds    IssueAssigneds[]
-  createdAt         DateTime?          @default(now())
-  updatedAt         DateTime?          @default(now())
+  CreatedBy         Users?           @relation(fields: [usersId], references: [id])
+  // IssueRejecteds    IssueRejecteds[]
+  // IssueAssigneds    IssueAssigneds[]
+  createdAt         DateTime?        @default(now())
+  updatedAt         DateTime?        @default(now())
   usersId           String?
-  IssueAccepts      IssueAccepts[]
-  IssueForwardedTo  IssueForwardedTo[]
-  IssuePriority     IssuePriorities?   @relation(fields: [issuePrioritiesId], references: [id])
+  // IssueAccepts      IssueAccepts[]
+  // IssueForwardedTo  IssueForwardedTo[]
+  IssuePriority     IssuePriorities? @relation(fields: [issuePrioritiesId], references: [id])
   issuePrioritiesId String?
-  Departement       Departements?      @relation(fields: [departementsId], references: [id])
+  Departement       Departements?    @relation(fields: [departementsId], references: [id])
   departementsId    String?
   Discussion        Discussion[]
   Images            Images[]
+  IssueHistory      IssueHistories[]
+}
+
+model IssueHistories {
+  id              String         @id @default(uuid())
+  Issue           Issues?        @relation(fields: [issuesId], references: [id])
+  issuesId        String?
+  note            String?
+  User            Users?         @relation(fields: [usersId], references: [id])
+  usersId         String?
+  IssueStatus     IssueStatuses? @relation(fields: [issueStatusesId], references: [id])
+  createdAt       DateTime?      @default(now())
+  updatedAt       DateTime?      @updatedAt
+  issueStatusesId String?
 }
 
 model Images {
@@ -115,25 +135,26 @@ model Discussion {
   imagesId  String?
 }
 
-model IssueAccepts {
-  id         String    @id @default(uuid())
-  Issue      Issues?   @relation(fields: [issuesId], references: [id])
-  issuesId   String?
-  AcceptedBy Users?    @relation(fields: [usersId], references: [id])
-  createdAt  DateTime? @default(now())
-  updatedAt  DateTime? @default(now())
-  usersId    String?
-}
+// model IssueAccepts {
+//   id         String    @id @default(uuid())
+//   note       String?
+//   Issue      Issues?   @relation(fields: [issuesId], references: [id])
+//   issuesId   String?
+//   AcceptedBy Users?    @relation(fields: [usersId], references: [id])
+//   createdAt  DateTime? @default(now())
+//   updatedAt  DateTime? @default(now())
+//   usersId    String?
+// }
 
-model IssueForwardedTo {
-  id          String    @id @default(uuid())
-  Issue       Issues?   @relation(fields: [issuesId], references: [id])
-  ForwardedTo Users?    @relation(fields: [usersId], references: [id])
-  createdAt   DateTime? @default(now())
-  updatedAt   DateTime? @default(now())
-  usersId     String?
-  issuesId    String?
-}
+// model IssueForwardedTo {
+//   id          String    @id @default(uuid())
+//   Issue       Issues?   @relation(fields: [issuesId], references: [id])
+//   ForwardedTo Users?    @relation(fields: [usersId], references: [id])
+//   createdAt   DateTime? @default(now())
+//   updatedAt   DateTime? @default(now())
+//   usersId     String?
+//   issuesId    String?
+// }
 
 model IssueTypes {
   id     String   @id @default(uuid())
@@ -142,9 +163,10 @@ model IssueTypes {
 }
 
 model IssueStatuses {
-  id     String   @id @default(uuid())
-  name   String
-  Issues Issues[]
+  id           String         @id @default(uuid())
+  name         String
+  Issues       Issues[]
+  IssueHistory IssueHistories[]
 }
 
 model Clients {
@@ -173,16 +195,16 @@ model Products {
   Issues Issues[]
 }
 
-model IssueRejecteds {
-  id        String    @id @default(uuid())
-  note      String
-  Issues    Issues?   @relation(fields: [issuesId], references: [id])
-  issuesId  String?
-  RejectBy  Users?    @relation(fields: [usersId], references: [id])
-  usersId   String?
-  createdAt DateTime? @default(now())
-  updatedAt DateTime? @default(now())
-}
+// model IssueRejecteds {
+//   id        String    @id @default(uuid())
+//   note      String
+//   Issues    Issues?   @relation(fields: [issuesId], references: [id])
+//   issuesId  String?
+//   RejectBy  Users?    @relation(fields: [usersId], references: [id])
+//   usersId   String?
+//   createdAt DateTime? @default(now())
+//   updatedAt DateTime? @default(now())
+// }
 
 model IssuePriorities {
   id     String   @id @default(uuid())
@@ -192,13 +214,22 @@ model IssuePriorities {
   Issues Issues[]
 }
 
-model IssueAssigneds {
-  id        String    @id @default(uuid())
-  note      String
-  Issues    Issues?   @relation(fields: [issuesId], references: [id])
-  issuesId  String?
-  AssignBy  Users?    @relation(fields: [usersId], references: [id])
-  usersId   String?
-  createdAt DateTime? @default(now())
-  updatedAt DateTime? @default(now())
+// model IssueAssigneds {
+//   id        String    @id @default(uuid())
+//   note      String
+//   Issues    Issues?   @relation(fields: [issuesId], references: [id])
+//   issuesId  String?
+//   AssignBy  Users?    @relation(fields: [usersId], references: [id])
+//   usersId   String?
+//   createdAt DateTime? @default(now())
+//   updatedAt DateTime? @default(now())
+// }
+
+model AuthToken {
+  id        String   @id @default(uuid())
+  User      Users    @relation(fields: [usersId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  expiresAt DateTime @default(now())
+  usersId   String
 }

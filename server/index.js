@@ -1,3 +1,5 @@
+const {PrismaClient} = require('@prisma/client')
+const prisma = new PrismaClient()
 const express = require('express');
 const app = express();
 const port = 3000;
@@ -65,7 +67,7 @@ app.get('/images/:name', (req, res) => {
     }
 });
 
-app.use(apiRoot, (req, res, next) => {
+app.use(apiRoot, async (req, res, next) => {
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1]
     if (token == null) {
@@ -73,17 +75,39 @@ app.use(apiRoot, (req, res, next) => {
         return res.sendStatus(401)
     }
 
-    jwt.verify(token, process.env.TOKEN_API, (err, user) => {
+    // jwt.verify(token, process.env.TOKEN_API, (err, user) => {
 
-        if (err) {
-            console.log("error 403", err)
-            return res.sendStatus(403)
-        } else {
-            req.userId = user.userId
-            next()
+    //     if (err) {
+    //         console.log("error 403", err)
+    //         return res.sendStatus(403)
+    //     } else {
+    //         req.userId = user.userId
+    //         next()
+    //     }
+
+    // })
+
+    
+
+    const auth = await prisma.authToken.findUnique({
+        where: {
+            id: token
+        },
+        include: {
+            User: true
         }
-
     })
+
+    console.log("auth", auth)
+
+    if (auth == null) {
+        console.log("error 403", auth)
+        return res.sendStatus(403)
+    }else{
+        req.userId = auth.User.id
+        next()
+    }
+    
 });
 
 app.use(apiRoot, api);

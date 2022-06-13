@@ -3,7 +3,10 @@ import 'package:get/get.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:my_probus/conn.dart';
 import 'package:my_probus/homes/home_issue_detail.dart';
+import 'package:my_probus/homes/home_issue_week_laps.dart';
 import 'package:my_probus/homes/home_nav.dart';
+import 'package:my_probus/homes/under_construction.dart';
+import 'package:my_probus/load.dart';
 import 'package:my_probus/val.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'home_main.dart';
@@ -27,29 +30,93 @@ class HomePage extends StatelessWidget {
     },
     {
       'index': 1,
-      'title': 'Form Request',
-      'icon': Icons.add,
+      'title': 'Crete Issue',
+      'icon': Icons.auto_stories_sharp,
       'page': HomeRequest(),
+      'menu': true,
+    },
+    {
+      'index': 1,
+      'title': 'Issue Week Laps',
+      'icon': Icons.auto_stories_sharp,
+      'page': HomeIssueWeekLaps(),
       'menu': true,
     },
     {
       'index': 2,
       'title': 'Form Todo',
-      'icon': Icons.add,
-      'page': HomeTodo(),
+      'icon': Icons.auto_stories_sharp,
+      'page': UnderConstruction(),
+      'menu': true,
+    },
+    // issue submission
+    {
+      'index': 3,
+      'title': 'Issue Submission',
+      'icon': Icons.auto_stories_sharp,
+      'page': UnderConstruction(),
       'menu': true,
     },
     {
-      'index': 3,
+      'index': 4,
       'title': 'Issue Detail',
-      'icon': Icons.add,
+      'icon': Icons.auto_stories_sharp,
       'page': HomeIssueDetail(),
       'menu': false,
+    },
+    {
+      'index': 5,
+      'title': 'Absensi',
+      'icon': Icons.auto_stories_sharp,
+      'page': UnderConstruction(),
+      'menu': true,
+    },
+    {
+      'index': 6,
+      'title': 'Form Cuti',
+      'icon': Icons.auto_stories_sharp,
+      'page': UnderConstruction(),
+      'menu': true,
+    },
+    {
+      'index': 7,
+      'title': 'Form Ijin',
+      'icon': Icons.auto_stories_sharp,
+      'page': UnderConstruction(),
+      'menu': true,
+    },
+    {
+      'index': 8,
+      'title': 'Calendar Libur',
+      'icon': Icons.auto_stories_sharp,
+      'page': UnderConstruction(),
+      'menu': true,
+    },
+    {
+      'index': 9,
+      'title': 'Bank Solusi',
+      'icon': Icons.auto_stories_sharp,
+      'page': UnderConstruction(),
+      'menu': true,
+    },
+    {
+      'index': 10,
+      'title': 'Product Store',
+      'icon': Icons.auto_stories_sharp,
+      'page': UnderConstruction(),
+      'menu': true,
+    },
+    {
+      'index': 11,
+      'title': 'List Client',
+      'icon': Icons.auto_stories_sharp,
+      'page': UnderConstruction(),
+      'menu': true,
     },
   ];
 
   _onLoad() async {
-    Conn().loadFirst();
+    Load().loadFirst();
   }
 
   @override
@@ -61,13 +128,18 @@ class HomePage extends StatelessWidget {
         builder: (context, sizingInformation) => Scaffold(
           appBar: sizingInformation.isMobile
               ? AppBar(
-                  title: Text("Form"),
+                  title: Text("My Probus"),
                   actions: [],
                 )
               : null,
           drawer: sizingInformation.isMobile
               ? Drawer(
-                  child: HomeNav(subPages: _subPages, indexhome: Val.indexHome, sizingInformation: sizingInformation),
+                  child: HomeNav(
+                    selectedpage: Val.selectedPage,
+                    subPages: _subPages,
+                    indexhome: Val.indexHome,
+                    sizingInformation: sizingInformation,
+                  ),
                 )
               : null,
           body: SafeArea(
@@ -77,6 +149,7 @@ class HomePage extends StatelessWidget {
                 Visibility(
                   visible: !sizingInformation.isMobile,
                   child: HomeNav(
+                    selectedpage: Val.selectedPage,
                     sizingInformation: sizingInformation,
                     subPages: _subPages,
                     indexhome: Val.indexHome,
@@ -89,7 +162,8 @@ class HomePage extends StatelessWidget {
                       children: _subPages
                           .map(
                             (e) => Visibility(
-                              visible: Val.indexHome.value.val == e['index'] as int,
+                              visible: e['title'] == Val.selectedPage.value.val,
+                              // visible: Val.indexHome.value.val == e['index'] as int,
                               child: e['page'] as Widget,
                             ),
                           )

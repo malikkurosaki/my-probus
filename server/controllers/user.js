@@ -10,14 +10,22 @@ const UserGet = expressAsyncHandler(async (req, res) => {
         where:{
             id: req.userId,
         },
-        include: {
-            Profiles: true,
+        select: {
+            id: true,
+            name: true,
+            Role: {
+                select: {
+                    id: true,
+                    name: true,
+                },
+            },
+            
         }
+
     })
 
-    console.log(user);
     res.status(200).json({
-        data: user??{}
+        data: user
     })
 })
 

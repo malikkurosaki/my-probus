@@ -10,7 +10,7 @@ import 'package:my_probus/skt.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 void main() {
-  IO.Socket socket = IO.io(Conn.host);
+  IO.Socket socket = IO.io(Conn().host);
   socket.onConnect(
     (_) {
       Skt.onConnect(socket);
