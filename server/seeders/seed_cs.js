@@ -30,4 +30,5 @@ const SeedCs = async () => {
   console.log("seed cs success");
 };
 
+
 module.exports = { SeedCs };

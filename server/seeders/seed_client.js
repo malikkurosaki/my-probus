@@ -69,6 +69,13 @@ const SeedClient = async () => {
   console.log("seed client success");
 };
 
+const SeedCClienClear = async () => {
+  await prisma.clients.deleteMany({});
+  console.log("seed client clean success");
+}
+
+
 module.exports = {
   SeedClient,
+  SeedCClienClear,
 };

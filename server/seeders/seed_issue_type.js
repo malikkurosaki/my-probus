@@ -40,4 +40,6 @@ const SeedIssueType = async () => {
   console.log("seed issue type success");
 };
 
+
+
 module.exports = { SeedIssueType };

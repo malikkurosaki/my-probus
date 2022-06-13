@@ -61,4 +61,9 @@ const SeedIssueStatus = async () => {
   console.log("seed issue status success");
 };
 
-module.exports = { SeedIssueStatus };
+const SeedIssueStatusClear = async () => {
+  await prisma.issueStatuses.deleteMany({});
+  console.log("seed issue status clean success");
+}
+
+module.exports = { SeedIssueStatus, SeedIssueStatusClear };

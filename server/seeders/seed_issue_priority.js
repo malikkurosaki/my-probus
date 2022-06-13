@@ -50,4 +50,12 @@ const SeedIssuePriorit = async () => {
   console.log("seed issue priorit success");
 };
 
-module.exports = { SeedIssuePriorit };
+const SeedIssuePrioritClear = async () => {
+  await prisma.issuePriorities.deleteMany({});
+  console.log("seed clean issue priorit success");
+};
+
+module.exports = {
+  SeedIssuePriorit,
+  SeedIssuePrioritClear,
+};

@@ -1,6 +1,6 @@
 const { SeedClient } = require("./seed_client");
 const { SeedCs } = require("./seed_cs");
-const { SeedDepartement } = require("./seed_departement");
+const { SeedDepartement, SeedDepartementClear } = require("./seed_departement");
 const { SeedIssue } = require("./seed_issue");
 const { SeedIssuePriorit } = require("./seed_issue_priority");
 const { SeedIssueStatus } = require("./seed_issue_status");
@@ -17,7 +17,9 @@ const { SeedUser } = require("./seed_user");
   await SeedRole();
   await SeedUser();
   await SeedPosition();
+
   await SeedDepartement();
+  
   await SeedIssueType();
   await SeedProduct();
   await SeedClient();

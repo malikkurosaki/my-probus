@@ -55,9 +55,24 @@ const SeedDepartement = async () => {
         name: departement,
       },
     });
+    id++;
   }
 
   console.log("seed sdepartement success");
 };
 
-module.exports = { SeedDepartement };
+const SeedDepartementClear = async () => {
+  await prisma.departements.deleteMany({
+    where: {
+      id: {
+        not: "0",
+      }
+    },
+  });
+  console.log("seed departement clean success");
+};
+
+module.exports = {
+  SeedDepartement,
+  SeedDepartementClear,
+};

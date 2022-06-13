@@ -3,7 +3,7 @@ const prisma = new PrismaClient();
 
 /**@returns {number} */
 function acak(a, b) {
-  return Math.floor(Math.random() * b) + a;
+  return `${Math.floor(Math.random() * b) + a}`;
 }
 
 const issues = [
@@ -46,7 +46,7 @@ const SeedIssue = async () => {
         clientsId: acak(1, 10).toString(),
         productsId: acak(1, 4).toString(),
         usersId: acak(1, 10).toString(),
-        departementsId: acak(1, 3).toString(),
+        departementsId: acak(1, 11).toString(),
         issueStatusesId: "1",
       },
       create: {
