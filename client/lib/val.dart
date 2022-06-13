@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 
 class Val {
   static final indexHome = 0.val('indexhome').obs;
-  static final selectedPage = "Home".val('selectedPage').obs;
+  static final selectedPage = "Dashboard".val('selectedPage').obs;
   static final users = [].val('users').obs;
   static final user = {}.val("user").obs;
   static final token = "".val("token").obs;
@@ -24,6 +24,7 @@ class Val {
   static final discussion = [].val("discussion").obs;
   static final issueAccepted = [].val("issueAccepted").obs;
   static final issueStatuses = [].val("issueStatuses").obs;
+  static final dashboards = {}.val("dashboards").obs;
 
   
   static Future<void> logout()async{

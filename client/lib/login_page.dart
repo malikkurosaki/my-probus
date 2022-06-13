@@ -51,7 +51,7 @@ class LoginPage extends StatelessWidget {
                     )),
               ),
               Container(
-                color: Colors.blueGrey.shade100,
+                color: Colors.cyan.withOpacity(0.4),
                 width: sizingInformation.isMobile ? Get.width : 460,
                 height: Get.height,
                 child: SingleChildScrollView(
@@ -65,7 +65,7 @@ class LoginPage extends StatelessWidget {
                       ),
                       ListTile(
                         title: Text("LOGIN",
-                            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.black)),
+                            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(16),
@@ -100,7 +100,8 @@ class LoginPage extends StatelessWidget {
                       ),
                       ListTile(
                         subtitle: MaterialButton(
-                          color: Colors.blueGrey,
+                          elevation: 0,
+                          color: Colors.cyan,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Padding(

@@ -10,7 +10,7 @@ import 'val.dart';
 class Load {
   Future<Map> _pengolahMap(http.Response data) async {
     try {
-      debugPrint(data.body);
+
       final jsonData = Map.from(json.decode(data.body)['data']);
       // onData(jsonData, jsonData.isEmpty ? false : true);
       return {
@@ -54,7 +54,6 @@ class Load {
     await loadPosition(alert: alert);
     await loadProduct(alert: alert);
     await loadClient(alert: alert);
-    
   }
 
   Future<void> loadDiscution() async {
@@ -122,7 +121,7 @@ class Load {
   // load user
   Future<void> loadUser({bool alert = false}) async {
     final data = await _pengolahMap(await Conn().userGet());
-    debugPrint(data.toString());
+
     if (data['status']) {
       Val.user.value.val = data['data'];
       Val.user.refresh();
@@ -155,11 +154,22 @@ class Load {
   // load issue status get
   Future<void> loadIssueStatus({bool alert = false}) async {
     final data = await _pengolahList(await Conn().issueStatusGet());
-    debugPrint(data.toString());
+
     if (data['status']) {
       Val.issueStatuses.value.val = List.from(data['data']);
       Val.issueStatuses.refresh();
       if (alert) EasyLoading.showInfo("issue status laoded");
+    }
+  }
+
+  // load dashboards
+  Future<void> loadDashboard({bool alert = false}) async {
+    final data = await _pengolahMap(await Conn().dashboardGet());
+
+    if (data['status']) {
+      Val.dashboards.value.val = Map.from(data['data']);
+      Val.dashboards.refresh();
+      if (alert) EasyLoading.showInfo("dashboard laoded");
     }
   }
 }

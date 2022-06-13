@@ -40,17 +40,22 @@ class HomeNav extends StatelessWidget {
                 height: 200,
                 child: Stack(
                   children: [
+                    Container(
+                      width: double.infinity,
+                      height: double.infinity,
+                      color: Colors.cyan.withOpacity(0.4),
+                    ),
                     CachedNetworkImage(
                       imageUrl: '${Conn().host}/images/profile.png',
                       width: double.infinity,
                       fit: BoxFit.cover,
                     ),
                     // Visibility(visible: sizingInformation.isMobile, child: BackButton()),
-                    Container(
-                      width: double.infinity,
-                      height: double.infinity,
-                      color: Colors.black.withOpacity(0.2),
-                    ),
+                    // Container(
+                    //   width: double.infinity,
+                    //   height: double.infinity,
+                    //   color: Colors.black.withOpacity(0.2),
+                    // ),
                     Align(
                       alignment: Alignment.bottomRight,
                       child: Padding(
@@ -64,7 +69,7 @@ class HomeNav extends StatelessWidget {
                               ),
                             ),
                             Chip(
-                              backgroundColor: Colors.green,
+                              backgroundColor: Colors.cyan,
                               label: Text(
                                 (Val.user.value.val['Role']?['name'] ?? "User").toString(),
                                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),

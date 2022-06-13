@@ -30,6 +30,7 @@ class Conn {
   get _imageDeleteFile => '$_url/file/delete-file';
   get _imageDeleteDb => '$_url/file/delete-db';
   get _discus => '$_url/discus';
+  get _dashboard => '$_url/dashboard';
   // get _issuePatchStatus => '$_url/issue/patch-status';
   get _issueStatus => '$_url/issue-status';
   Map<String, String> get _header => {"authorization": "Bearer ${Val.token.value.val}"};
@@ -326,4 +327,11 @@ class Conn {
 
   //  bool _cekOk(String data) => !data.contains(_errorServer) || data.contains(_server201Ok);
 
+  // dashboard
+  Future<http.Response> dashboardGet() async => cek(
+        await http.get(
+          Uri.parse(_dashboard),
+          headers: _header,
+        ),
+      );
 }

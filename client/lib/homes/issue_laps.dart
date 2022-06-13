@@ -16,8 +16,8 @@ import 'package:responsive_builder/responsive_builder.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-class HomeMain extends StatelessWidget {
-  HomeMain({Key? key}) : super(key: key);
+class IssueLaps extends StatelessWidget {
+  IssueLaps({Key? key}) : super(key: key);
 
   final _seletctedCategory = <String, dynamic>{"id": "all", "name": "all"}.val("_seletctedCategory").obs;
   final _selectedStatus = <String, dynamic>{"id": "all", "name": "all"}.val("_selectedStatus").obs;

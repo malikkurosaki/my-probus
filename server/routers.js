@@ -15,6 +15,7 @@ const uuid = require('uuid');
 const { routeImage } = require('./controllers/image');
 const { routeDiscus } = require('./controllers/discus');
 const { routeIssueStatus } = require('./controllers/issue_status');
+const { routeDashboard } = require('./controllers/dashboard');
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         if (!fs.existsSync('./uploads/')) {
@@ -52,6 +53,7 @@ api.use('/issue-status', routeIssueStatus);
 api.use('/issue', routeIssue);
 api.use('/file', routeImage);
 api.use('/discus', routeDiscus);
+api.use('/dashboard', routeDashboard);
 
 
 module.exports = { api };

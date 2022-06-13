@@ -20,6 +20,7 @@ const io = new Server(httpServer, {
     },
 });
 const fs = require('fs');
+const { routeDashboard } = require('./controllers/dashboard');
 
 // const { routeImage } = require('./controllers/image');
 
@@ -47,6 +48,9 @@ app.get('/', (req, res) => res.send('Hello World!'));
 app.use('/login', routeLogin);
 // app.use('/images', routeImage);
 
+const cobaApi = express.Router();
+cobaApi.use("/dashboard", routeDashboard);
+app.use(cobaApi)
 
 // dafri upload image
 app.get('/image/:name', (req, res) => {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
-import 'package:my_probus/conn.dart';
+import 'package:my_probus/homes/home_dashboard.dart';
 import 'package:my_probus/homes/home_issue_detail.dart';
 import 'package:my_probus/homes/home_issue_week_laps.dart';
 import 'package:my_probus/homes/home_nav.dart';
@@ -9,9 +9,8 @@ import 'package:my_probus/homes/under_construction.dart';
 import 'package:my_probus/load.dart';
 import 'package:my_probus/val.dart';
 import 'package:responsive_builder/responsive_builder.dart';
-import 'home_main.dart';
 import 'home_request.dart';
-import 'home_todo.dart';
+import 'issue_laps.dart';
 
 // module
 // departement ke module
@@ -23,9 +22,16 @@ class HomePage extends StatelessWidget {
   final _subPages = [
     {
       'index': 0,
-      'title': 'Home',
+      'title': 'Dashboard',
+      'icon': Icons.dashboard,
+      'page': HomeDashbord(),
+      'menu': true,
+    },
+    {
+      'index': 0,
+      'title': 'Issue Laps',
       'icon': Icons.home,
-      'page': HomeMain(),
+      'page': IssueLaps(),
       'menu': true,
     },
     {
@@ -128,7 +134,16 @@ class HomePage extends StatelessWidget {
         builder: (context, sizingInformation) => Scaffold(
           appBar: sizingInformation.isMobile
               ? AppBar(
-                  title: Text("My Probus"),
+                backgroundColor: Colors.cyan.withOpacity(0.4),
+                elevation: 0.0,
+                  title: Text("My Probus",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+
+                  ),
                   actions: [],
                 )
               : null,

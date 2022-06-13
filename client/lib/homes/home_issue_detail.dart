@@ -78,7 +78,7 @@ class HomeIssueDetail extends StatelessWidget {
                   BackButton(
                     onPressed: () {
                       Val.indexHome.value.val = 0;
-                      Val.selectedPage.value.val = "Home";
+                      Val.selectedPage.value.val = "Issue Laps";
                       Val.selectedPage.refresh();
                       Val.indexHome.refresh();
                     },
