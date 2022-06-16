@@ -59,7 +59,8 @@ let listUser = [];
         { title: "model generate", value: "model_generate" },
         { title: "config preference", value: "config_preference" },
         { title: "setting preferencr", value: "sp" },
-        { title: "flutter build web", value: "build_web" },
+        { title: "flutter build web github", value: "build_web_github" },
+        { title: "flutter build web server", value: "build_web_server" },
         { title: "cmd server", value: "cmd_server" },
         { title: "client mode development", value: "cdev_mode" },
         { title: "client mode production", value: "cpro_mode" },
@@ -87,9 +88,15 @@ let listUser = [];
     case "config_preference":
       Preference();
       break;
-    case "build_web":
+    case "build_web_github":
       execSync(
-        `cd client && flutter build web --base-href '/my-probus/client/build/web/'`,
+        `cd client && flutter build web --release --base-href '/my-probus/client/build/web/'`,
+        { stdio: "inherit" }
+      );
+      break;
+    case "build_web_server":
+      execSync(
+        `cd client && flutter build web --release`,
         { stdio: "inherit" }
       );
       break;

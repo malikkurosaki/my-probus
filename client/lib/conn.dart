@@ -11,7 +11,7 @@ import 'package:get/get.dart';
 import 'dart:io';
 
 class Conn {
-  String get _host => "https://makurostudio.my.id";
+  String get _host => "http://localhost:3000";
   String get host => _host;
   String get hostImage => "$_host/image";
   String get _api => "/api/v1";
