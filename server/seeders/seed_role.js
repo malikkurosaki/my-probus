@@ -1,7 +1,7 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
-const roles = ["user", "leader", "moderator", "admin", "super admin"];
+const roles = ["User", "Leader", "Moderator", "Admin", "Super Admin"];
 
 const SeedRole = async () => {
   let id = 1;

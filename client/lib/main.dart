@@ -10,17 +10,17 @@ import 'package:my_probus/skt.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 void main() {
-  IO.Socket socket = IO.io(Conn().host);
-  socket.onConnect(
-    (_) {
-      Skt.onConnect(socket);
-      // debugPrint('connect');
-      // socket.emit('msg', 'test');
-    },
-  );
-  socket.on('event', (data) => print(data));
-  socket.onDisconnect((_) => print('disconnect'));
-  socket.on('fromServer', (_) => print(_));
+  // IO.Socket socket = IO.io(Conn().host);
+  // socket.onConnect(
+  //   (_) {
+  //     Skt.onConnect(socket);
+  //     // debugPrint('connect');
+  //     // socket.emit('msg', 'test');
+  //   },
+  // );
+  // socket.on('event', (data) => print(data));
+  // socket.onDisconnect((_) => print('disconnect'));
+  // socket.on('fromServer', (_) => print(_));
 
   GetStorage.init();
   runApp(

@@ -2,17 +2,16 @@ import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:my_probus/conn.dart';
 import 'package:my_probus/homes/priority.dart';
 import 'package:my_probus/load.dart';
+import 'package:my_probus/models/model_status.dart';
+import 'package:my_probus/pref.dart';
 import 'package:my_probus/val.dart';
-import 'package:get_storage/get_storage.dart';
 
 class HomeIssueDetail extends StatelessWidget {
   HomeIssueDetail({Key? key}) : super(key: key);
@@ -23,7 +22,7 @@ class HomeIssueDetail extends StatelessWidget {
   final _priority = {}.val("HomeIssueDetail_priority").obs;
   final _noteController = "".val("HomeIssueDetail_note").obs;
 
-  _onload() async {
+  Future _onload() async {
     Val.discussion.value.val = [];
     Val.discussion.refresh();
 
@@ -60,6 +59,522 @@ class HomeIssueDetail extends StatelessWidget {
         ],
       );
 
+  // leader button action (accept, reject)
+  Widget _leaderButton() => Visibility(
+        visible: Pref().isLeader && Val.issueDetail.value.val['issueStatusesId'] == '1',
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              MaterialButton(
+                color: Colors.blue,
+                child: Text("Accept", style: TextStyle(color: Colors.white)),
+                onPressed: () {
+                  Get.dialog(
+                    AlertDialog(
+                      title: Text("Accept"),
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text("Are you sure to accept this issue?"),
+                          // pilih prioritas
+                          Priority(
+                              title: "Please Select Priority".toUpperCase(),
+                              item: Val.issuePriorities.value.val,
+                              value: _priority,
+                              subtitle: "berikan prioritas untuk issue ini")
+                        ],
+                      ),
+                      actions: [
+                        MaterialButton(
+                          child: Text("Yes"),
+                          onPressed: () async {
+                            if (_priority.value.val.isEmpty) {
+                              EasyLoading.showError("Please Select Priority");
+                              return;
+                            }
+
+                            final body = {
+                              "issueId": Val.issueDetail.value.val['id'],
+                              "issuePriorityId": _priority.value.val['id'],
+                              "issueStatusesId": "2",
+                              "note": "",
+                            };
+
+                            final ptc = await Conn().issuePatchStatus(body);
+                            debugPrint(ptc.body);
+
+                            if (ptc.statusCode == 200) {
+                              await Load().loadIssue();
+                              Get.back();
+                              EasyLoading.showSuccess("Success");
+                            } else {
+                              EasyLoading.showError("Failed");
+                            }
+                          },
+                        ),
+                        MaterialButton(
+                          child: Text("No"),
+                          onPressed: () {
+                            Get.back();
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+              MaterialButton(
+                color: Colors.pink,
+                child: Text("Reject", style: TextStyle(color: Colors.white)),
+                onPressed: () {
+                  Get.dialog(
+                    AlertDialog(
+                      title: Text("Reject"),
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text("Are you sure to reject this issue?"),
+                          // pilih prioritas
+                          TextFormField(
+                            onChanged: (value) => _noteController.value.val = value,
+                            controller: TextEditingController(text: _noteController.value.val),
+                            maxLength: 100,
+                            maxLines: 5,
+                            decoration: InputDecoration(
+                              labelText: "Reason",
+                              hintText: "Please enter reason",
+                            ),
+                          )
+                        ],
+                      ),
+                      actions: [
+                        MaterialButton(
+                          child: Text("Yes"),
+                          onPressed: () async {
+                            if (_noteController.value.val.isEmpty) {
+                              EasyLoading.showError("Please enter reason");
+                              return;
+                            }
+
+                            final body = {
+                              "issueId": Val.issueDetail.value.val['id'],
+                              // "issuePriorityId": _priority.value.val['id'],
+                              "issueStatusesId": "3",
+                              "note": _noteController.value.val,
+                            };
+
+                            final ptc = await Conn().issuePatchStatus(body);
+                            debugPrint(ptc.body);
+
+                            if (ptc.statusCode == 200) {
+                              await Load().loadIssue();
+                              Get.back();
+                              EasyLoading.showSuccess("Success");
+                            } else {
+                              EasyLoading.showError("Failed");
+                            }
+                          },
+                        ),
+                        MaterialButton(
+                          child: Text("No"),
+                          onPressed: () {
+                            Get.back();
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+      );
+
+  // moderator button action (approve, decline)
+  Widget _moderatorButton() => Visibility(
+        visible: Pref().isModerator && Val.issueDetail.value.val['issueStatusesId'] == '2',
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              MaterialButton(
+                color: Colors.blue,
+                child: Text("Approve", style: TextStyle(color: Colors.white)),
+                onPressed: () {
+                  Get.dialog(
+                    AlertDialog(
+                      title: Text("Approve"),
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text("Are you sure to accept this issue?"),
+                          // pilih prioritas
+                          Priority(
+                              title: "Please Select Priority".toUpperCase(),
+                              item: Val.issuePriorities.value.val,
+                              value: _priority,
+                              subtitle: "berikan prioritas untuk issue ini")
+                        ],
+                      ),
+                      actions: [
+                        MaterialButton(
+                          child: Text("Yes"),
+                          onPressed: () async {
+                            if (_priority.value.val.isEmpty) {
+                              EasyLoading.showError("Please Select Priority");
+                              return;
+                            }
+
+                            final body = {
+                              "issueId": Val.issueDetail.value.val['id'],
+                              "issuePriorityId": _priority.value.val['id'],
+                              "issueStatusesId": "4",
+                              "note": "",
+                            };
+
+                            final ptc = await Conn().issuePatchStatus(body);
+                            debugPrint(ptc.body);
+
+                            if (ptc.statusCode == 200) {
+                              await Load().loadIssue();
+                              Get.back();
+                              EasyLoading.showSuccess("Success");
+                            } else {
+                              EasyLoading.showError("Failed");
+                            }
+                          },
+                        ),
+                        MaterialButton(
+                          child: Text("No"),
+                          onPressed: () {
+                            Get.back();
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+              MaterialButton(
+                color: Colors.pink,
+                child: Text(
+                  "Decline",
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () {
+                  Get.dialog(
+                    AlertDialog(
+                      title: Text("Reject"),
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text("Are you sure to reject this issue?"),
+                          // pilih prioritas
+                          TextFormField(
+                            onChanged: (value) => _noteController.value.val = value,
+                            controller: TextEditingController(text: _noteController.value.val),
+                            maxLength: 100,
+                            maxLines: 5,
+                            decoration: InputDecoration(
+                              labelText: "Reason",
+                              hintText: "Please enter reason",
+                            ),
+                          )
+                        ],
+                      ),
+                      actions: [
+                        MaterialButton(
+                          child: Text("Yes"),
+                          onPressed: () async {
+                            if (_noteController.value.val.isEmpty) {
+                              EasyLoading.showError("Please enter reason");
+                              return;
+                            }
+
+                            final body = {
+                              "issueId": Val.issueDetail.value.val['id'],
+                              // "issuePriorityId": _priority.value.val['id'],
+                              "issueStatusesId": "5",
+                              "note": _noteController.value.val,
+                            };
+
+                            final ptc = await Conn().issuePatchStatus(body);
+                            debugPrint(ptc.body);
+
+                            if (ptc.statusCode == 200) {
+                              await Load().loadIssue();
+                              Get.back();
+                              EasyLoading.showSuccess("Success");
+                            } else {
+                              EasyLoading.showError("Failed");
+                            }
+                          },
+                        ),
+                        MaterialButton(
+                          child: Text("No"),
+                          onPressed: () {
+                            Get.back();
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+      );
+
+  // admin button action (progress, pending)
+  Widget _adminButton() => Visibility(
+        visible: Pref().isAdmin && Val.issueDetail.value.val['issueStatusesId'] == '4',
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              MaterialButton(
+                color: Colors.blue,
+                child: Text("Progress", style: TextStyle(color: Colors.white)),
+                onPressed: () {
+                  Get.dialog(
+                    AlertDialog(
+                      title: Text("Progress"),
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text("Are you sure to progress this issue?"),
+                          // pilih prioritas
+                          // Priority(
+                          //     title: "Please Select Priority".toUpperCase(),
+                          //     item: Val.issuePriorities.value.val,
+                          //     value: _priority,
+                          //     subtitle: "berikan prioritas untuk issue ini")
+                        ],
+                      ),
+                      actions: [
+                        MaterialButton(
+                          child: Text("Yes"),
+                          onPressed: () async {
+                            // if (_priority.value.val.isEmpty) {
+                            //   EasyLoading.showError("Please Select Priority");
+                            //   return;
+                            // }
+
+                            final body = {
+                              "issueId": Val.issueDetail.value.val['id'],
+                              // "issuePriorityId": _priority.value.val['id'],
+                              "issueStatusesId": ModelStatus.progress().id,
+                              "note": "",
+                            };
+
+                            final ptc = await Conn().issuePatchStatus(body);
+                            debugPrint(ptc.body);
+
+                            if (ptc.statusCode == 200) {
+                              await Load().loadIssue();
+                              Get.back();
+                              EasyLoading.showSuccess("Success");
+                            } else {
+                              EasyLoading.showError("Failed");
+                            }
+                          },
+                        ),
+                        MaterialButton(
+                          child: Text("No"),
+                          onPressed: () {
+                            Get.back();
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+              MaterialButton(
+                color: Colors.pink,
+                child: Text("Pending", style: TextStyle(color: Colors.white)),
+                onPressed: () {
+                  Get.dialog(
+                    AlertDialog(
+                      title: Text("Pending"),
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text("Are you sure to pending this issue?"),
+                          // pilih prioritas
+                          // Priority(
+                          //     title: "Please Select Priority".toUpperCase(),
+                          //     item: Val.issuePriorities.value.val,
+                          //     value: _priority,
+                          //     subtitle: "berikan prioritas untuk issue ini")
+                        ],
+                      ),
+                      actions: [
+                        MaterialButton(
+                          child: Text("Yes"),
+                          onPressed: () async {
+                            if (_priority.value.val.isEmpty) {
+                              EasyLoading.showError("Please Select Priority");
+                              return;
+                            }
+
+                            final body = {
+                              "issueId": Val.issueDetail.value.val['id'],
+                              // "issuePriorityId": _priority.value.val['id'],
+                              "issueStatusesId": ModelStatus.pending().id,
+                              "note": "",
+                            };
+
+                            final ptc = await Conn().issuePatchStatus(body);
+                            debugPrint(ptc.body);
+
+                            if (ptc.statusCode == 200) {
+                              await Load().loadIssue();
+                              Get.back();
+                              EasyLoading.showSuccess("Success");
+                            } else {
+                              EasyLoading.showError("Failed");
+                            }
+                          },
+                        ),
+                        MaterialButton(
+                          child: Text("No"),
+                          onPressed: () {
+                            Get.back();
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+      );
+
+  Widget _detailBar() => Row(
+        children: [
+          BackButton(
+            onPressed: () {
+              Val.indexHome.value.val = 0;
+              Val.selectedPage.value.val = "Issue Laps";
+              Val.selectedPage.refresh();
+              Val.indexHome.refresh();
+            },
+          ),
+          Expanded(
+            child: Stack(
+              children: [
+                _moderatorButton(),
+                _leaderButton(),
+                _adminButton(),
+              ],
+            ),
+          ),
+        ],
+      );
+
+  Widget _panelDetail() => Container(
+        color: Colors.white,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Visibility(
+              visible: Pref().isAdmin,
+              child: Text("Adimin section"),
+            ),
+            Visibility(
+              visible: Pref().isSuperAdmin,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.edit,
+                      color: Colors.orange,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.delete,
+                      color: Colors.pink,
+                    ),
+                  )
+                ],
+              ),
+            ),
+            _ketDetail("type", (Val.issueDetail.value.val["IssueType"]?['name'] ?? "null").toString()),
+
+            _ketDetail("Title", (Val.issueDetail.value.val["name"] ?? "null").toString()),
+
+            _ketDetail("Description", Val.issueDetail.value.val["des"].toString()),
+
+            _ketDetail("Client", (Val.issueDetail.value.val["Client"]?['name'] ?? "null").toString()),
+
+            _ketDetail("Created By", (Val.issueDetail.value.val["CreatedBy"]?['name'] ?? "null").toString()),
+
+            _ketDetail("Create At",
+                DateFormat('dd MMMM yyyy').format(DateTime.parse(Val.issueDetail.value.val['createdAt'])).toString()),
+
+            Val.issueDetail.value.val["IssuePriority"] == null
+                ? const SizedBox.shrink()
+                : _ketDetail("Priority", Val.issueDetail.value.val["IssuePriority"]['value'].toString()),
+
+            _ketDetail("Module", (Val.issueDetail.value.val["Departement"]?['name'] ?? "null").toString()),
+            // Text(Val.issueDetail.value.val["IssueRejecteds"].toString()),
+            // Text(Val.issueDetail.value.val["IssueAccepts"].toString()),
+            // Text(Val.issueDetail.value.val["IssueForwardedTo"].toString()),
+            // Text(Val.issueDetail.value.val["Discussion"].toString()),
+            Val.issueDetail.value.val['Images'] == null || Val.issueDetail.value.val['Images'].length < 0
+                ? Text(Val.issueDetail.value.val['Images'].toString())
+                : Wrap(
+                    children: [
+                      for (final img in List.from(Val.issueDetail.value.val['Images']))
+                        InkWell(
+                          onTap: () {
+                            Get.dialog(Material(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  BackButton(),
+                                  Flexible(
+                                    child: CachedNetworkImage(
+                                      imageUrl: "${Conn().hostImage}/${img['name']}",
+                                      fit: BoxFit.contain,
+                                      width: double.infinity,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ));
+                          },
+                          child: Container(
+                            margin: EdgeInsets.all(5),
+                            width: 150,
+                            height: 150,
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey.shade200),
+                            ),
+                            child: CachedNetworkImage(
+                              imageUrl: "${Conn().hostImage}/${img['name']}",
+                            ),
+                          ),
+                        )
+                    ],
+                  ),
+          ],
+        ),
+      );
+
   @override
   Widget build(BuildContext context) {
     _onload();
@@ -73,454 +588,50 @@ class HomeIssueDetail extends StatelessWidget {
             color: Colors.white,
             child: Container(
               color: Colors.grey.shade200,
-              child: Row(
-                children: [
-                  BackButton(
-                    onPressed: () {
-                      Val.indexHome.value.val = 0;
-                      Val.selectedPage.value.val = "Issue Laps";
-                      Val.selectedPage.refresh();
-                      Val.indexHome.refresh();
-                    },
-                  ),
-                  Expanded(
-                    child: Stack(
-                      children: [
-                        Visibility(
-                          visible: Val.user.value.val['Role']['id'] == '3' &&
-                              Val.issueDetail.value.val['issueStatusesId'] == '2',
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                MaterialButton(
-                                  color: Colors.green,
-                                  child: Text("Approve", style: TextStyle(color: Colors.white)),
-                                  onPressed: () {
-                                    Get.dialog(
-                                      AlertDialog(
-                                        title: Text("Approve"),
-                                        content: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Text("Are you sure to accept this issue?"),
-                                            // pilih prioritas
-                                            Priority(
-                                                title: "Please Select Priority".toUpperCase(),
-                                                item: Val.issuePriorities.value.val,
-                                                value: _priority,
-                                                subtitle: "berikan prioritas untuk issue ini")
-                                          ],
-                                        ),
-                                        actions: [
-                                          MaterialButton(
-                                            child: Text("Yes"),
-                                            onPressed: () async {
-                                              // where: {
-                                              //     id: req.body.issueId,
-                                              //   },
-                                              //   data: {
-                                              //     issueStatusesId: req.body.issueStatusesId,
-                                              //     issuePriorityId: req.body.issuePriorityId,
-                                              //     IssueHistory: {
-                                              //       create: {
-                                              //         IssueStatus: {
-                                              //           connect: {
-                                              //             id: req.body.issueStatusesId,
-                                              //           },
-                                              //         },
-                                              //         usersId: req.usersId,
-                                              //         note: req.body.note ?? undefined,
-                                              //       },
-                                              //     },
-                                              //   },
-                                              // });
-
-                                              if (_priority.value.val.isEmpty) {
-                                                EasyLoading.showError("Please Select Priority");
-                                                return;
-                                              }
-
-                                              final body = {
-                                                "issueId": Val.issueDetail.value.val['id'],
-                                                "issuePriorityId": _priority.value.val['id'],
-                                                "issueStatusesId": "4",
-                                                "note": "",
-                                              };
-
-                                              final ptc = await Conn().issuePatchStatus(body);
-                                              debugPrint(ptc.body);
-
-                                              if (ptc.statusCode == 200) {
-                                                await Load().loadIssue();
-                                                Get.back();
-                                                EasyLoading.showSuccess("Success");
-                                              } else {
-                                                EasyLoading.showError("Failed");
-                                              }
-                                            },
-                                          ),
-                                          MaterialButton(
-                                            child: Text("No"),
-                                            onPressed: () {
-                                              Get.back();
-                                            },
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                ),
-                                MaterialButton(
-                                  color: Colors.pink,
-                                  child: Text(
-                                    "Decline",
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  onPressed: () {
-                                    Get.dialog(
-                                      AlertDialog(
-                                        title: Text("Reject"),
-                                        content: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Text("Are you sure to reject this issue?"),
-                                            // pilih prioritas
-                                            TextFormField(
-                                              onChanged: (value) => _noteController.value.val = value,
-                                              controller: TextEditingController(text: _noteController.value.val),
-                                              maxLength: 100,
-                                              maxLines: 5,
-                                              decoration: InputDecoration(
-                                                labelText: "Reason",
-                                                hintText: "Please enter reason",
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                        actions: [
-                                          MaterialButton(
-                                            child: Text("Yes"),
-                                            onPressed: () async {
-                                              if (_noteController.value.val.isEmpty) {
-                                                EasyLoading.showError("Please enter reason");
-                                                return;
-                                              }
-
-                                              final body = {
-                                                "issueId": Val.issueDetail.value.val['id'],
-                                                // "issuePriorityId": _priority.value.val['id'],
-                                                "issueStatusesId": "5",
-                                                "note": _noteController.value.val,
-                                              };
-
-                                              final ptc = await Conn().issuePatchStatus(body);
-                                              debugPrint(ptc.body);
-
-                                              if (ptc.statusCode == 200) {
-                                                await Load().loadIssue();
-                                                Get.back();
-                                                EasyLoading.showSuccess("Success");
-                                              } else {
-                                                EasyLoading.showError("Failed");
-                                              }
-                                            },
-                                          ),
-                                          MaterialButton(
-                                            child: Text("No"),
-                                            onPressed: () {
-                                              Get.back();
-                                            },
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Visibility(
-                          visible: Val.user.value.val['Role']['id'] == '2' &&
-                              Val.issueDetail.value.val['issueStatusesId'] == '1',
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                MaterialButton(
-                                  color: Colors.green,
-                                  child: Text("Accept", style: TextStyle(color: Colors.white)),
-                                  onPressed: () {
-                                    Get.dialog(
-                                      AlertDialog(
-                                        title: Text("Accept"),
-                                        content: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Text("Are you sure to accept this issue?"),
-                                            // pilih prioritas
-                                            Priority(
-                                                title: "Please Select Priority".toUpperCase(),
-                                                item: Val.issuePriorities.value.val,
-                                                value: _priority,
-                                                subtitle: "berikan prioritas untuk issue ini")
-                                          ],
-                                        ),
-                                        actions: [
-                                          MaterialButton(
-                                            child: Text("Yes"),
-                                            onPressed: () async {
-                                              // where: {
-                                              //     id: req.body.issueId,
-                                              //   },
-                                              //   data: {
-                                              //     issueStatusesId: req.body.issueStatusesId,
-                                              //     issuePriorityId: req.body.issuePriorityId,
-                                              //     IssueHistory: {
-                                              //       create: {
-                                              //         IssueStatus: {
-                                              //           connect: {
-                                              //             id: req.body.issueStatusesId,
-                                              //           },
-                                              //         },
-                                              //         usersId: req.usersId,
-                                              //         note: req.body.note ?? undefined,
-                                              //       },
-                                              //     },
-                                              //   },
-                                              // });
-
-                                              if (_priority.value.val.isEmpty) {
-                                                EasyLoading.showError("Please Select Priority");
-                                                return;
-                                              }
-
-                                              final body = {
-                                                "issueId": Val.issueDetail.value.val['id'],
-                                                "issuePriorityId": _priority.value.val['id'],
-                                                "issueStatusesId": "2",
-                                                "note": "",
-                                              };
-
-                                              final ptc = await Conn().issuePatchStatus(body);
-                                              debugPrint(ptc.body);
-
-                                              if (ptc.statusCode == 200) {
-                                                await Load().loadIssue();
-                                                Get.back();
-                                                EasyLoading.showSuccess("Success");
-                                              } else {
-                                                EasyLoading.showError("Failed");
-                                              }
-                                            },
-                                          ),
-                                          MaterialButton(
-                                            child: Text("No"),
-                                            onPressed: () {
-                                              Get.back();
-                                            },
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                ),
-                                MaterialButton(
-                                  color: Colors.pink,
-                                  child: Text("Reject", style: TextStyle(color: Colors.white)),
-                                  onPressed: () {
-                                    Get.dialog(
-                                      AlertDialog(
-                                        title: Text("Reject"),
-                                        content: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Text("Are you sure to reject this issue?"),
-                                            // pilih prioritas
-                                            TextFormField(
-                                              onChanged: (value) => _noteController.value.val = value,
-                                              controller: TextEditingController(text: _noteController.value.val),
-                                              maxLength: 100,
-                                              maxLines: 5,
-                                              decoration: InputDecoration(
-                                                labelText: "Reason",
-                                                hintText: "Please enter reason",
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                        actions: [
-                                          MaterialButton(
-                                            child: Text("Yes"),
-                                            onPressed: () async {
-                                              if (_noteController.value.val.isEmpty) {
-                                                EasyLoading.showError("Please enter reason");
-                                                return;
-                                              }
-
-                                              final body = {
-                                                "issueId": Val.issueDetail.value.val['id'],
-                                                // "issuePriorityId": _priority.value.val['id'],
-                                                "issueStatusesId": "3",
-                                                "note": _noteController.value.val,
-                                              };
-
-                                              final ptc = await Conn().issuePatchStatus(body);
-                                              debugPrint(ptc.body);
-
-                                              if (ptc.statusCode == 200) {
-                                                await Load().loadIssue();
-                                                Get.back();
-                                                EasyLoading.showSuccess("Success");
-                                              } else {
-                                                EasyLoading.showError("Failed");
-                                              }
-                                            },
-                                          ),
-                                          MaterialButton(
-                                            child: Text("No"),
-                                            onPressed: () {
-                                              Get.back();
-                                            },
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+              child: _detailBar(),
             ),
           ),
           Flexible(
-            child: Container(
-              color: Val.issueDetail.value.val['issueStatusesId'] == '1'
-                  ? Colors.blue.shade100
-                  : Val.issueDetail.value.val['issueStatusesId'] == '2'
-                      ? Colors.green.shade100
-                      : Val.issueDetail.value.val['issueStatusesId'] == '3'
-                          ? Colors.red.shade100
-                          : Colors.white,
-              child: ListView(
-                controller: _scrollController,
-                children: [
-                  Container(
-                    color: Colors.white,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _ketDetail("type", Val.issueDetail.value.val["IssueType"]['name'].toString()),
-
-                        _ketDetail("Title", Val.issueDetail.value.val["name"].toString()),
-
-                        _ketDetail("Description", Val.issueDetail.value.val["des"].toString()),
-
-                        _ketDetail("Client", Val.issueDetail.value.val["Client"]['name'].toString()),
-
-                        _ketDetail("Created By", Val.issueDetail.value.val["CreatedBy"]['name'].toString()),
-
-                        _ketDetail(
-                            "Create At",
-                            DateFormat('dd MMMM yyyy')
-                                .format(DateTime.parse(Val.issueDetail.value.val['createdAt']))
-                                .toString()),
-
-                        Val.issueDetail.value.val["IssuePriority"] == null
-                            ? const SizedBox.shrink()
-                            : _ketDetail("Priority", Val.issueDetail.value.val["IssuePriority"]['value'].toString()),
-
-                        _ketDetail("Module", Val.issueDetail.value.val["Departement"]['name'].toString()),
-                        // Text(Val.issueDetail.value.val["IssueRejecteds"].toString()),
-                        // Text(Val.issueDetail.value.val["IssueAccepts"].toString()),
-                        // Text(Val.issueDetail.value.val["IssueForwardedTo"].toString()),
-                        // Text(Val.issueDetail.value.val["Discussion"].toString()),
-                        Val.issueDetail.value.val['Images'] == null || Val.issueDetail.value.val['Images'].length < 0
-                            ? Text(Val.issueDetail.value.val['Images'].toString())
-                            : Wrap(
+            child: ListView(
+              controller: _scrollController,
+              children: [
+                _panelDetail(),
+                Obx(
+                  () => Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      for (final dis in Val.discussion.value.val)
+                        Align(
+                          alignment:
+                              dis['User']['id'] == Val.user.value.val['id'] ? Alignment.topRight : Alignment.topLeft,
+                          child: Card(
+                            elevation: 0,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: dis['User']['id'] == Val.user.value.val['id']
+                                    ? CrossAxisAlignment.end
+                                    : CrossAxisAlignment.start,
                                 children: [
-                                  for (final img in List.from(Val.issueDetail.value.val['Images']))
-                                    InkWell(
-                                      onTap: () {
-                                        Get.dialog(Material(
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              BackButton(),
-                                              Flexible(
-                                                child: CachedNetworkImage(
-                                                  imageUrl: "${Conn().hostImage}/${img['name']}",
-                                                  fit: BoxFit.contain,
-                                                  width: double.infinity,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ));
-                                      },
-                                      child: Container(
-                                        margin: EdgeInsets.all(5),
-                                        width: 150,
-                                        height: 150,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(color: Colors.grey.shade200),
-                                        ),
-                                        child: CachedNetworkImage(
-                                          imageUrl: "${Conn().hostImage}/${img['name']}",
-                                        ),
-                                      ),
-                                    )
+                                  Text(dis['User']['name'].toString(),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: dis['User']['id'] == Val.user.value.val['id']
+                                              ? Colors.blue
+                                              : Colors.black)),
+                                  List.from(dis['Image'] ?? []).isEmpty
+                                      ? Text(dis['content'].toString())
+                                      : CachedNetworkImage(imageUrl: "${Conn().hostImage}/${dis['Image'][0]['name']}"),
+                                  Text(DateFormat('dd/MM/yyyy hh:mm').format(DateTime.parse(dis['createdAt']))),
                                 ],
                               ),
-                      ],
-                    ),
+                            ),
+                          ),
+                        )
+                    ],
                   ),
-                  Obx(() => Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          for (final dis in Val.discussion.value.val)
-                            Align(
-                              alignment: dis['User']['id'] == Val.user.value.val['id']
-                                  ? Alignment.topRight
-                                  : Alignment.topLeft,
-                              child: Card(
-                                elevation: 0,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    crossAxisAlignment: dis['User']['id'] == Val.user.value.val['id']
-                                        ? CrossAxisAlignment.end
-                                        : CrossAxisAlignment.start,
-                                    children: [
-                                      Text(dis['User']['name'].toString(),
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: dis['User']['id'] == Val.user.value.val['id']
-                                                  ? Colors.blue
-                                                  : Colors.black)),
-                                      List.from(dis['Image'] ?? []).isEmpty
-                                          ? Text(dis['content'].toString())
-                                          : CachedNetworkImage(
-                                              imageUrl: "${Conn().hostImage}/${dis['Image'][0]['name']}"),
-                                      Text(DateFormat('dd/MM/yyyy hh:mm').format(DateTime.parse(dis['createdAt']))),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            )
-                        ],
-                      ))
-                ],
-              ),
+                )
+              ],
             ),
           ),
           // chat input area

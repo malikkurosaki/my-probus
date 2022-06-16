@@ -9,6 +9,7 @@ const IssueGet = expressAsyncHandler(async (req, res) => {
       name: true,
       des: true,
       id: true,
+      idx: true,
       issueStatusesId: true,
       clientsId: true,
       departementsId: true,
@@ -17,6 +18,7 @@ const IssueGet = expressAsyncHandler(async (req, res) => {
       productsId: true,
       usersId: true,
       createdAt: true,
+      updatedAt: true,
       IssuesStatus: {
         select: {
           id: true,
@@ -137,7 +139,11 @@ const IssuePatch = expressAsyncHandler(async (req, res) => {
               id: req.body.issueStatusesId,
             },
           },
-          usersId: req.usersId,
+          User: {
+            connect: {
+              id: req.userId,
+            },
+          },
           note: req.body.note ?? undefined,
         },
       },
@@ -160,6 +166,7 @@ const IssueAcceptedGet = expressAsyncHandler(async (req, res) => {
       des: true,
       id: true,
       createdAt: true,
+      updatedAt: true,
       IssuesStatus: {
         select: {
           id: true,

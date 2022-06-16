@@ -41,6 +41,7 @@ class AmbilGambar extends StatelessWidget {
                     children: const [
                       Icon(Icons.image,
                         color: Colors.grey,
+                        size: 52,
                       ),
                     ],
                   ),

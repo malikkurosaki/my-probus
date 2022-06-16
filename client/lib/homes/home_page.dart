@@ -3,14 +3,14 @@ import 'package:get/get.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:my_probus/homes/home_dashboard.dart';
 import 'package:my_probus/homes/home_issue_detail.dart';
-import 'package:my_probus/homes/home_issue_week_laps.dart';
+import 'package:my_probus/homes/home_issue_history.dart';
 import 'package:my_probus/homes/home_nav.dart';
 import 'package:my_probus/homes/under_construction.dart';
 import 'package:my_probus/load.dart';
 import 'package:my_probus/val.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'home_request.dart';
-import 'issue_laps.dart';
+import 'home_issue_laps.dart';
 
 // module
 // departement ke module
@@ -31,7 +31,7 @@ class HomePage extends StatelessWidget {
       'index': 0,
       'title': 'Issue Laps',
       'icon': Icons.home,
-      'page': IssueLaps(),
+      'page': HomeIssueLaps(),
       'menu': true,
     },
     {
@@ -43,9 +43,9 @@ class HomePage extends StatelessWidget {
     },
     {
       'index': 1,
-      'title': 'Issue Week Laps',
+      'title': 'Issue Histories',
       'icon': Icons.auto_stories_sharp,
-      'page': HomeIssueWeekLaps(),
+      'page': HomeIssueHistory(),
       'menu': true,
     },
     {
@@ -121,13 +121,11 @@ class HomePage extends StatelessWidget {
     },
   ];
 
-  _onLoad() async {
-    Load().loadFirst();
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
-    _onLoad();
+    Load().loadFirst();
 
     return KeyboardDismisser(
       child: ResponsiveBuilder(

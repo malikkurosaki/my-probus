@@ -1,3 +1,4 @@
+const { SeedAdmin } = require("./seed_admin");
 const { SeedClient } = require("./seed_client");
 const { SeedCs } = require("./seed_cs");
 const { SeedDepartement, SeedDepartementClear } = require("./seed_departement");
@@ -10,6 +11,7 @@ const { SeedModerator } = require("./seed_moderator");
 const { SeedPosition } = require("./seed_position");
 const { SeedProduct } = require("./seed_product");
 const { SeedRole } = require("./seed_role");
+const { SeedSuperAdmin } = require("./seed_super_admin");
 const { SeedTrainer } = require("./seed_trainer");
 const { SeedUser } = require("./seed_user");
 
@@ -19,7 +21,7 @@ const { SeedUser } = require("./seed_user");
   await SeedPosition();
 
   await SeedDepartement();
-  
+
   await SeedIssueType();
   await SeedProduct();
   await SeedClient();
@@ -30,4 +32,6 @@ const { SeedUser } = require("./seed_user");
   await SeedTrainer();
   await SeedCs();
   await SeedModerator();
+  await SeedSuperAdmin();
+  await SeedAdmin();
 })();

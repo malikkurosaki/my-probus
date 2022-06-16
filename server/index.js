@@ -102,7 +102,6 @@ app.use(apiRoot, async (req, res, next) => {
         }
     })
 
-    console.log("auth", auth)
 
     if (auth == null) {
         console.log("error 403", auth)

@@ -172,4 +172,14 @@ class Load {
       if (alert) EasyLoading.showInfo("dashboard laoded");
     }
   }
+
+  // load issue history
+  Future<void> loadIssueHistory({bool alert = false}) async {
+    final data = await _pengolahList(await Conn().issueHistoryGet());
+    if (data['status']) {
+      Val.issueHistories.value.val = List.from(data['data']);
+      Val.issueHistories.refresh();
+      if (alert) EasyLoading.showInfo("issue history laoded");
+    }
+  }
 }

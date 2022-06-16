@@ -1,13 +1,13 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
-const listLeader = ["guntur", "dewi", "ahmad", "adi"];
+const listSuperAdmin = ["mukijan"];
 
-const SeedLeader = async () => {
+const SeedSuperAdmin = async () => {
   let users = await prisma.users.findMany({
     where: {
       name: {
-        in: listLeader,
+        in: listSuperAdmin,
       },
     },
   });
@@ -20,14 +20,14 @@ const SeedLeader = async () => {
       data: {
         Role: {
           connect: {
-            id: "2",
+            id: "5",
           },
         },
       },
     });
   }
 
-  console.log("seed leader success");
+  console.log("seed super admin success");
 };
 
-module.exports = { SeedLeader };
+module.exports = { SeedSuperAdmin };

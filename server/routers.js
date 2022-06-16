@@ -16,6 +16,10 @@ const { routeImage } = require('./controllers/image');
 const { routeDiscus } = require('./controllers/discus');
 const { routeIssueStatus } = require('./controllers/issue_status');
 const { routeDashboard } = require('./controllers/dashboard');
+const { routeIssueHistory } = require('./controllers/issue-histories');
+const { routeApproved } = require('./controllers/status_approved');
+const { routeAccepted } = require('./controllers/status_accepted');
+const { routeOpen } = require('./controllers/status_open');
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         if (!fs.existsSync('./uploads/')) {
@@ -54,6 +58,9 @@ api.use('/issue', routeIssue);
 api.use('/file', routeImage);
 api.use('/discus', routeDiscus);
 api.use('/dashboard', routeDashboard);
-
+api.use('/issue-history', routeIssueHistory);
+api.use('/status-approved', routeApproved);
+api.use('/status-accepted', routeAccepted);
+api.use('/status-open', routeOpen);
 
 module.exports = { api };

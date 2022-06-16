@@ -23,7 +23,6 @@ class LoginPage extends StatelessWidget {
   final _email = "".val("LoginPage_email").obs;
   final _password = "".val("LoginPage_password").obs;
 
-
   _onload() {
     Val.logout();
   }
@@ -54,18 +53,25 @@ class LoginPage extends StatelessWidget {
                 color: Colors.cyan.withOpacity(0.4),
                 width: sizingInformation.isMobile ? Get.width : 460,
                 height: Get.height,
+                padding: EdgeInsets.all(20),
                 child: SingleChildScrollView(
                   controller: ScrollController(),
                   child: Column(
                     children: [
                       // Image.asset('assets/images/login.jpg'),
                       SizedBox(
-                        height: 300,
+                        height: 250,
                         child: CachedNetworkImage(imageUrl: '${Conn().host}/images/login.png'),
                       ),
                       ListTile(
-                        title: Text("LOGIN",
-                            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),),
+                        title: Text(
+                          "LOGIN",
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black.withOpacity(0.5),
+                          ),
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(16),
@@ -74,10 +80,17 @@ class LoginPage extends StatelessWidget {
                           controller: TextEditingController(text: _email.value.val),
                           decoration: InputDecoration(
                             prefixIcon: Icon(Icons.email),
-                            label: Text("Email"),
+                            hintText: "Email",
                             filled: true,
                             fillColor: Colors.white54,
                             border: InputBorder.none,
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(4),
+                              borderSide: BorderSide(
+                                color: Colors.white54,
+                                width: 0,
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -88,10 +101,17 @@ class LoginPage extends StatelessWidget {
                           controller: TextEditingController(text: _password.value.val),
                           decoration: InputDecoration(
                             prefixIcon: Icon(Icons.lock),
-                            label: Text("Password"),
+                            hintText: "Password",
                             filled: true,
                             fillColor: Colors.white54,
                             border: InputBorder.none,
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(4),
+                              borderSide: BorderSide(
+                                color: Colors.white54,
+                                width: 0,
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -103,22 +123,17 @@ class LoginPage extends StatelessWidget {
                           elevation: 0,
                           color: Colors.cyan,
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8),
-                              child: Text(
-                                "Login",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                            padding: const EdgeInsets.all(12),
+                            child: Text(
+                              "Login",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
                           onPressed: () async {
-                            
-
                             final body = {
                               "email": _email.value.val,
                               "password": _password.value.val,
@@ -142,16 +157,18 @@ class LoginPage extends StatelessWidget {
                                   content: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      CachedNetworkImage(imageUrl: Conn().host + "/images/tos.png",
+                                      CachedNetworkImage(
+                                        imageUrl: Conn().host + "/images/tos.png",
                                         height: Get.height * 0.3,
                                         fit: BoxFit.cover,
                                       ),
-                                      Text("Welcome back, ${Val.user.value.val['name']}", 
+                                      Text(
+                                        "Welcome back, ${Val.user.value.val['name']}",
                                         style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                                       ),
-                                      Text("You are now logged in",
+                                      Text(
+                                        "You are now logged in",
                                         style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-
                                       ),
                                     ],
                                   ),
@@ -166,8 +183,9 @@ class LoginPage extends StatelessWidget {
                                 ),
                                 barrierDismissible: false,
                               );
-
+                              
                               Routes.home().goOff();
+                              
                             } else {
                               EasyLoading.showError(
                                   res.statusCode == 401 ? "wrong email or password" : res.statusCode.toString());

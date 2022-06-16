@@ -11,34 +11,41 @@ import 'package:get/get.dart';
 import 'dart:io';
 
 class Conn {
-  get _host => "https://makurostudio.my.id";
-  get host => _host;
-  get hostImage => "$_host/image";
-  get _api => "/api/v1";
-  get _url => _host + _api;
-
-  get _client => '$_url/client';
-  get _product => '$_url/product';
-  get _position => '$_url/position';
-  get _departement => '$_url/departement';
-  get _role => '$_url/role';
-  get _issueType => '$_url/issue-type';
-  get _user => '$_url/user';
-  get _issuePriority => '$_url/issue-priority';
-  get _issue => '$_url/issue';
-  get _upload => '$_url/upload';
-  get _imageDeleteFile => '$_url/file/delete-file';
-  get _imageDeleteDb => '$_url/file/delete-db';
-  get _discus => '$_url/discus';
-  get _dashboard => '$_url/dashboard';
+  String get _host => "https://makurostudio.my.id";
+  String get host => _host;
+  String get hostImage => "$_host/image";
+  String get _api => "/api/v1";
+  String get _url => _host + _api;
+  String get _client => '$_url/client';
+  String get _product => '$_url/product';
+  String get _position => '$_url/position';
+  String get _departement => '$_url/departement';
+  String get _role => '$_url/role';
+  String get _issueType => '$_url/issue-type';
+  String get _user => '$_url/user';
+  String get _issuePriority => '$_url/issue-priority';
+  String get _issue => '$_url/issue';
+  String get _upload => '$_url/upload';
+  String get _imageDeleteFile => '$_url/file/delete-file';
+  String get _imageDeleteDb => '$_url/file/delete-db';
+  String get _discus => '$_url/discus';
+  String get _dashboard => '$_url/dashboard';
+  String get _issueHistory => '$_url/issue-history';
+  String get _statusApproved => '$_url/status-approved';
+  String get _statusAccepted => '$_url/status-accepted';
+  String get _statusOpen => '$_url/status-open';
   // get _issuePatchStatus => '$_url/issue/patch-status';
-  get _issueStatus => '$_url/issue-status';
+  String get _issueStatus => '$_url/issue-status';
   Map<String, String> get _header => {"authorization": "Bearer ${Val.token.value.val}"};
-  get _errorServer => "error_server_500";
-  get _server201Ok => "server_ok_201";
-  get _login => '$_host/login';
+  String get _errorServer => "error_server_500";
+  String get _server201Ok => "server_ok_201";
+  String get _login => '$_host/login';
 
-  bool kembali = true;
+  static bool kembali = true;
+  
+  
+  
+  
   Future<http.Response> cek(http.Response res) async {
     if (res.statusCode == 401 || res.statusCode == 403) {
       if (kembali) {
@@ -50,6 +57,7 @@ class Conn {
       }
       return res;
     } else {
+      kembali = true;
       return res;
     }
   }
@@ -334,4 +342,39 @@ class Conn {
           headers: _header,
         ),
       );
+
+  // issue history get
+  Future<http.Response> issueHistoryGet() async => cek(
+        await http.get(
+          Uri.parse(_issueHistory),
+          headers: _header,
+        ),
+      );
+
+  // status approved get
+  Future<http.Response> statusApprovedGet() async => cek(
+        await http.get(
+          Uri.parse(_statusApproved),
+          headers: _header,
+        ),
+      );
+
+  // status accepted get
+  Future<http.Response> statusAcceptedGet() async => cek(
+        await http.get(
+          Uri.parse(_statusAccepted),
+          headers: _header,
+        ),
+      );
+
+  // status open
+  Future<http.Response> statusOpenGet() async => cek(
+        await http.get(
+          Uri.parse(_statusOpen),
+          headers: _header,
+        ),
+      );
+
+  
+
 }

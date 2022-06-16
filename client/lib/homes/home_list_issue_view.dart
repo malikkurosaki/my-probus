@@ -7,6 +7,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:my_probus/conn.dart';
 import 'package:my_probus/load.dart';
+import 'package:my_probus/pref.dart';
 import 'package:my_probus/val.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -23,6 +24,7 @@ class HomeListIssueView extends StatelessWidget {
     return RefreshIndicator(
       onRefresh: () async {
         await Load().loadIssue(alert: true);
+
         listIssue.value.val = Val.issues.value.val;
         listIssueBackup.value.val = Val.issues.value.val;
         listIssue.refresh();
@@ -60,16 +62,22 @@ class HomeListIssueView extends StatelessWidget {
                               width: 120,
                               alignment: Alignment.topLeft,
                               child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Card(
-                                    elevation: 0.0,
-                                    child: Container(
-                                      width: double.infinity,
-                                      padding: const EdgeInsets.all(8.0),
+                                  
+                                  Center(
+                                    child: Text(
+                                      e['idx'].toString(),
+                                      style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: double.infinity,
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Center(
                                       child: Text(
-                                        e['IssueType']['name'].toString().toUpperCase(),
+                                        (e?['IssueType']?['name'] ?? "empty data").toString().toUpperCase(),
                                         style: TextStyle(
                                           color: Colors.blue,
                                           fontWeight: FontWeight.bold,
@@ -77,21 +85,18 @@ class HomeListIssueView extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  Card(
-                                    elevation: 0.0,
-                                    child: Container(
-                                      width: double.infinity,
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        DateFormat('dd/MM/yyyy').format(
-                                          DateTime.parse(
-                                            e['createdAt'].toString(),
-                                          ),
+                                  Container(
+                                    width: double.infinity,
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      DateFormat('dd/MM/yyyy').format(
+                                        DateTime.parse(
+                                          e['createdAt'].toString(),
                                         ),
-                                        style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
                                       ),
+                                      style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
                                     ),
-                                  ),
+                                  )
                                 ],
                               ),
                             ),
@@ -102,7 +107,7 @@ class HomeListIssueView extends StatelessWidget {
                                   Padding(
                                     padding: const EdgeInsets.symmetric(vertical: 8),
                                     child: Text(
-                                      (e['name'] ?? "kosong").toString().toUpperCase(),
+                                      (e['name'] ?? "null").toString().toUpperCase(),
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
@@ -110,10 +115,9 @@ class HomeListIssueView extends StatelessWidget {
                                     ),
                                   ),
                                   Card(
-                                    color: Colors.blue,
-                                    child: Container(
+                                    elevation: 0,
+                                    child: SizedBox(
                                       width: lebarItem,
-                                      padding: const EdgeInsets.all(8.0),
                                       child: Text(
                                         timeago
                                             .format(
@@ -123,10 +127,27 @@ class HomeListIssueView extends StatelessWidget {
                                             )
                                             .toString()
                                             .toUpperCase(),
-                                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                        style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
                                       ),
                                     ),
                                   ),
+                                  // (e['updatedAt'] ?? "").toString().isEmpty
+                                  //     ? SizedBox.shrink()
+                                  //     : Container(
+                                  //       width: lebarItem,
+                                  //       padding: const EdgeInsets.all(8.0),
+                                  //       child: Text(
+                                  //         timeago
+                                  //             .format(
+                                  //               DateTime.parse(
+                                  //                 e['updatedAt'].toString(),
+                                  //               ),
+                                  //             )
+                                  //             .toString()
+                                  //             .toUpperCase(),
+                                  //         style: TextStyle(color: Colors.grey.shade700, fontWeight: FontWeight.bold),
+                                  //       ),
+                                  //     ),
                                   Wrap(
                                     children: [
                                       SizedBox(
@@ -135,11 +156,11 @@ class HomeListIssueView extends StatelessWidget {
                                           children: [
                                             Icon(
                                               Icons.store,
-                                              color: Colors.blue,
+                                              color: Colors.brown.shade300,
                                             ),
                                             Expanded(
                                               child: Text(
-                                                e['Client']['name'].toString().toUpperCase(),
+                                                (e['Client']?['name'] ?? "null").toString().toUpperCase(),
                                                 overflow: TextOverflow.ellipsis,
                                               ),
                                             ),
@@ -150,13 +171,10 @@ class HomeListIssueView extends StatelessWidget {
                                         width: lebarItem,
                                         child: Row(
                                           children: [
-                                            Icon(
-                                              Icons.account_tree_sharp,
-                                              color: Colors.blue,
-                                            ),
+                                            Icon(Icons.account_tree_sharp, color: Colors.green.shade300),
                                             Expanded(
                                               child: Text(
-                                                e['Departement']['name'].toString(),
+                                                (e['Departement']?['name'] ?? "null").toString(),
                                                 overflow: TextOverflow.ellipsis,
                                               ),
                                             ),
@@ -169,11 +187,11 @@ class HomeListIssueView extends StatelessWidget {
                                           children: [
                                             Icon(
                                               Icons.propane_tank_rounded,
-                                              color: Colors.blue,
+                                              color: Colors.cyan.shade300,
                                             ),
                                             Expanded(
                                               child: Text(
-                                                e['Product']['name'].toString(),
+                                                (e['Product']?['name'] ?? "null").toString(),
                                                 overflow: TextOverflow.ellipsis,
                                               ),
                                             ),
@@ -186,11 +204,11 @@ class HomeListIssueView extends StatelessWidget {
                                           children: [
                                             Icon(
                                               Icons.account_circle,
-                                              color: Colors.blue,
+                                              color: Colors.teal.shade300,
                                             ),
                                             Expanded(
                                               child: Text(
-                                                e['CreatedBy']['name'].toString(),
+                                                (e['CreatedBy']?['name'] ?? "null").toString(),
                                                 overflow: TextOverflow.ellipsis,
                                               ),
                                             ),
@@ -200,12 +218,12 @@ class HomeListIssueView extends StatelessWidget {
                                       SizedBox(
                                         width: lebarItem,
                                         child: Visibility(
-                                          visible: ((e['IssuePriority']?['value']??0) as int).isGreaterThan(0),
+                                          visible: ((e['IssuePriority']?['value'] ?? 0) as int).isGreaterThan(0),
                                           child: Row(
                                             children: [
                                               Icon(
                                                 Icons.add_moderator_sharp,
-                                                color: Colors.blue,
+                                                color: Colors.purple.shade300,
                                               ),
                                               for (final str in List.generate(5, (index) => (index + 1)))
                                                 Icon(
@@ -223,7 +241,10 @@ class HomeListIssueView extends StatelessWidget {
                                         width: lebarItem,
                                         child: Row(
                                           children: [
-                                            Icon(Icons.add_chart_sharp, color: Colors.blue),
+                                            Icon(
+                                              Icons.add_chart_sharp,
+                                              color: Colors.indigo.shade300,
+                                            ),
                                             Text(
                                               (e['IssuesStatus']?['name'] ?? "null").toString().toUpperCase(),
                                               style: TextStyle(),
@@ -243,26 +264,8 @@ class HomeListIssueView extends StatelessWidget {
                                           ),
                                         ),
                                       ),
-
-                                      // Visibility(
-                                      //   visible: e['IssuePriority']['value'] > 1,
-                                      //   child: Icon(
-                                      //     Icons.info,
-                                      //     color: Colors.orange,
-                                      //   ),
-                                      // ),
                                     ],
                                   ),
-
-                                  // Row(
-                                  //   children: [
-                                  //     for (var i in List.generate(e['IssuePriority']['value'], (index) => index))
-                                  //       Icon(
-                                  //         Icons.star,
-                                  //         color: Colors.grey.shade600,
-                                  //       ),
-                                  //   ],
-                                  // ),
                                   e['Images'] == null || e['Images'].length < 0
                                       ? Text(e['Images'].toString())
                                       : Wrap(
@@ -294,7 +297,7 @@ class HomeListIssueView extends StatelessWidget {
                         )
                         // ListTile(
                         //   leading: Text(e['IssueType']['name'].toString()),
-                        //   title: Text(e['name']?? "kosong"),
+                        //   title: Text(e['name']?? "null"),
                         //   subtitle: Row(
                         //     children: [
                         //       for(var i in List.generate(e['IssuePriority']['value'], (index) => index))

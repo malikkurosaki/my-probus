@@ -25,10 +25,14 @@ class Val {
   static final issueAccepted = [].val("issueAccepted").obs;
   static final issueStatuses = [].val("issueStatuses").obs;
   static final dashboards = {}.val("dashboards").obs;
+  static final issueHistories = [].val("issueHistories").obs;
+  static final seletctedCategory = <String, dynamic>{"id": "all", "name": "all"}.val("_seletctedCategory").obs;
+  static final selectedStatus = <String, dynamic>{"id": "all", "name": "all"}.val("_selectedStatus").obs;
 
-  
   static Future<void> logout()async{
-    GetStorage().erase();
+    GetStorage().remove("indexhome");
+    GetStorage().remove("selectedPage");
+    GetStorage().remove("users");
     GetStorage().remove('token');
     GetStorage().remove('user');
     GetStorage().remove('users');
@@ -45,48 +49,10 @@ class Val {
     GetStorage().remove('issues');
     GetStorage().remove('issueDetail');
     GetStorage().remove('discussion');
+    GetStorage().remove('issueAccepted');
+    GetStorage().remove('issueStatuses');
+    GetStorage().remove('dashboards');
+    GetStorage().erase();
     Get.deleteAll();
-  
-    // try {
-    //   indexHome.value.val = 0;
-    //   user.value.val = {};
-    //   token.value.val = "";
-    //   listContent.value.val = [];
-    //   listRequest.value.val = [];
-    //   listTodo.value.val = [];
-
-    //   clients.value.val = [];
-    //   products.value.val = [];
-    //   positions.value.val = [];
-    //   departements.value.val = [];
-    //   roles.value.val = [];
-    //   issueTypes.value.val = [];
-    //   issuePriorities.value.val = [];
-    //   issues.value.val = [];
-    //   issueDetail.value.val = {};
-    //   discussion.value.val = [];
-
-    //   indexHome.refresh();
-    //   user.refresh();
-    //   token.refresh();
-    //   listContent.refresh();
-    //   listRequest.refresh();
-    //   listTodo.refresh();
-
-    //   clients.refresh();
-    //   products.refresh();
-    //   positions.refresh();
-    //   departements.refresh();
-    //   roles.refresh();
-    //   issueTypes.refresh();
-    //   issuePriorities.refresh();
-    //   issues.refresh();
-    //   issueDetail.refresh();
-    //   discussion.refresh();
-      
-      
-    // } catch (e) {
-    //   debugPrint(e.toString());
-    // } 
   }
 }

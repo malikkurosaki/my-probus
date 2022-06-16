@@ -15,6 +15,8 @@ const users = [
   "widia",
   "ayu ari",
   "yuni",
+  "malik",
+  "mukijan"
 ];
 
 const SeedUser = async () => {
@@ -26,17 +28,22 @@ const SeedUser = async () => {
       },
       update: {
         name: user,
-        email: user + "@gmail.com",
+        email: user.replace(" ", "_") + "@gmail.com",
         password: "123456",
+        Role: {
+          connect: {
+            id: "1",
+          },
+        },
       },
       create: {
         id: id.toString(),
-        email: user + "@gmail.com",
+        email: user.replace(" ", "_") + "@gmail.com",
         password: "123456",
         name: user,
         Role: {
           connect: {
-            id: user === "guntur" || user === "dewi" ? "2" : "1",
+            id: "1",
           },
         },
       },
