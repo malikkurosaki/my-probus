@@ -12,6 +12,7 @@ const jwt = require('jsonwebtoken');
 const { Server } = require('socket.io');
 const { createServer } = require("http");
 const httpServer = createServer(app);
+const path = require('path');
 const io = new Server(httpServer, {
     allowEIO3: true,
     cors: {
@@ -43,8 +44,9 @@ app.use(cors());
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
+app.use(express.static(path.join(__dirname, './../client/build/web')));
 //app.use(express.static('assets'));
-app.get('/', (req, res) => res.send('Hello World!'));
+// app.get('/', (req, res) => res.send('Hello World!'));
 app.use('/login', routeLogin);
 // app.use('/images', routeImage);
 
