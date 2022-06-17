@@ -5,13 +5,14 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get_connect.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:my_probus/config.dart';
 import 'package:my_probus/routes.dart';
 import 'package:my_probus/val.dart';
 import 'package:get/get.dart';
 import 'dart:io';
 
 class Conn {
-  String get _host => "http://localhost:3000";
+  String get _host => Config.host;
   String get host => _host;
   String get hostImage => "$_host/image";
   String get _api => "/api/v1";

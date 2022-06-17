@@ -32,6 +32,40 @@ function proMode() {
   fs.writeFileSync(connFile, fl);
 }
 
+const setMode = async (modenya) => {
+  let devWeb = "http://localhost:3000";
+  let proWeb = "https://makurostudio.my.id";
+  let devMobile = "http://192.168.43.112:3000";
+  let con = "";
+
+  let connFile = path.join(__dirname, "./../../client/lib/config.dart");
+ 
+  switch (modenya) {
+    case "dev_web":
+      con = devWeb;
+      break;
+    case "pro_web":
+      con = proWeb;
+      break;
+    case "dev_mobile":
+      con = devMobile;
+      break;
+    default:
+      con = devWeb;
+      break;
+  }
+
+  let target = `
+  class Config{
+    static const String host = "${con}";
+  }`;
+
+  fs.writeFileSync(connFile, target, { encoding: "utf-8" });
+
+  console.log("mode set to " + modenya);
+
+}
+
 /**
  * @type {{
  * id: string,
@@ -75,6 +109,7 @@ let listUser = [];
         { title: "run server pm2", value: "pm2_run" },
         { title: "pm2 restart", value: "pm2_restart" },
         { title: "install init", value: "install_init" },
+        { title: "client mode", value: "client_mode" },
       ],
     },
   ]);
@@ -165,6 +200,20 @@ let listUser = [];
       break;
     case "sp":
       settingPreference();
+      break;
+    case "client_mode":
+      const pilihan = await prompts({
+        type: "select",
+        name: "mode",
+        message: "What do you want to do?",
+        choices: [
+          { title: "dev web", value: "dev_web" },
+          { title: "pro web", value: "pro_web" },
+          { title: "dev mobile", value: "dev_mobile" },
+        ],
+      });
+      setMode(pilihan.mode);
+ 
       break;
     default:
       console.log("Invalid action");

@@ -34,8 +34,6 @@ class HomeDashbord extends StatelessWidget {
                     child: CachedNetworkImage(imageUrl: Conn().host + "/images/dashboard.png"),
                   ),
                 ),
-
-               
                 // issue status by leader
                 Visibility(
                   visible: !Pref().isUser,
@@ -126,7 +124,6 @@ class HomeDashbord extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
