@@ -6,12 +6,19 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
+import 'package:my_probus/components/button_status.dart';
 import 'package:my_probus/conn.dart';
 import 'package:my_probus/homes/priority.dart';
 import 'package:my_probus/load.dart';
+import 'package:my_probus/models/model_issue_histories.dart';
+import 'package:my_probus/models/model_issue_statuses.dart';
+import 'package:my_probus/models/model_issues.dart';
 import 'package:my_probus/models/model_status.dart';
 import 'package:my_probus/pref.dart';
 import 'package:my_probus/val.dart';
+
+
+
 
 class HomeIssueDetail extends StatelessWidget {
   HomeIssueDetail({Key? key}) : super(key: key);
@@ -60,7 +67,8 @@ class HomeIssueDetail extends StatelessWidget {
       );
 
   // leader button action (accept, reject)
-  Widget _leaderButton() => Visibility(
+  Widget _leaderButton() => 
+  Visibility(
         visible: Pref().isLeader && Val.issueDetail.value.val['issueStatusesId'] == '1',
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -71,6 +79,7 @@ class HomeIssueDetail extends StatelessWidget {
                 color: Colors.blue,
                 child: Text("Accept", style: TextStyle(color: Colors.white)),
                 onPressed: () {
+                  final noteText = 
                   Get.dialog(
                     AlertDialog(
                       title: Text("Accept"),
@@ -83,7 +92,14 @@ class HomeIssueDetail extends StatelessWidget {
                               title: "Please Select Priority".toUpperCase(),
                               item: Val.issuePriorities.value.val,
                               value: _priority,
-                              subtitle: "berikan prioritas untuk issue ini")
+                              subtitle: "berikan prioritas untuk issue ini"),
+                          TextFormField(
+                            decoration: InputDecoration(
+                              fillColor: Colors.grey.shade50,
+                              filled: true,
+                              hintText: ""
+                            ),
+                          )
                         ],
                       ),
                       actions: [
@@ -473,7 +489,13 @@ class HomeIssueDetail extends StatelessWidget {
             child: Stack(
               children: [
                 _moderatorButton(),
-                _leaderButton(),
+                // _leaderButton(),
+                ButtonStatus(
+                  visibleFor:Pref().isLeader, 
+                  paramA: ModelStatus.accepted(), 
+                  paramB: ModelStatus.rejected(), 
+                  issueId: Val.issueDetail.value.val['id'],
+                ),
                 _adminButton(),
               ],
             ),
@@ -489,28 +511,6 @@ class HomeIssueDetail extends StatelessWidget {
             Visibility(
               visible: Pref().isAdmin,
               child: Text("Adimin section"),
-            ),
-            Visibility(
-              visible: Pref().isSuperAdmin,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.edit,
-                      color: Colors.orange,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.delete,
-                      color: Colors.pink,
-                    ),
-                  )
-                ],
-              ),
             ),
             _ketDetail("type", (Val.issueDetail.value.val["IssueType"]?['name'] ?? "null").toString()),
 

@@ -2,10 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:my_probus/conn.dart';
+import 'package:my_probus/homes/home_issue_laps.dart';
 import 'package:my_probus/load.dart';
 import 'package:my_probus/pref.dart';
 import 'package:my_probus/val.dart';
@@ -29,31 +31,32 @@ class HomeListIssueView extends StatelessWidget {
         listIssueBackup.value.val = Val.issues.value.val;
         listIssue.refresh();
       },
-      child: Obx(() => listIssue.value.val.isEmpty
-          ? Center(
-              child: CachedNetworkImage(
-              imageUrl: Conn().host + "/images/kosong.png",
-              fit: BoxFit.cover,
-              height: lebarItem,
-              width: lebarItem,
-            ))
-          : ListView(
-              controller: ScrollController(),
-              children: [
-                // Text(JsonEncoder.withIndent('  ').convert(items)),
-                for (final e in listIssue.value.val)
-                  InkWell(
-                    onTap: () {
-                      Val.indexHome.value.val = 4;
-                      Val.selectedPage.value.val = "Issue Detail";
-                      Val.issueDetail.value.val = e;
+      child: Obx(
+        () => listIssue.value.val.isEmpty
+            ? Center(
+                child: CachedNetworkImage(
+                imageUrl: Conn().host + "/images/kosong.png",
+                fit: BoxFit.cover,
+                height: lebarItem,
+                width: lebarItem,
+              ))
+            : ListView(
+                controller: ScrollController(),
+                children: [
+                  // Text(JsonEncoder.withIndent('  ').convert(items)),
+                  for (final e in listIssue.value.val)
+                    Card(
+                      elevation: 0,
+                      child: InkWell(
+                        onTap: () {
+                          Val.indexHome.value.val = 4;
+                          Val.selectedPage.value.val = "Issue Detail";
+                          Val.issueDetail.value.val = e;
 
-                      Val.issueDetail.refresh();
-                      Val.indexHome.refresh();
-                      Val.selectedPage.refresh();
-                    },
-                    child: Card(
-                        elevation: 0,
+                          Val.issueDetail.refresh();
+                          Val.indexHome.refresh();
+                          Val.selectedPage.refresh();
+                        },
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -65,7 +68,6 @@ class HomeListIssueView extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  
                                   Center(
                                     child: Text(
                                       e['idx'].toString(),
@@ -131,23 +133,6 @@ class HomeListIssueView extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  // (e['updatedAt'] ?? "").toString().isEmpty
-                                  //     ? SizedBox.shrink()
-                                  //     : Container(
-                                  //       width: lebarItem,
-                                  //       padding: const EdgeInsets.all(8.0),
-                                  //       child: Text(
-                                  //         timeago
-                                  //             .format(
-                                  //               DateTime.parse(
-                                  //                 e['updatedAt'].toString(),
-                                  //               ),
-                                  //             )
-                                  //             .toString()
-                                  //             .toUpperCase(),
-                                  //         style: TextStyle(color: Colors.grey.shade700, fontWeight: FontWeight.bold),
-                                  //       ),
-                                  //     ),
                                   Wrap(
                                     children: [
                                       SizedBox(
@@ -272,44 +257,167 @@ class HomeListIssueView extends StatelessWidget {
                                           children: [
                                             for (final img in List.from(e['Images']))
                                               Container(
-                                                  margin: EdgeInsets.all(5),
-                                                  width: 150,
-                                                  height: 150,
-                                                  decoration: BoxDecoration(
-                                                    border: Border.all(color: Colors.grey.shade200),
-                                                  ),
-                                                  child: CachedNetworkImage(
-                                                    imageUrl: "${Conn().hostImage}/${img['name']}",
-                                                  ))
+                                                margin: EdgeInsets.all(5),
+                                                width: 150,
+                                                height: 150,
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(color: Colors.grey.shade200),
+                                                ),
+                                                child: CachedNetworkImage(
+                                                  imageUrl: "${Conn().hostImage}/${img['name']}",
+                                                ),
+                                              )
                                           ],
                                         ),
+                                  Visibility(
+                                    visible: Pref().isSuperAdmin,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          height: 50,
+                                        ),
+                                        Card(
+                                          elevation: 0,
+                                          color: Colors.grey.shade200,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: Text("Operation",
+                                                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    MaterialButton(
+                                                        child: Row(
+                                                          mainAxisSize: MainAxisSize.min,
+                                                          children: [
+                                                            Icon(Icons.edit),
+                                                            Text("Edit"),
+                                                          ],
+                                                        ),
+                                                        onPressed: () {}),
+                                                    MaterialButton(
+                                                        child: Row(
+                                                          mainAxisSize: MainAxisSize.min,
+                                                          children: [
+                                                            Icon(Icons.delete),
+                                                            Text("Delete"),
+                                                          ],
+                                                        ),
+                                                        onPressed: () {}),
+                                                  ],
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: Text(
+                                                    "Revision Status",
+                                                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: SingleChildScrollView(
+                                                    scrollDirection: Axis.horizontal,
+                                                    child: FittedBox(
+                                                      child: Row(
+                                                        children: [
+                                                          for (final stt in Val.issueStatuses.value.val)
+                                                            Visibility(
+                                                              visible: (stt['id'] ?? "") != e['IssuesStatus']['id'],
+                                                              child: Padding(
+                                                                padding: const EdgeInsets.all(4),
+                                                                child: MaterialButton(
+                                                                  elevation: 0,
+                                                                  color: Colors.white,
+                                                                  child: Text(
+                                                                    stt['name'].toString(),
+                                                                    style: TextStyle(color: Colors.cyan),
+                                                                  ),
+                                                                  onPressed: () {
+                                                                    final note = TextEditingController();
+                                                                    Get.dialog(AlertDialog(
+                                                                      title: Text("Are you sure?"),
+                                                                      content: Column(
+                                                                        mainAxisSize: MainAxisSize.min,
+                                                                        children: [
+                                                                          Text(
+                                                                              "Are you sure to change status to ${stt['name']}?"),
+                                                                          TextField(
+                                                                            controller: note,
+                                                                            decoration: InputDecoration(
+                                                                              hintText: "Note",
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                      actions: [
+                                                                        MaterialButton(
+                                                                          child: Text("Cancel"),
+                                                                          onPressed: () => Get.back(),
+                                                                        ),
+                                                                        MaterialButton(
+                                                                          child: Text("Yes"),
+                                                                          onPressed: () async {
+                                                                            if (note.text.isEmpty) {
+                                                                              EasyLoading.showError("Please fill note");
+                                                                              return;
+                                                                            }
+
+                                                                            final body = {
+                                                                              "issueId": e['id'],
+                                                                              "issueStatusesId": stt['id'],
+                                                                              "note": note.text,
+                                                                            };
+
+                                                                            final ptc =
+                                                                                await Conn().issuePatchStatus(body);
+                                                                            debugPrint(ptc.body);
+
+                                                                            await HomeIssueLaps().onLoad();
+
+                                                                            if (ptc.statusCode == 200) {
+                                                                              // await Load().loadIssue();
+                                                                              Get.back();
+                                                                              EasyLoading.showSuccess("Success");
+                                                                            } else {
+                                                                              Get.back();
+                                                                              EasyLoading.showError("Failed");
+                                                                            }
+                                                                          },
+                                                                        ),
+                                                                      ],
+                                                                    ));
+                                                                  },
+                                                                ),
+                                                              ),
+                                                            )
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
-                            // Container(
-                            //   width: 100,
-                            //   height: 100,
-                            //   alignment: Alignment.center,
-                            //   child: Text(e['Status']['name'].toString()),
-                            // ),
-                            // day ago
                           ],
-                        )
-                        // ListTile(
-                        //   leading: Text(e['IssueType']['name'].toString()),
-                        //   title: Text(e['name']?? "null"),
-                        //   subtitle: Row(
-                        //     children: [
-                        //       for(var i in List.generate(e['IssuePriority']['value'], (index) => index))
-                        //       Icon(Icons.star)
-                        //     ]
-                        //   ),
-                        //   onTap: () {},
-                        // ),
                         ),
-                  )
-              ],
-            )),
+                      ),
+                    ),
+                ],
+              ),
+      ),
     );
   }
 }
