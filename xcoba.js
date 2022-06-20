@@ -25,6 +25,55 @@ function typeNya(data) {
   }
 }
 
+String.prototype.log = function () {
+  console.log(this.toString());
+}
+
+const prompts = require("prompts");
+
 ;(async () => {
-    console.log(typeNya(new Date()));
+  const menu = await prompts([
+    {
+      type: "select",
+      name: "action",
+      message: "What do you want to do?",
+      choices: [
+        {
+          title: "git",
+          value: "git",
+        },
+        {
+          title: "model",
+          value: "model",
+        },
+        {
+          title: "build",
+          value: "build",
+        },
+      ],
+    },
+    {
+      type: "select",
+      name: "action2",
+      message: "What do you want to do?",
+      choices: [
+        {
+          title: "git2",
+          value: "git",
+        },
+        {
+          title: "model2",
+          value: "model",
+        },
+        {
+          title: "build2",
+          value: "build",
+        },
+      ],
+      
+    }
+  ]);
+
+  console.log(menu);
+
 })()

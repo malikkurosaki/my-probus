@@ -33,6 +33,7 @@ migrate_working_dir/
 !build/
 build/*
 !build/web/
+!build/app/outputs/apk/release
 
 
 # Web related
