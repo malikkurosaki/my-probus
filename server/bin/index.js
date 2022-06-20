@@ -206,6 +206,8 @@ function build() {
         });
 
         chooiceBuild("web production").isMe(answer, () => {
+          setMode("pro_web");
+          
           execSync(
             `cd ${_client} && flutter build web --base-href '/' --release`,
             {
