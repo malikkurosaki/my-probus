@@ -137,7 +137,7 @@ function local() {
       onSubmit: (_, answer) => {
         switch (answer) {
           case "run_client_web":
-            execSync(`cd ${_client} && flutter run`, { stdio: "inherit" });
+            execSync(`cd ${_client} && flutter run -d chrome`, { stdio: "inherit" });
             break;
           case "run_client_android":
             execSync(`cd ${_client} && flutter run `, {
@@ -225,19 +225,12 @@ function build() {
         });
 
         chooiceBuild("android").isMe(answer, () => {
-          ssh
-            .exec(`cd my-probus && git pull`, {
-              out: (data) => {
-                console.log(data);
-              },
-            })
-            .start();
+          
+          execSync(`cd ${_client} && flutter build apk --release --split-per-abi`, {
+            stdio: "inherit",
+          });
 
-          // execSync(`cd ${_client} && flutter build apk --release --split-per-abi`, {
-          //   stdio: "inherit",
-          // });
-
-          // console.log("build android");
+          console.log("build android");
         });
       },
     }
