@@ -219,7 +219,7 @@ function build() {
           console.log("git push done");
           ssh.exec(`cd my-probus && git pull && pm2 restart all`, {
             out: (data) => console.log(data),
-          });
+          }).start();
         });
 
         chooiceBuild("android").isMe(answer, () => {
