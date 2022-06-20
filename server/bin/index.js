@@ -180,6 +180,8 @@ function chooiceBuild(value) {
   };
 }
 
+
+// build
 function build() {
   prompts(
     {
@@ -229,7 +231,11 @@ function build() {
           execSync(`cd ${_client} && flutter build apk --release --split-per-abi`, {
             stdio: "inherit",
           });
-
+          
+          execSync(
+            `cp ${path.join(__dirname, './../../client/build/app/outputs/apk/release/app-arm64-v8a-release.apk')} ${path.join(__dirname, './../../server/assets/apk/')}`,
+            { stdio: "inherit" }
+          );
           console.log("build android");
         });
       },
