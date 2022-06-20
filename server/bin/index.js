@@ -5,21 +5,25 @@ const _server = path.join(__dirname, "../../server");
 const _client = path.join(__dirname, "../../client");
 const execSync = require("child_process").execSync;
 const fs = require("fs");
+const Ssh = require("simple-ssh");
+const ssh = new Ssh({
+  host: "makurostudio.my.id",
+  user: "makuro",
+  pass: "Makuro_123",
+});
 
-
-choices1("")
+choices1("");
 
 /** @typedef {"local" | "server" | "mode" | "build"} Chooice1 */
 /** @typedef {"dev_web" | "pro_web" | "dev_mobile"} Chooice2 */
 /** @typedef {"run_client_web" | "run_client_android" | "run_server" | "git_push" | "git_clear"} Chooice3 */
-
 
 /** @param {Chooice1} title */
 function choices1(title) {
   return {
     choices: {
       title: title,
-    value: title,
+      value: title,
     },
     /** @param {void} onSubmit */
     isMe(answer, onSubmit) {
@@ -53,7 +57,6 @@ prompts(
 function server() {
   console.log("server");
 }
-
 
 function mode() {
   prompts(
@@ -162,6 +165,79 @@ function local() {
 
 /**
  *
- * @param value {"web" | "android"}
+ * @param {"web github version" | "web production" | "android" } value
  */
-function build(value) {}
+function chooiceBuild(value) {
+  return {
+    choices: {
+      title: value,
+      value: value,
+    },
+    /** @param {void} onSubmit */
+    isMe(answer, onSubmit) {
+      if (answer === value) onSubmit();
+    },
+  };
+}
+
+function build() {
+  prompts(
+    {
+      type: "select",
+      name: "name",
+      message: "select menu",
+      choices: [
+        chooiceBuild("web github version").choices,
+        chooiceBuild("web production").choices,
+        chooiceBuild("android").choices,
+      ],
+    },
+    {
+      onSubmit: (_, answer) => {
+        chooiceBuild("web github version").isMe(answer, () => {
+          execSync(
+            `cd ${_client} && flutter build web --base-href '/my-probus/client/build/web/' --release`,
+            {
+              stdio: "inherit",
+            }
+          );
+
+          console.log("build web github version");
+        });
+
+        chooiceBuild("web production").isMe(answer, () => {
+          execSync(
+            `cd ${_client} && flutter build web --base-href '/' --release`,
+            {
+              stdio: "inherit",
+            }
+          );
+          console.log("build web production done");
+          execSync(`git add . && git commit -m "ya" && git push`, {
+            stdio: "inherit",
+          });
+          console.log("git push done");
+          ssh.exec(`cd my-probus && git pull && pm2 restart all`, {
+            out: (data) => console.log(data),
+          });
+        });
+
+        chooiceBuild("android").isMe(answer, () => {
+          ssh
+            .exec(`cd my-probus && git pull`, {
+              out: (data) => {
+                console.log(data);
+              },
+            })
+            .start();
+
+          // execSync(`cd ${_client} && flutter build apk --release --split-per-abi`, {
+          //   stdio: "inherit",
+          // });
+
+          // console.log("build android");
+        });
+      },
+    }
+  );
+}

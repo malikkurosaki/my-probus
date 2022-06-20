@@ -78065,7 +78065,7 @@ case 4:case 1:return A.C(q,r)}})
 return A.D($async$d8,r)},
 p9(){var s=0,r=A.E(t.kc),q,p,o,n,m,l,k,j,i,h,g,f,e,d,c,b
 var $async$p9=A.z(function(a,a0){if(a===1)return A.B(a0,r)
-while(true)switch(s){case 0:e=A.aMt("POST",A.cm("http://localhost:3000/api/v1/upload",0,null))
+while(true)switch(s){case 0:e=A.aMt("POST",A.cm("https://makurostudio.my.id/api/v1/upload",0,null))
 s=3
 return A.u($.aEn().kx(null,500,500),$async$p9)
 case 3:d=a0
@@ -78109,7 +78109,7 @@ case 5:case 1:return A.C(q,r)}})
 return A.D($async$p9,r)},
 wH(){var s=0,r=A.E(t.J),q,p=this,o,n,m
 var $async$wH=A.z(function(a,b){if(a===1)return A.B(b,r)
-while(true)switch(s){case 0:o=A.cm("http://localhost:3000/api/v1/client",0,null)
+while(true)switch(s){case 0:o=A.cm("https://makurostudio.my.id/api/v1/client",0,null)
 n=$.dP()
 m=t.N
 s=3
@@ -78122,7 +78122,7 @@ return A.D($async$wH,r)},
 xb(a){return this.agN(a)},
 agN(a){var s=0,r=A.E(t.J),q,p=this,o,n,m
 var $async$xb=A.z(function(b,c){if(b===1)return A.B(c,r)
-while(true)switch(s){case 0:o=A.cm("http://localhost:3000/api/v1/discus/"+a,0,null)
+while(true)switch(s){case 0:o=A.cm("https://makurostudio.my.id/api/v1/discus/"+a,0,null)
 n=$.dP()
 m=t.N
 s=3
@@ -78135,7 +78135,7 @@ return A.D($async$xb,r)},
 xc(a){return this.agO(a)},
 agO(a){var s=0,r=A.E(t.J),q,p=this,o,n,m
 var $async$xc=A.z(function(b,c){if(b===1)return A.B(c,r)
-while(true)switch(s){case 0:o=A.cm("http://localhost:3000/api/v1/discus",0,null)
+while(true)switch(s){case 0:o=A.cm("https://makurostudio.my.id/api/v1/discus",0,null)
 n=$.dP()
 m=t.N
 s=3
@@ -78147,7 +78147,7 @@ case 1:return A.C(q,r)}})
 return A.D($async$xc,r)},
 yt(){var s=0,r=A.E(t.J),q,p=this,o,n,m
 var $async$yt=A.z(function(a,b){if(a===1)return A.B(b,r)
-while(true)switch(s){case 0:o=A.cm("http://localhost:3000/api/v1/product",0,null)
+while(true)switch(s){case 0:o=A.cm("https://makurostudio.my.id/api/v1/product",0,null)
 n=$.dP()
 m=t.N
 s=3
@@ -78159,7 +78159,7 @@ case 1:return A.C(q,r)}})
 return A.D($async$yt,r)},
 yr(){var s=0,r=A.E(t.J),q,p=this,o,n,m
 var $async$yr=A.z(function(a,b){if(a===1)return A.B(b,r)
-while(true)switch(s){case 0:o=A.cm("http://localhost:3000/api/v1/position",0,null)
+while(true)switch(s){case 0:o=A.cm("https://makurostudio.my.id/api/v1/position",0,null)
 n=$.dP()
 m=t.N
 s=3
@@ -78171,7 +78171,7 @@ case 1:return A.C(q,r)}})
 return A.D($async$yr,r)},
 wZ(){var s=0,r=A.E(t.J),q,p=this,o,n,m
 var $async$wZ=A.z(function(a,b){if(a===1)return A.B(b,r)
-while(true)switch(s){case 0:o=A.cm("http://localhost:3000/api/v1/departement",0,null)
+while(true)switch(s){case 0:o=A.cm("https://makurostudio.my.id/api/v1/departement",0,null)
 n=$.dP()
 m=t.N
 s=3
@@ -78183,7 +78183,7 @@ case 1:return A.C(q,r)}})
 return A.D($async$wZ,r)},
 yE(){var s=0,r=A.E(t.J),q,p=this,o,n,m
 var $async$yE=A.z(function(a,b){if(a===1)return A.B(b,r)
-while(true)switch(s){case 0:o=A.cm("http://localhost:3000/api/v1/role",0,null)
+while(true)switch(s){case 0:o=A.cm("https://makurostudio.my.id/api/v1/role",0,null)
 n=$.dP()
 m=t.N
 s=3
@@ -78195,7 +78195,7 @@ case 1:return A.C(q,r)}})
 return A.D($async$yE,r)},
 xX(){var s=0,r=A.E(t.J),q,p=this,o,n,m
 var $async$xX=A.z(function(a,b){if(a===1)return A.B(b,r)
-while(true)switch(s){case 0:o=A.cm("http://localhost:3000/api/v1/issue-type",0,null)
+while(true)switch(s){case 0:o=A.cm("https://makurostudio.my.id/api/v1/issue-type",0,null)
 n=$.dP()
 m=t.N
 s=3
@@ -78207,7 +78207,7 @@ case 1:return A.C(q,r)}})
 return A.D($async$xX,r)},
 yN(){var s=0,r=A.E(t.J),q,p=this,o,n,m
 var $async$yN=A.z(function(a,b){if(a===1)return A.B(b,r)
-while(true)switch(s){case 0:o=A.cm("http://localhost:3000/api/v1/user",0,null)
+while(true)switch(s){case 0:o=A.cm("https://makurostudio.my.id/api/v1/user",0,null)
 n=$.dP()
 m=t.N
 s=3
@@ -78219,7 +78219,7 @@ case 1:return A.C(q,r)}})
 return A.D($async$yN,r)},
 xV(){var s=0,r=A.E(t.J),q,p=this,o,n,m
 var $async$xV=A.z(function(a,b){if(a===1)return A.B(b,r)
-while(true)switch(s){case 0:o=A.cm("http://localhost:3000/api/v1/issue-priority",0,null)
+while(true)switch(s){case 0:o=A.cm("https://makurostudio.my.id/api/v1/issue-priority",0,null)
 n=$.dP()
 m=t.N
 s=3
@@ -78231,7 +78231,7 @@ case 1:return A.C(q,r)}})
 return A.D($async$xV,r)},
 xS(){var s=0,r=A.E(t.J),q,p=this,o,n,m
 var $async$xS=A.z(function(a,b){if(a===1)return A.B(b,r)
-while(true)switch(s){case 0:o=A.cm("http://localhost:3000/api/v1/issue",0,null)
+while(true)switch(s){case 0:o=A.cm("https://makurostudio.my.id/api/v1/issue",0,null)
 n=$.dP()
 m=t.N
 s=3
@@ -78244,7 +78244,7 @@ return A.D($async$xS,r)},
 xU(a){return this.ajk(a)},
 ajk(a){var s=0,r=A.E(t.J),q,p=this,o,n,m
 var $async$xU=A.z(function(b,c){if(b===1)return A.B(c,r)
-while(true)switch(s){case 0:o=A.cm("http://localhost:3000/api/v1/issue",0,null)
+while(true)switch(s){case 0:o=A.cm("https://makurostudio.my.id/api/v1/issue",0,null)
 n=$.dP()
 m=t.N
 s=3
@@ -78257,7 +78257,7 @@ return A.D($async$xU,r)},
 jf(a){return this.ajj(a)},
 ajj(a){var s=0,r=A.E(t.J),q,p=this,o,n,m
 var $async$jf=A.z(function(b,c){if(b===1)return A.B(c,r)
-while(true)switch(s){case 0:o=A.cm("http://localhost:3000/api/v1/issue/patch-status",0,null)
+while(true)switch(s){case 0:o=A.cm("https://makurostudio.my.id/api/v1/issue/patch-status",0,null)
 n=$.dP()
 m=t.N
 s=3
@@ -78269,7 +78269,7 @@ case 1:return A.C(q,r)}})
 return A.D($async$jf,r)},
 xW(){var s=0,r=A.E(t.J),q,p=this,o,n,m
 var $async$xW=A.z(function(a,b){if(a===1)return A.B(b,r)
-while(true)switch(s){case 0:o=A.cm("http://localhost:3000/api/v1/issue-status",0,null)
+while(true)switch(s){case 0:o=A.cm("https://makurostudio.my.id/api/v1/issue-status",0,null)
 n=$.dP()
 m=t.N
 s=3
@@ -78281,7 +78281,7 @@ case 1:return A.C(q,r)}})
 return A.D($async$xW,r)},
 wV(){var s=0,r=A.E(t.J),q,p=this,o,n,m
 var $async$wV=A.z(function(a,b){if(a===1)return A.B(b,r)
-while(true)switch(s){case 0:o=A.cm("http://localhost:3000/api/v1/dashboard",0,null)
+while(true)switch(s){case 0:o=A.cm("https://makurostudio.my.id/api/v1/dashboard",0,null)
 n=$.dP()
 m=t.N
 s=3
@@ -78293,7 +78293,7 @@ case 1:return A.C(q,r)}})
 return A.D($async$wV,r)},
 xT(){var s=0,r=A.E(t.J),q,p=this,o,n,m
 var $async$xT=A.z(function(a,b){if(a===1)return A.B(b,r)
-while(true)switch(s){case 0:o=A.cm("http://localhost:3000/api/v1/issue-history",0,null)
+while(true)switch(s){case 0:o=A.cm("https://makurostudio.my.id/api/v1/issue-history",0,null)
 n=$.dP()
 m=t.N
 s=3
@@ -78305,7 +78305,7 @@ case 1:return A.C(q,r)}})
 return A.D($async$xT,r)},
 uR(){var s=0,r=A.E(t.J),q,p=this,o,n,m
 var $async$uR=A.z(function(a,b){if(a===1)return A.B(b,r)
-while(true)switch(s){case 0:o=A.cm("http://localhost:3000/api/v1/status-approved",0,null)
+while(true)switch(s){case 0:o=A.cm("https://makurostudio.my.id/api/v1/status-approved",0,null)
 n=$.dP()
 m=t.N
 s=3
@@ -78317,7 +78317,7 @@ case 1:return A.C(q,r)}})
 return A.D($async$uR,r)},
 uQ(){var s=0,r=A.E(t.J),q,p=this,o,n,m
 var $async$uQ=A.z(function(a,b){if(a===1)return A.B(b,r)
-while(true)switch(s){case 0:o=A.cm("http://localhost:3000/api/v1/status-accepted",0,null)
+while(true)switch(s){case 0:o=A.cm("https://makurostudio.my.id/api/v1/status-accepted",0,null)
 n=$.dP()
 m=t.N
 s=3
@@ -78329,7 +78329,7 @@ case 1:return A.C(q,r)}})
 return A.D($async$uQ,r)},
 uS(){var s=0,r=A.E(t.J),q,p=this,o,n,m
 var $async$uS=A.z(function(a,b){if(a===1)return A.B(b,r)
-while(true)switch(s){case 0:o=A.cm("http://localhost:3000/api/v1/status-open",0,null)
+while(true)switch(s){case 0:o=A.cm("https://makurostudio.my.id/api/v1/status-open",0,null)
 n=$.dP()
 m=t.N
 s=3
@@ -78366,13 +78366,13 @@ A.YI.prototype={
 $0(){var s,r,q,p,o=null,n=t.p,m=A.b([],n)
 for(s=this.a,r=s.c,r=J.aq(r.gk(r).gO());r.u();){q=r.gH(r)
 p=new A.cf(8,8)
-m.push(new A.cJ(200,200,A.bh(A.b([new A.eu(B.n1,o,o,A.nj(o,!0,B.Ea,o,new A.YE(s,q),B.t,o,o),o),new A.eU(1,B.aS,A.aR(o,A.h5(new A.YF(),o,o,"http://localhost:3000/image/"+A.d(J.x(q,"name")),new A.YG(),o),B.k,o,o,new A.dm(B.aF,o,o,new A.dl(p,p,p,p),o,o,B.aE),o,o,B.t,o,o,o,o),o)],n),B.u,B.m,B.o),o))}return A.w0(m)},
+m.push(new A.cJ(200,200,A.bh(A.b([new A.eu(B.n1,o,o,A.nj(o,!0,B.Ea,o,new A.YE(s,q),B.t,o,o),o),new A.eU(1,B.aS,A.aR(o,A.h5(new A.YF(),o,o,"https://makurostudio.my.id/image/"+A.d(J.x(q,"name")),new A.YG(),o),B.k,o,o,new A.dm(B.aF,o,o,new A.dl(p,p,p,p),o,o,B.aE),o,o,B.t,o,o,o,o),o)],n),B.u,B.m,B.o),o))}return A.w0(m)},
 $S:494}
 A.YE.prototype={
 $0(){var s=0,r=A.E(t.H),q=this,p,o,n,m,l,k
 var $async$$0=A.z(function(a,b){if(a===1)return A.B(b,r)
 while(true)switch(s){case 0:o=q.b
-n=A.cm("http://localhost:3000/api/v1/file/delete-file/"+J.x(o,"name"),0,null)
+n=A.cm("https://makurostudio.my.id/api/v1/file/delete-file/"+J.x(o,"name"),0,null)
 m=$.dP()
 l=t.N
 s=2
@@ -78406,7 +78406,7 @@ $0(){var s,r,q,p,o,n,m,l,k,j,i,h,g,f,e,d=null,c="name",b="count",a=$.Y4()
 if(J.et(a.gk(a).gO()))a=A.eP(A.ab("No Data",d,d,d,d,d,d,d),d,d)
 else{s=A.kL(0)
 r=A.ah(102,0,188,212)
-r=A.aR(d,A.eP(A.h5(d,d,d,"http://localhost:3000/images/dashboard.png",d,d),d,d),B.k,r,d,d,d,200,d,d,d,d,d)
+r=A.aR(d,A.eP(A.h5(d,d,d,"https://makurostudio.my.id/images/dashboard.png",d,d),d,d),B.k,r,d,d,d,200,d,d,d,d,d)
 q=$.j3()
 q=J.f(J.x(J.x(q.gk(q).gO(),"Role"),c),"User")
 if(new A.jA().gFw())p=new A.cx().uS()
@@ -78527,7 +78527,7 @@ if(J.x(s.gk(s).gO(),a0)==null||J.asQ(J.bo(J.x(s.gk(s).gO(),a0)),0))s=A.ab(J.aI(J
 else{j=A.b([],t.p)
 for(s=A.bK(J.x(s.gk(s).gO(),a0),!0,t.z),i=s.length,h=0;h<i;++h){g=s[h]
 f=new A.d_(B.dB,1,B.aL)
-j.push(A.hc(!1,!0,A.aR(d,A.h5(d,d,d,"http://localhost:3000/image/"+A.d(J.x(g,c)),d,d),B.k,d,d,new A.dm(d,d,new A.dk(f,f,f,f),d,d,d,B.aE),d,150,new A.au(5,5,5,5),d,d,d,150),d,!0,d,d,d,d,d,d,d,d,d,d,new A.a5j(g),d,d,d,d,d,d))}s=A.w0(j)}return A.aR(d,A.bh(A.b([a1,r,q,p,o,n,m,l,k,s],t.p),B.H,B.m,B.o),B.k,B.l,d,d,d,d,d,d,d,d,d)},
+j.push(A.hc(!1,!0,A.aR(d,A.h5(d,d,d,"https://makurostudio.my.id/image/"+A.d(J.x(g,c)),d,d),B.k,d,d,new A.dm(d,d,new A.dk(f,f,f,f),d,d,d,B.aE),d,150,new A.au(5,5,5,5),d,d,d,150),d,!0,d,d,d,d,d,d,d,d,d,d,new A.a5j(g),d,d,d,d,d,d))}s=A.w0(j)}return A.aR(d,A.bh(A.b([a1,r,q,p,o,n,m,l,k,s],t.p),B.H,B.m,B.o),B.k,B.l,d,d,d,d,d,d,d,d,d)},
 F(a,b){var s,r=this,q=null
 r.Cb()
 s=t.p
@@ -78709,7 +78709,7 @@ q.ba(r)},
 $S:0}
 A.a5j.prototype={
 $0(){var s=null
-A.ko($.aH(),A.ds(B.y,!0,s,A.bh(A.b([new A.rA(s,s),new A.eU(1,B.aS,A.h5(s,B.hc,s,"http://localhost:3000/image/"+A.d(J.x(this.a,"name")),s,1/0),s)],t.p),B.H,B.m,B.o),B.k,s,0,s,s,s,s,s,B.ah),!0,t.z)},
+A.ko($.aH(),A.ds(B.y,!0,s,A.bh(A.b([new A.rA(s,s),new A.eU(1,B.aS,A.h5(s,B.hc,s,"https://makurostudio.my.id/image/"+A.d(J.x(this.a,"name")),s,1/0),s)],t.p),B.H,B.m,B.o),B.k,s,0,s,s,s,s,s,B.ah),!0,t.z)},
 $S:0}
 A.a5k.prototype={
 $0(){var s,r,q,p,o,n,m,l,k,j,i,h="User",g="id",f=null,e="_value",d="GetStorage",c="_concrete",b=t.p,a=A.b([],b)
@@ -78760,7 +78760,7 @@ j.toString
 j=A.aN(n).i("1?").a(J.x(j,n.a))
 n=J.f(k,J.x(j==null?n.b:j,g))?B.ap:B.q
 k=p.h(q,"Image")
-k=A.bK(k==null?[]:k,!0,r).length===0?new A.bk(J.aI(p.h(q,"content")),f,f,f,f,f,f,f,f,f):A.h5(f,f,f,"http://localhost:3000/image/"+A.d(J.x(J.x(p.h(q,"Image"),0),"name")),f,f)
+k=A.bK(k==null?[]:k,!0,r).length===0?new A.bk(J.aI(p.h(q,"content")),f,f,f,f,f,f,f,f,f):A.h5(f,f,f,"https://makurostudio.my.id/image/"+A.d(J.x(J.x(p.h(q,"Image"),0),"name")),f,f)
 a.push(new A.eu(o,f,f,A.h6(new A.ao(B.t,A.bh(A.b([new A.bk(l,f,new A.r(!0,n,f,f,f,f,f,B.v,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f),f,f,f,f,f,f,f),k,new A.bk(A.yE("dd/MM/yyyy hh:mm").j6(0,A.JV(p.h(q,"createdAt"))),f,f,f,f,f,f,f,f,f)],b),m,B.m,B.o),f),f,0),f))}return A.bh(a,B.H,B.m,B.o)},
 $S:167}
 A.a5l.prototype={
@@ -78936,7 +78936,7 @@ $S:7}
 A.a5C.prototype={
 $0(){var s,r,q,p,o,n,m,l,k,j,i,h,g,f,e,d,c,b,a,a0,a1,a2,a3,a4,a5,a6=null,a7="name",a8="createdAt",a9="null",b0="IssuePriority",b1="IssuesStatus",b2="Images",b3="GetStorage",b4="_concrete",b5=this.a,b6=b5.c
 if(J.et(b6.gk(b6).gO())){b5=b5.e
-b5=A.eP(A.h5(a6,B.cf,b5,"http://localhost:3000/images/kosong.png",a6,b5),a6,a6)}else{s=A.kL(0)
+b5=A.eP(A.h5(a6,B.cf,b5,"https://makurostudio.my.id/images/kosong.png",a6,b5),a6,a6)}else{s=A.kL(0)
 r=t.p
 q=A.b([],r)
 for(b6=J.aq(b6.gk(b6).gO()),p=t.z,b5=b5.e,o=t.t;b6.u();){n=b6.gH(b6)
@@ -78985,7 +78985,7 @@ a3=A.w0(A.b([new A.cJ(b5,a6,i,a6),new A.cJ(b5,a6,h,a6),new A.cJ(b5,a6,g,a6),new 
 if(m.h(n,b2)==null||J.asQ(J.bo(m.h(n,b2)),0))i=new A.bk(J.aI(m.h(n,b2)),a6,a6,a6,a6,a6,a6,a6,a6,a6)
 else{i=A.b([],r)
 for(h=A.bK(m.h(n,b2),!0,p),g=h.length,a1=0;a1<g;++a1){a4=new A.d_(B.dB,1,B.aL)
-i.push(A.aR(a6,A.h5(a6,a6,a6,"http://localhost:3000/image/"+A.d(J.x(h[a1],a7)),a6,a6),B.k,a6,a6,new A.dm(a6,a6,new A.dk(a4,a4,a4,a4),a6,a6,a6,B.aE),a6,150,new A.au(5,5,5,5),a6,a6,a6,150))}i=A.w0(i)}h=$.j3()
+i.push(A.aR(a6,A.h5(a6,a6,a6,"https://makurostudio.my.id/image/"+A.d(J.x(h[a1],a7)),a6,a6),B.k,a6,a6,new A.dm(a6,a6,new A.dk(a4,a4,a4,a4),a6,a6,a6,B.aE),a6,150,new A.au(5,5,5,5),a6,a6,a6,150))}i=A.w0(i)}h=$.j3()
 g=$.hY
 if(g!=null)g.a4(0,h.aK$)
 h=A.a(h.eU$,"_value")
@@ -79076,7 +79076,7 @@ A.ef("Failed")}case 1:return A.C(q,r)}})
 return A.D($async$$0,r)},
 $S:7}
 A.Ld.prototype={
-F(a,b){var s,r=null,q=this.e.a===B.bZ?1/0:340,p=A.aR(r,r,B.k,A.ah(102,0,188,212),r,r,r,1/0,r,r,r,r,1/0),o=A.h5(r,B.cf,r,"http://localhost:3000/images/profile.png",r,1/0),n=$.j3(),m=A.eT(A.ab(J.aI(J.x(n.gk(n).gO(),"name")),r,r,r,r,A.b7(r,r,B.l,r,r,r,r,r,r,r,r,30,r,B.v,r,r,!0,r,r,r,r,r,r,r,r),r,r),1)
+F(a,b){var s,r=null,q=this.e.a===B.bZ?1/0:340,p=A.aR(r,r,B.k,A.ah(102,0,188,212),r,r,r,1/0,r,r,r,r,1/0),o=A.h5(r,B.cf,r,"https://makurostudio.my.id/images/profile.png",r,1/0),n=$.j3(),m=A.eT(A.ab(J.aI(J.x(n.gk(n).gO(),"name")),r,r,r,r,A.b7(r,r,B.l,r,r,r,r,r,r,r,r,30,r,B.v,r,r,!0,r,r,r,r,r,r,r,r),r,r),1)
 n=J.x(n.gk(n).gO(),"Role")
 n=n==null?r:J.x(n,"name")
 s=t.p
@@ -79108,7 +79108,7 @@ p.ba(r)
 if(s.e.a===B.bZ)A.ev($.aH())},
 $S:0}
 A.a5J.prototype={
-$0(){var s=null,r=$.aH(),q=A.ab("Logout",s,s,s,s,s,s,s),p=t.p,o=A.bh(A.b([A.h5(s,s,200,"http://localhost:3000/images/logout.png",s,s),new A.ao(B.t,A.ab("Are you sure?",s,s,s,s,A.b7(s,s,B.q,s,s,s,s,s,s,s,s,24,s,B.v,s,s,!0,s,s,s,s,s,s,s,s),s,s),s)],p),B.u,B.m,B.a8)
+$0(){var s=null,r=$.aH(),q=A.ab("Logout",s,s,s,s,s,s,s),p=t.p,o=A.bh(A.b([A.h5(s,s,200,"https://makurostudio.my.id/images/logout.png",s,s),new A.ao(B.t,A.ab("Are you sure?",s,s,s,s,A.b7(s,s,B.q,s,s,s,s,s,s,s,s,24,s,B.v,s,s,!0,s,s,s,s,s,s,s,s),s,s),s)],p),B.u,B.m,B.a8)
 A.ko(r,A.lc(A.b([A.ce(A.ab("Yes",s,s,s,s,s,s,s),s,s,new A.a5F()),A.ce(A.ab("No",s,s,s,s,s,s,s),s,s,new A.a5G())],p),o,q),!0,t.z)},
 $S:0}
 A.a5F.prototype={
@@ -79165,7 +79165,7 @@ F(a,b){var s=null
 this.BN()
 return A.ds(B.y,!0,s,new A.dT(new A.a5X(this),s),B.k,s,0,s,s,s,s,s,B.ah)}}
 A.a5X.prototype={
-$0(){var s,r,q,p,o,n,m,l=null,k=A.kL(0),j=A.eF(A.h5(l,B.cf,l,"http://localhost:3000/images/contribution.png",l,l),200,l),i=this.a,h=i.c.a===B.bZ?0:20,g=t.p,f=A.bj(A.b([new A.ao(B.t,A.h5(l,B.cf,70,"http://localhost:3000/images/form.png",l,l),l),A.eT(new A.ao(B.t,A.bh(A.b([new A.ao(B.t,A.ab("Form Pengajuan",l,l,l,l,A.b7(l,l,B.q,l,l,l,l,l,l,l,l,30,l,B.v,l,l,!0,l,l,l,l,l,l,l,l),l,l),l),new A.ao(B.t,A.ab("Isi form pengajuan untuk mengajukan request ataupun mengajukan bugs, pastikan data yang anda isi benar",l,l,l,l,A.b7(l,l,B.bf,l,l,l,l,l,l,l,l,12,l,B.v,l,l,!0,l,l,l,l,l,l,l,l),l,l),l)],g),B.H,B.m,B.o),l),1)],g),B.u,B.m,B.o),e=i.d
+$0(){var s,r,q,p,o,n,m,l=null,k=A.kL(0),j=A.eF(A.h5(l,B.cf,l,"https://makurostudio.my.id/images/contribution.png",l,l),200,l),i=this.a,h=i.c.a===B.bZ?0:20,g=t.p,f=A.bj(A.b([new A.ao(B.t,A.h5(l,B.cf,70,"https://makurostudio.my.id/images/form.png",l,l),l),A.eT(new A.ao(B.t,A.bh(A.b([new A.ao(B.t,A.ab("Form Pengajuan",l,l,l,l,A.b7(l,l,B.q,l,l,l,l,l,l,l,l,30,l,B.v,l,l,!0,l,l,l,l,l,l,l,l),l,l),l),new A.ao(B.t,A.ab("Isi form pengajuan untuk mengajukan request ataupun mengajukan bugs, pastikan data yang anda isi benar",l,l,l,l,A.b7(l,l,B.bf,l,l,l,l,l,l,l,l,12,l,B.v,l,l,!0,l,l,l,l,l,l,l,l),l,l),l)],g),B.H,B.m,B.o),l),1)],g),B.u,B.m,B.o),e=i.d
 e=e.gk(e).gO()
 s=$.asK()
 s=s.gk(s).gO()
@@ -79266,7 +79266,7 @@ break
 case 4:j=$.aH()
 h=A.ab("Success",null,null,null,null,null,null,null)
 f=t.p
-c=A.bh(A.b([A.h5(null,B.cf,200,"http://localhost:3000/images/jempol.png",null,null),A.ab("Halo "+A.d(J.x(c.gk(c).gO(),"name"))+",  Issue anda berhasil dikirimkan ",null,null,null,null,A.b7(null,null,B.q,null,null,null,null,null,null,null,null,20,null,B.v,null,null,!0,null,null,null,null,null,null,null,null),null,null),A.ab("Terimakasih atas kontribusinya",null,null,null,null,A.b7(null,null,B.q,null,null,null,null,null,null,null,null,20,null,B.v,null,null,!0,null,null,null,null,null,null,null,null),null,null)],f),B.u,B.m,B.a8)
+c=A.bh(A.b([A.h5(null,B.cf,200,"https://makurostudio.my.id/images/jempol.png",null,null),A.ab("Halo "+A.d(J.x(c.gk(c).gO(),"name"))+",  Issue anda berhasil dikirimkan ",null,null,null,null,A.b7(null,null,B.q,null,null,null,null,null,null,null,null,20,null,B.v,null,null,!0,null,null,null,null,null,null,null,null),null,null),A.ab("Terimakasih atas kontribusinya",null,null,null,null,A.b7(null,null,B.q,null,null,null,null,null,null,null,null,20,null,B.v,null,null,!0,null,null,null,null,null,null,null,null),null,null)],f),B.u,B.m,B.a8)
 s=7
 return A.u(A.ko(j,A.lc(A.b([A.ce(A.ab("OK",null,null,null,null,null,null,null),null,null,new A.a5N())],f),c,h),!0,a0),$async$$0)
 case 7:m.iL(0,B.mr)
@@ -79840,7 +79840,7 @@ s=$.c4()
 r=s.gfJ()
 q=s.w
 r=r.cU(0,q==null?A.aZ():q)
-r=A.kW(A.aR(B.P,A.h5(g,B.cf,g,"http://localhost:3000/images/logo.png",g,g),B.k,g,g,g,g,g,g,new A.au(20,20,20,20),g,g,r.a-460),!f)
+r=A.kW(A.aR(B.P,A.h5(g,B.cf,g,"https://makurostudio.my.id/images/logo.png",g,g),B.k,g,g,g,g,g,g,new A.au(20,20,20,20),g,g,r.a-460),!f)
 q=A.ah(102,0,188,212)
 if(f){f=s.gfJ()
 p=s.w
@@ -79849,7 +79849,7 @@ p=s.gfJ()
 s=s.w
 s=p.cU(0,s==null?A.aZ():s)
 p=A.kL(0)
-o=A.eF(A.h5(g,g,g,"http://localhost:3000/images/login.png",g,g),250,g)
+o=A.eF(A.h5(g,g,g,"https://makurostudio.my.id/images/login.png",g,g),250,g)
 n=A.lP(g,g,!1,g,A.ab("LOGIN",g,g,g,g,A.b7(g,g,A.ah(B.e.az(127.5),0,0,0),g,g,g,g,g,g,g,g,30,g,B.v,g,g,!0,g,g,g,g,g,g,g,g),g,g))
 m=this.a
 l=m.c
@@ -79886,7 +79886,7 @@ n=A.Y(["email",i.gk(i).gO(),"password",j.gk(j).gO()],o,o)
 if(n.gbf(n).v(0,"")){A.ef("Please fill all the fields")
 s=1
 break}s=3
-return A.u(A.avM(A.cm("http://localhost:3000/login",0,null),n,null),$async$$0)
+return A.u(A.avM(A.cm("https://makurostudio.my.id/login",0,null),n,null),$async$$0)
 case 3:m=b
 j=m.b
 s=j===200?4:6
@@ -79906,7 +79906,7 @@ o=A.ab("Login Successful",null,null,null,null,null,null,null)
 i=$.c4()
 l=i.gfJ()
 i=i.w
-i=A.h5(null,B.cf,l.cU(0,i==null?A.aZ():i).b*0.3,"http://localhost:3000/images/tos.png",null,null)
+i=A.h5(null,B.cf,l.cU(0,i==null?A.aZ():i).b*0.3,"https://makurostudio.my.id/images/tos.png",null,null)
 l=$.j3()
 k=t.p
 l=A.bh(A.b([i,A.ab("Welcome back, "+A.d(J.x(l.gk(l).gO(),"name")),null,null,null,null,A.b7(null,null,null,null,null,null,null,null,null,null,null,20,null,B.v,null,null,!0,null,null,null,null,null,null,null,null),null,null),A.ab("You are now logged in",null,null,null,null,A.b7(null,null,null,null,null,null,null,null,null,null,null,20,null,B.v,null,null,!0,null,null,null,null,null,null,null,null),null,null)],k),B.u,B.m,B.a8)

@@ -1,15 +1,12 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:get/get_connect.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:my_probus/config.dart';
 import 'package:my_probus/routes.dart';
 import 'package:my_probus/val.dart';
-import 'package:get/get.dart';
-import 'dart:io';
 
 class Conn {
   String get _host => Config.host;
