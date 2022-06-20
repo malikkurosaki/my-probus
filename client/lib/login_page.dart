@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:my_probus/config.dart';
 import 'package:my_probus/conn.dart';
 import 'package:my_probus/load.dart';
 import 'package:my_probus/routes.dart';
@@ -12,6 +13,8 @@ import 'package:my_probus/val.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -40,14 +43,30 @@ class LoginPage extends StatelessWidget {
             children: [
               Visibility(
                 visible: !sizingInformation.isMobile,
-                child: Container(
-                    width: Get.width - 460,
-                    padding: EdgeInsets.all(20),
-                    alignment: Alignment.center,
-                    child: CachedNetworkImage(
-                      imageUrl: Conn().host + "/images/logo.png",
-                      fit: BoxFit.cover,
-                    )),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: Get.width - 460,
+                      padding: EdgeInsets.all(20),
+                      alignment: Alignment.center,
+                      child: CachedNetworkImage(
+                        imageUrl: Conn().host + "/images/logo.png",
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    Center(
+                      child: MaterialButton(
+                        child: CachedNetworkImage(imageUrl: "${Conn().host}/images/android_download.png", width: 250,),
+                        onPressed: () async{
+                          final url = Uri.parse("${Conn().host}/my-probus-apk");
+                          if (!await launchUrl(url)) throw 'Could not launch $url}';
+                        }
+                      ),
+                    )
+                  ],
+                ),
               ),
               Container(
                 color: Colors.cyan.withOpacity(0.4),
@@ -183,9 +202,8 @@ class LoginPage extends StatelessWidget {
                                 ),
                                 barrierDismissible: false,
                               );
-                              
+
                               Routes.home().goOff();
-                              
                             } else {
                               EasyLoading.showError(
                                   res.statusCode == 401 ? "wrong email or password" : res.statusCode.toString());

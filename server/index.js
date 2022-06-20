@@ -49,7 +49,9 @@ app.use(express.static(path.join(__dirname, './../client/build/web')));
 // app.get('/', (req, res) => res.send('Hello World!'));
 app.use('/login', routeLogin);
 // app.use('/images', routeImage);
-
+app.use('/my-probus-apk', (req, res) => {
+    res.sendFile(path.join(__dirname, './assets/apk/app-arm64-v8a-release.apk'))
+})
 const cobaApi = express.Router();
 cobaApi.use("/dashboard", routeDashboard);
 app.use(cobaApi)

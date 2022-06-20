@@ -137,7 +137,9 @@ function local() {
       onSubmit: (_, answer) => {
         switch (answer) {
           case "run_client_web":
-            execSync(`cd ${_client} && flutter run -d chrome`, { stdio: "inherit" });
+            execSync(`cd ${_client} && flutter run -d chrome`, {
+              stdio: "inherit",
+            });
             break;
           case "run_client_android":
             execSync(`cd ${_client} && flutter run `, {
@@ -180,7 +182,6 @@ function chooiceBuild(value) {
   };
 }
 
-
 // build
 function build() {
   prompts(
@@ -207,38 +208,44 @@ function build() {
           console.log("build web github version");
         });
 
-        chooiceBuild("web production").isMe(answer, () => {
-          setMode("pro_web");
-          
-          execSync(
-            `cd ${_client} && flutter build web --base-href '/' --release`,
-            {
-              stdio: "inherit",
-            }
-          );
-          console.log("build web production done");
-          execSync(`git add . && git commit -m "ya" && git push`, {
-            stdio: "inherit",
-          });
-          console.log("git push done");
-          ssh.exec(`cd my-probus && git pull && pm2 restart all`, {
-            out: (data) => console.log(data),
-          }).start();
-        });
-
-        chooiceBuild("android").isMe(answer, () => {
-          
-          execSync(`cd ${_client} && flutter build apk --release --split-per-abi`, {
-            stdio: "inherit",
-          });
-          
-          execSync(
-            `cp ${path.join(__dirname, './../../client/build/app/outputs/apk/release/app-arm64-v8a-release.apk')} ${path.join(__dirname, './../../server/assets/apk/')}`,
-            { stdio: "inherit" }
-          );
-          console.log("build android");
-        });
+        chooiceBuild("web production").isMe(answer, buildWebProduction);
+        chooiceBuild("android").isMe(answer, buildApk);
       },
     }
   );
+}
+
+function buildWebProduction() {
+  setMode("pro_web");
+  buildApk();
+  console.log("build apk done");
+  execSync(`cd ${_client} && flutter build web --base-href '/' --release`, {
+    stdio: "inherit",
+  });
+  execSync(`git add . && git commit -m "ya" && git push`, {
+    stdio: "inherit",
+  });
+  console.log("git push done");
+  ssh
+    .exec(`cd my-probus && git pull && pm2 restart all`, {
+      out: (data) => console.log(data),
+    })
+    .start();
+  console.log("pm2 restart done");
+  setMode("dev_web");
+}
+
+function buildApk() {
+  execSync(`cd ${_client} && flutter build apk --release --split-per-abi`, {
+    stdio: "inherit",
+  });
+
+  execSync(
+    `cp ${path.join(
+      __dirname,
+      "./../../client/build/app/outputs/apk/release/app-arm64-v8a-release.apk"
+    )} ${path.join(__dirname, "./../../server/assets/apk/")}`,
+    { stdio: "inherit" }
+  );
+  console.log("build android");
 }
