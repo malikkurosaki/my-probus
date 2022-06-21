@@ -104,6 +104,7 @@ function setMode(modenya) {
       con = devWeb;
       break;
   }
+  
 
   let target = `
   class Config{
@@ -237,7 +238,7 @@ function buildWebProduction() {
   console.log("set mode to dev_web");
 
   console.log("build dan update server selesai");
-  
+
 }
 
 function buildApk() {
