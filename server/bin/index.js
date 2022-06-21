@@ -231,8 +231,10 @@ function buildWebProduction() {
       out: (data) => console.log(data),
     })
     .start();
-  console.log("pm2 restart done");
+
+  console.log("git pull && pm2 restart done");
   setMode("dev_web");
+  console.log("build dan update server selesai")
 }
 
 function buildApk() {
