@@ -237,6 +237,7 @@ function buildWebProduction() {
   console.log("set mode to dev_web");
 
   console.log("build dan update server selesai");
+  
 }
 
 function buildApk() {
