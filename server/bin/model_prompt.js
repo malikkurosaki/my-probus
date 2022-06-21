@@ -33,15 +33,19 @@ class ModelPrompt {
 }
 
 function PromptSelect(choices, onSubmit) {
-  prompts(
-    {
-      type: "select",
-      name: "name",
-      message: "select menu",
-      choices: choices,
-    },
-    { onSubmit }
-  );
+  try {
+    prompts(
+      {
+        type: "select",
+        name: "name",
+        message: "select menu",
+        choices: choices,
+      },
+      { onSubmit }
+    );
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 function Prom(title) {
