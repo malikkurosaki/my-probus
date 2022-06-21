@@ -222,7 +222,7 @@ function buildWebProduction() {
   execSync(`cd ${_client} && flutter build web --base-href '/' --release`);
   console.log("build web production done");
 
-  execSync(`git add . && git commit -m "ya" && git push`);
+  execSync(`git add . && git commit -m "ya" && git push`, {stdio: "inherit"});
   console.log("git push done");
 
   ssh.exec(`cd my-probus && git pull `).start();
