@@ -56,15 +56,22 @@ class LoginPage extends StatelessWidget {
                         fit: BoxFit.cover,
                       ),
                     ),
-                    Center(
-                      child: MaterialButton(
-                        child: CachedNetworkImage(imageUrl: "${Conn().host}/images/android_download.png", width: 250,),
-                        onPressed: () async{
-                          final url = Uri.parse("${Conn().host}/my-probus-apk");
-                          if (!await launchUrl(url)) throw 'Could not launch $url}';
-                        }
-                      ),
-                    )
+                    downloadApp(sizingInformation, !sizingInformation.isMobile)
+                    // Visibility(
+                    //   visible: !sizingInformation.isMobile,
+                    //   child: Container(
+                    //     padding: EdgeInsets.all(20),
+                    //     child: MaterialButton(
+                    //         child: CachedNetworkImage(
+                    //           imageUrl: "${Conn().host}/images/android_download.png",
+                    //           width: 250,
+                    //         ),
+                    //         onPressed: () async {
+                    //           final url = Uri.parse("${Conn().host}/my-probus-apk");
+                    //           if (!await launchUrl(url)) throw 'Could not launch $url}';
+                    //         }),
+                    //   ),
+                    // )
                   ],
                 ),
               ),
@@ -211,6 +218,22 @@ class LoginPage extends StatelessWidget {
                           },
                         ),
                       ),
+                      downloadApp(sizingInformation, sizingInformation.isMobile)
+                      // Visibility(
+                      //   visible: !sizingInformation.isMobile,
+                      //   child: Container(
+                      //     padding: EdgeInsets.all(20),
+                      //     child: MaterialButton(
+                      //         child: CachedNetworkImage(
+                      //           imageUrl: "${Conn().host}/images/android_download.png",
+                      //           width: 250,
+                      //         ),
+                      //         onPressed: () async {
+                      //           final url = Uri.parse("${Conn().host}/my-probus-apk");
+                      //           if (!await launchUrl(url)) throw 'Could not launch $url}';
+                      //         }),
+                      //   ),
+                      // )
                       // ListTile(
                       //   title: Text("Don't have an account?"),
                       //   subtitle: MaterialButton(
@@ -341,4 +364,20 @@ class LoginPage extends StatelessWidget {
   //         ),
   //       ),
   //     );
+
+  Widget downloadApp(SizingInformation sizingInformation, bool visible) => Visibility(
+        visible: visible,
+        child: Container(
+          padding: EdgeInsets.all(20),
+          child: MaterialButton(
+              child: CachedNetworkImage(
+                imageUrl: "${Conn().host}/images/android_download.png",
+                width: 250,
+              ),
+              onPressed: () async {
+                final url = Uri.parse("${Conn().host}/my-probus-apk");
+                if (!await launchUrl(url)) throw 'Could not launch $url}';
+              }),
+        ),
+      );
 }

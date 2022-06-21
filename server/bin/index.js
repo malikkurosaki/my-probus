@@ -218,23 +218,25 @@ function build() {
 function buildWebProduction() {
   setMode("pro_web");
   buildApk();
-  console.log("build apk done");
-  execSync(`cd ${_client} && flutter build web --base-href '/' --release`, {
-    stdio: "inherit",
-  });
-  execSync(`git add . && git commit -m "ya" && git push`, {
-    stdio: "inherit",
-  });
-  console.log("git push done");
-  ssh
-    .exec(`cd my-probus && git pull && pm2 restart all`, {
-      out: (data) => console.log(data),
-    })
-    .start();
 
-  console.log("git pull && pm2 restart done");
+  execSync(`cd ${_client} && flutter build web --base-href '/' --release`);
+  console.log("build web production done");
+
+  execSync(`git add . && git commit -m "ya" && git push`);
+  console.log("git push done");
+
+  ssh.exec(`cd my-probus && git pull `).start();
+  console.log("git pull from server  done");
+
+  ssh.exec(`pm2 restart all`).start();
+  console.log("pm2 restart all done");
+
+  ssh.exec(`pm2 status`).start();
+  
   setMode("dev_web");
-  console.log("build dan update server selesai")
+  console.log("set mode to dev_web");
+
+  console.log("build dan update server selesai");
 }
 
 function buildApk() {
@@ -249,5 +251,5 @@ function buildApk() {
     )} ${path.join(__dirname, "./../../server/assets/apk/")}`,
     { stdio: "inherit" }
   );
-  console.log("build android");
+  console.log("build android done");
 }
