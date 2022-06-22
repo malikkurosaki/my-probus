@@ -2,5 +2,5 @@
   "build_version": "1.0.0",
   "debug_web": "1.0.0",
   "debug_apk": "1.0.1",
-  "build_production": "1.0.6"
+  "build_production": "1.0.7"
 }
