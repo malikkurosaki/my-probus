@@ -31,7 +31,7 @@ function CliLocal() {
         runServerLocal.choice,
         runAndroidLocal.choice,
         gitPushLocal.choice,
-        gitClearLocal.choices,
+        gitClearLocal.choice,
       ],
     },
     {
