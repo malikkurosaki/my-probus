@@ -3,9 +3,9 @@ const path = require("path");
 
 /** @param {("dev_web" | "pro_web" | "dev_mobile" )} modenya */
 const CliSetMode = async (modenya) => {
-  let devWeb = "http://localhost:3000";
+  let devWeb = "http://localhost:3001";
   let proWeb = "https://probus.makurostudio.my.id";
-  let devMobile = "http://192.168.43.112:3000";
+  let devMobile = "http://192.168.43.112:3001";
   let con = "";
 
   let connFile = path.join(__dirname, "./../../client/lib/config.dart");

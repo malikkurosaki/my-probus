@@ -56,11 +56,13 @@ class HomeDashbord extends StatelessWidget {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      "Ada ${value.value.val.length} Item Butuh Penanganan Anda",
-                                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        "Ada ${value.value.val.length} Item Butuh Penanganan Anda",
+                                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+                                      ),
                                     ),
                                   ),
                                   MaterialButton(
@@ -81,7 +83,7 @@ class HomeDashbord extends StatelessWidget {
 
                                       if (Pref().isModerator) {
                                         Val.selectedStatus.value.val = Map<String, dynamic>.from(
-                                          {"name": "accepted", "id": "3"},
+                                          {"name": "accepted", "id": "2"},
                                         );
                                       }
 

@@ -52,6 +52,11 @@ app.use('/login', routeLogin);
 app.get('/my-probus-apk', (req, res) => {
     res.sendFile(path.join(__dirname, './assets/apk/app-arm64-v8a-release.apk'))
 })
+
+app.get('/build-debug', (req, res) => {
+    let debug = require(path.join(__dirname, './build.json'));
+    res.json(debug);
+})
 const cobaApi = express.Router();
 cobaApi.use("/dashboard", routeDashboard);
 app.use(cobaApi)
