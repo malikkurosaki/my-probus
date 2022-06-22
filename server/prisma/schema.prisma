@@ -192,3 +192,5 @@ model AuthToken {
   expiresAt DateTime @default(now())
   usersId   String
 }
+
+

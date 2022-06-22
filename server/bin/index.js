@@ -11,20 +11,6 @@ const { CliLocal } = require("./cli_local");
 const { CliChoose } = require("./cli_choose");
 const { CliBuild } = require("./cli_build");
 
-// /** @param {("local" | "server" | "build" | "mode")} title */
-// function choice(title) {
-//   return {
-//     choices: {
-//       title: title,
-//       value: title,
-//     },
-//     /** @param {void} onSubmit */
-//     isMe(answer, onSubmit) {
-//       if (answer === title) onSubmit();
-//     },
-//   };
-// }
-
 class Choice extends CliChoose {
   constructor(title) {
     super(title);
@@ -39,7 +25,7 @@ const mode = new Choice("mode");
 PromptSelect(
   [local.choice, server.choice, build.choice, mode.choice],
   (_, answer) => {
-    local.isMe(answer, CliLocal.select);
+    local.isMe(answer, CliLocal);
     server.isMe(answer, CliServer.select);
     build.isMe(answer, CliBuild);
     mode.isMe(answer, () => console.log("ini ada dimasna"));

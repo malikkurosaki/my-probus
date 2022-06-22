@@ -19,7 +19,7 @@ const runAndroidLocal = new choose("run android local");
 const gitPushLocal = new choose("git push local");
 const gitClearLocal = new choose("git clear local");
 
-function select() {
+function CliLocal() {
   prompts(
     {
       type: "select",
@@ -43,49 +43,7 @@ function select() {
       },
     }
   );
-  //   prompts(
-  //     {
-  //       type: "select",
-  //       name: "name",
-  //       message: "select menu",
-  //       choices: [
-  //         { title: "run client web", value: "run_client_web" },
-  //         { title: "run client android", value: "run_client_android" },
-  //         { title: "run server", value: "run_server" },
-  //         { title: "git push", value: "git_push" },
-  //         { title: "git clear", value: "git_clear" },
-  //       ],
-  //     },
-  //     {
-  //       onSubmit: (_, answer) => {
-  //         switch (answer) {
-  //           case "run_client_web":
-  //             execSync(`cd ${_client} && flutter run -d chrome`, {
-  //               stdio: "inherit",
-  //             });
-  //             break;
-  //           case "run_client_android":
-  //             execSync(`cd ${_client} && flutter run `, {
-  //               stdio: "inherit",
-  //             });
-  //             break;
-  //           case "run_server":
-  //             execSync(`cd ${_server} && nodemon .`, { stdio: "inherit" });
-  //             break;
-  //           case "git_push":
-  //             execSync(`git add . && git commit -m ya && git push origin main`, {
-  //               stdio: "inherit",
-  //             });
-  //             break;
-  //           case "git_clear":
-  //             execSync(`git rm -r --cached .`, { stdio: "inherit" });
-  //             break;
-  //           default:
-  //             console.log("tidak ada pilihan");
-  //         }
-  //       },
-  //     }
-  //   );
+
 }
 
 function runWeb() {
@@ -106,9 +64,5 @@ function gitClearl() {
   execSync(`git rm -r --cached .`, { stdio: "inherit" });
 }
 
-const CliLocal = {
-  //   choice: choice,
-  select: select,
-};
 
 module.exports = { CliLocal };
