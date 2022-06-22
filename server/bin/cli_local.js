@@ -1,5 +1,6 @@
 const path = require("path");
 const prompts = require("prompts");
+const { CliBuildDebug } = require("./cli_build_debug");
 const { CliChoose } = require("./cli_choose");
 const { PromptSelect } = require("./model_prompt");
 const execSync = require("child_process").execSync;
@@ -53,6 +54,7 @@ function runServer() {
   execSync(`cd ${_server} && nodemon .`, { stdio: "inherit" });
 }
 function runAndroid() {
+  CliBuildDebug("debug_apk");
   execSync(`cd ${_client} && flutter run `, { stdio: "inherit" });
 }
 function gitPush() {

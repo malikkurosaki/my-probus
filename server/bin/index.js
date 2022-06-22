@@ -31,25 +31,3 @@ PromptSelect(
     mode.isMe(answer, () => console.log("ini ada dimasna"));
   }
 );
-
-// prompts(
-//   {
-//     type: "select",
-//     name: "pilihan",
-//     message: "pilih menunya",
-//     choices: [
-//       choices1("local").choices,
-//       choices1("server").choices,
-//       choices1("build").choices,
-//       choices1("mode").choices,
-//     ],
-//   },
-//   {
-//     onSubmit: (_, answer) => {
-//       choices1("local").isMe(answer, local);
-//       choices1("server").isMe(answer, CliServer.select);
-//       choices1("build").isMe(answer, build);
-//       choices1("mode").isMe(answer, mode);
-//     },
-//   }
-// );
