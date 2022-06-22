@@ -2,7 +2,7 @@ const prompts = require("prompts");
 const { CliChoose } = require("./cli_choose");
 const { PromptSelect } = require("./model_prompt");
 const { execSync } = require("child_process");
-const { Myssh } = require("./cli_ssh");
+const {CliSsh } = require("./cli_ssh");
 
 // /** @param {("pull from server")} title */
 // function choose(title) {
@@ -56,7 +56,7 @@ function select() {
 }
 
 function Logs() {
-   Myssh("pm2 status");
+   CliSsh("pm2 status");
 //   CliSsh.exec(
 //     `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh && source ~/.bashrc && nvm list-remote && nvm install v18.4.0`,
 //     {

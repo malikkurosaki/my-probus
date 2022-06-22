@@ -6,11 +6,15 @@ const CliSsh = new Ssh({
   pass: "Makuro_123",
 });
 
-function Myssh(command) {
-  CliSsh.exec(`source .nvm/nvm.sh && ${command}`, {
-    out: (data) => console.log(data),
-    err: (err) => console.log(err),
-  }).start();
+function Clissh(command) {
+  try {
+    CliSsh.exec(`source .nvm/nvm.sh && ${command}`, {
+      out: (data) => console.log(data),
+      err: (err) => console.log(err),
+    }).start();
+  } catch (error) {
+    throw error;
+  }
 }
 
-module.exports = { Myssh };
+module.exports = { CliSsh };

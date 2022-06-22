@@ -9,6 +9,7 @@ const { CliServer } = require("./cli_server");
 const { PromptSelect } = require("./model_prompt");
 const { CliLocal } = require("./cli_local");
 const { CliChoose } = require("./cli_choose");
+const { CliBuild } = require("./cli_build");
 
 // /** @param {("local" | "server" | "build" | "mode")} title */
 // function choice(title) {
@@ -40,7 +41,7 @@ PromptSelect(
   (_, answer) => {
     local.isMe(answer, CliLocal.select);
     server.isMe(answer, CliServer.select);
-    build.isMe(answer, () => console.log("ini ada dimasna"));
+    build.isMe(answer, CliBuild);
     mode.isMe(answer, () => console.log("ini ada dimasna"));
   }
 );
