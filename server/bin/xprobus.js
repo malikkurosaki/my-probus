@@ -42,7 +42,7 @@ async function BuildRelease() {
     await new Promise((resolve, reject) => {
         try {
             SetMode("pro_web")
-            console.log("Mode berhasil diubah".yellow);
+            console.log("Mode berhasil diubah web production".yellow);
             resolve();
         } catch (error) {
             reject(error);
@@ -79,7 +79,7 @@ async function BuildRelease() {
 
     await new Promise((resolve, reject) => {
         try {
-            execSync(`cp ${path.join(__dirname, "../../client/build/app/outputs/apk/release/app-arm64-v8a-release.apk")} ${path.join(__dirname, './../../server/assets/apk/my_probus_apk')} `, {
+            execSync(`cp -rf ${path.join(__dirname, "../../client/build/app/outputs/apk/release/app-arm64-v8a-release.apk")} ${path.join(__dirname, './../../server/assets/apk/my_probus_apk')} `, {
                 stdio: "inherit"
             });
             console.log("Client apk berhasil di copy".yellow);
