@@ -122,9 +122,9 @@ async function BuildRelease() {
                     user: "makuro",
                     pass: pass
                 }).exec(`source ~/.nvm/nvm.sh && cd my-probus && git pull && pm2 restart all && pm2 save`, {
-                    out: (data) => console.log(`${data}`.blue)
+                    out: (data) => console.log(`${data}`)
                 }).start();
-
+                console.log("Server berhasil di restart".yellow);
                 resolve();
             })
 
