@@ -25,24 +25,17 @@ class Conn {
   String get _issue => '$_url/issue';
   String get _upload => '$_url/upload';
   String get _imageDeleteFile => '$_url/file/delete-file';
-  String get _imageDeleteDb => '$_url/file/delete-db';
   String get _discus => '$_url/discus';
   String get _dashboard => '$_url/dashboard';
   String get _issueHistory => '$_url/issue-history';
   String get _statusApproved => '$_url/status-approved';
   String get _statusAccepted => '$_url/status-accepted';
   String get _statusOpen => '$_url/status-open';
-  // get _issuePatchStatus => '$_url/issue/patch-status';
   String get _issueStatus => '$_url/issue-status';
   Map<String, String> get _header => {"authorization": "Bearer ${Val.token.value.val}"};
-  String get _errorServer => "error_server_500";
-  String get _server201Ok => "server_ok_201";
   String get _login => '$_host/login';
 
   static bool kembali = true;
-  
-  
-  
   
   Future<http.Response> cek(http.Response res) async {
     if (res.statusCode == 401 || res.statusCode == 403) {

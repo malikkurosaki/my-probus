@@ -1,7 +1,6 @@
 class ModelStatus {
   late String id;
   late String name;
-  
 
   ModelStatus.open() {
     id = "1";

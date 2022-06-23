@@ -56,7 +56,54 @@ class LoginPage extends StatelessWidget {
                         fit: BoxFit.cover,
                       ),
                     ),
-                    downloadApp(sizingInformation, !sizingInformation.isMobile)
+                    SizedBox(
+                      height: 70,
+                    
+                    ),
+                    downloadApp(sizingInformation, !sizingInformation.isMobile),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: MaterialButton(
+                        onPressed: () {
+                          showBottomSheet(
+                            enableDrag: true,
+                            
+                            context: context,
+                            builder: (context) => 
+                            Material(
+                              color: Colors.grey.shade600,
+                              child: Column(
+                                children: [
+                                  Container(
+                                    color: Colors.white,
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      children: [
+                                        BackButton(),
+                                        Text("Petunjuk Penggunaan", style: TextStyle(fontSize: 20)),
+                                      ],
+                                    ),
+                                  ),
+                                  Flexible(
+                                    child: SingleChildScrollView(
+                                      controller: ScrollController(),
+                                      child: CachedNetworkImage(imageUrl: Conn().host + "/images/petunjuk.png"),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                        child: Text("Petunjuk Penggunaan",
+                          style: TextStyle(
+                            color: Colors.cyan,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                    )
                     // Visibility(
                     //   visible: !sizingInformation.isMobile,
                     //   child: Container(
@@ -218,7 +265,8 @@ class LoginPage extends StatelessWidget {
                           },
                         ),
                       ),
-                      downloadApp(sizingInformation, sizingInformation.isMobile)
+                      downloadApp(sizingInformation, sizingInformation.isMobile),
+
                       // Visibility(
                       //   visible: !sizingInformation.isMobile,
                       //   child: Container(
@@ -252,6 +300,7 @@ class LoginPage extends StatelessWidget {
                       //     onPressed: () => Routes.register().go(),
                       //   ),
                       // )
+                      // FutureBuilder(builder: (context, snapshot) => ,)
                     ],
                   ),
                 ),

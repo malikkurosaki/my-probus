@@ -1,0 +1,9 @@
+[
+    "generate",
+    "run client debug",
+    "run server debug",
+    "server command",
+    "client command",
+    "build release",
+    "git push"
+]
