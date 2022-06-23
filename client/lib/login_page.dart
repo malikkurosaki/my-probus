@@ -57,53 +57,10 @@ class LoginPage extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                      height: 70,
-                    
+                      height: 0,
                     ),
-                    downloadApp(sizingInformation, !sizingInformation.isMobile),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: MaterialButton(
-                        onPressed: () {
-                          showBottomSheet(
-                            enableDrag: true,
-                            
-                            context: context,
-                            builder: (context) => 
-                            Material(
-                              color: Colors.grey.shade600,
-                              child: Column(
-                                children: [
-                                  Container(
-                                    color: Colors.white,
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      children: [
-                                        BackButton(),
-                                        Text("Petunjuk Penggunaan", style: TextStyle(fontSize: 20)),
-                                      ],
-                                    ),
-                                  ),
-                                  Flexible(
-                                    child: SingleChildScrollView(
-                                      controller: ScrollController(),
-                                      child: CachedNetworkImage(imageUrl: Conn().host + "/images/petunjuk.png"),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                        child: Text("Petunjuk Penggunaan",
-                          style: TextStyle(
-                            color: Colors.cyan,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          ),
-                        ),
-                      ),
-                    )
+                    footer(context, sizingInformation, !sizingInformation.isMobile)
+
                     // Visibility(
                     //   visible: !sizingInformation.isMobile,
                     //   child: Container(
@@ -189,7 +146,7 @@ class LoginPage extends StatelessWidget {
                         ),
                       ),
                       SizedBox(
-                        height: 70,
+                        height: 20,
                       ),
                       ListTile(
                         subtitle: MaterialButton(
@@ -265,8 +222,7 @@ class LoginPage extends StatelessWidget {
                           },
                         ),
                       ),
-                      downloadApp(sizingInformation, sizingInformation.isMobile),
-
+                      footer(context, sizingInformation, sizingInformation.isMobile)
                       // Visibility(
                       //   visible: !sizingInformation.isMobile,
                       //   child: Container(
@@ -311,6 +267,62 @@ class LoginPage extends StatelessWidget {
       ),
     );
   }
+
+  Widget footer(BuildContext context, SizingInformation sizingInformation, bool visible) => Visibility(
+        visible: visible,
+        child: Column(
+          children: [
+            SizedBox(
+              height: 70,
+            ),
+            downloadApp(sizingInformation),
+            penjelasan(context),
+          ],
+        ),
+      );
+
+  Widget penjelasan(BuildContext context) => Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: MaterialButton(
+          onPressed: () {
+            showBottomSheet(
+              enableDrag: true,
+              context: context,
+              builder: (context) => Material(
+                color: Colors.grey.shade600,
+                child: Column(
+                  children: [
+                    Container(
+                      color: Colors.white,
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          BackButton(),
+                          Text("Petunjuk Penggunaan", style: TextStyle(fontSize: 20)),
+                        ],
+                      ),
+                    ),
+                    Flexible(
+                      child: SingleChildScrollView(
+                        controller: ScrollController(),
+                        child: CachedNetworkImage(imageUrl: Conn().host + "/images/petunjuk.png"),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+          child: Text(
+            "Petunjuk Penggunaan",
+            style: TextStyle(
+              color: Colors.cyan,
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
+        ),
+      );
 
   // Widget loginMobile(SizingInformation sizingInformation) => SingleChildScrollView(
   //       controller: ScrollController(),
@@ -414,19 +426,16 @@ class LoginPage extends StatelessWidget {
   //       ),
   //     );
 
-  Widget downloadApp(SizingInformation sizingInformation, bool visible) => Visibility(
-        visible: visible,
-        child: Container(
-          padding: EdgeInsets.all(20),
-          child: MaterialButton(
-              child: CachedNetworkImage(
-                imageUrl: "${Conn().host}/images/android_download.png",
-                width: 250,
-              ),
-              onPressed: () async {
-                final url = Uri.parse("${Conn().host}/my-probus-apk");
-                if (!await launchUrl(url)) throw 'Could not launch $url}';
-              }),
+  Widget downloadApp(SizingInformation sizingInformation) => Container(
+    padding: EdgeInsets.all(20),
+    child: MaterialButton(
+        child: CachedNetworkImage(
+          imageUrl: "${Conn().host}/images/android_download.png",
+          width: 150,
         ),
-      );
+        onPressed: () async {
+          final url = Uri.parse("${Conn().host}/my-probus-apk");
+          if (!await launchUrl(url)) throw 'Could not launch $url}';
+        }),
+  );
 }

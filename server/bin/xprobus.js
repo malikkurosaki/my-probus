@@ -53,7 +53,7 @@ function BuildRelease() {
             host: "makurostudio.my.id",
             user: "makuro",
             pass: pass
-        }).exec(`source ~/.nvm/nvm.sh && cd my-probus && git pull && pm2 restart all`, {
+        }).exec(`source ~/.nvm/nvm.sh && cd my-probus && git pull && pm2 restart all && pm2 save`, {
             out: (data) => console.log(data)
         }).start();
 
