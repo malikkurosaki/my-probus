@@ -9,6 +9,7 @@ const {
     SetMode
 } = require("./set_mode");
 const SSH = require("simple-ssh");
+const colors = require("colors");
 
 // function BashSync(cmd, cwd) {
 //     return new Promise((resolve, reject) => {
@@ -41,7 +42,7 @@ async function BuildRelease() {
     await new Promise((resolve, reject) => {
         try {
             SetMode("pro_web")
-            console.log("Mode berhasil diubah");
+            console.log("Mode berhasil diubah".yellow);
             resolve();
         } catch (error) {
             reject(error);
@@ -54,7 +55,7 @@ async function BuildRelease() {
                 stdio: "inherit",
                 cwd: path.join(__dirname, "../../client"),
             }, );
-            console.log("Client web berhasil dibuild");
+            console.log("Client web berhasil dibuild".yellow);
             resolve();
         } catch (error) {
             reject(error);
@@ -66,7 +67,7 @@ async function BuildRelease() {
             execSync(`cd ${path.join(__dirname, "../../client")} && flutter build apk --release --split-per-abi`, {
                 stdio: "inherit"
             });
-            console.log("Client apk berhasil dibuild");
+            console.log("Client apk berhasil dibuild".yellow);
             resolve()
         } catch (error) {
             reject()
@@ -81,7 +82,7 @@ async function BuildRelease() {
             execSync(`cp ${path.join(__dirname, "../../client/build/app/outputs/apk/release/app-arm64-v8a-release.apk")} ${path.join(__dirname, './../../server/assets/apk/my_probus_apk')} `, {
                 stdio: "inherit"
             });
-            console.log("Client apk berhasil di copy");
+            console.log("Client apk berhasil di copy".yellow);
             resolve()
         } catch (error) {
             reject()
@@ -94,9 +95,10 @@ async function BuildRelease() {
     await new Promise((resolve, reject) => {
         try {
             execSync(`git add . && git commit -m "ya" && git push`, {
-                stdio: "inherit"
+                stdio: "inherit",
+                cwd: path.join(__dirname, "../../")
             });
-            console.log("Git push Success");
+            console.log("Git push Success".yellow);
             resolve()
         } catch (error) {
             reject()
@@ -120,13 +122,17 @@ async function BuildRelease() {
                     user: "makuro",
                     pass: pass
                 }).exec(`source ~/.nvm/nvm.sh && cd my-probus && git pull && pm2 restart all && pm2 save`, {
-                    out: (data) => console.log(data)
-                }).start();
+                    out: (data) => console.log(`${data}`.blue)
+                }).start().on("close", () => {
+                    console.log("Server berhasil diupdate".yellow);
+                    resolve();
+                }).on("error", (err) => {
+                    console.log(err);
+                    reject();
+                })
 
-                console.log("Restart Server Success");
             })
-            console.log("Restart Server Success");
-            resolve();
+
         } catch (error) {
             reject(error);
         }
