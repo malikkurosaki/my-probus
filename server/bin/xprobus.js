@@ -136,6 +136,16 @@ async function BuildRelease() {
 
     // SetMode("dev_web")
 
+    await new Promise((resolve, reject) => {
+        try {
+            SetMode("dev_web")
+            console.log("Mode berhasil diubah web development".yellow);
+            resolve();
+        } catch (error) {
+            reject(error);
+        }
+    })
+
     console.log("build release success")
 }
 
