@@ -123,14 +123,9 @@ async function BuildRelease() {
                     pass: pass
                 }).exec(`source ~/.nvm/nvm.sh && cd my-probus && git pull && pm2 restart all && pm2 save`, {
                     out: (data) => console.log(`${data}`.blue)
-                }).start().on("close", () => {
-                    console.log("Server berhasil diupdate".yellow);
-                    resolve();
-                }).on("error", (err) => {
-                    console.log(err);
-                    reject();
-                })
-
+                }).start();
+                
+                resolve();
             })
 
         } catch (error) {
