@@ -25,19 +25,23 @@ ModelGenerator({
 
 function BuildRelease() {
 
-    SetMode("pro_web")
+    SetMode("dev_web")
     execSync(`cd ${path.join(__dirname, "../../client")} && flutter build web --release`, {
         stdio: "inherit"
     });
+    console.log("Build Release web Success");
     execSync(`cd ${path.join(__dirname, "../../client")} && flutter build apk --release --split-per-abi`, {
         stdio: "inherit"
     });
+    console.log("Build Release apk Success");
     execSync(`cp ${path.join(__dirname, "../../client/build/app/outputs/apk/release/app-arm64-v8a-release.apk")} ${path.join(__dirname, './../../server/assets/apk/my_probus_apk')} `, {
         stdio: "inherit"
     });
+    console.log("Copy apk Success");
     execSync(`git add . && git commit -m "ya" && git push`, {
         stdio: "inherit"
     });
+    console.log("Git Push Success");
     prompts({
         type: "text",
         name: "pass",
@@ -52,7 +56,10 @@ function BuildRelease() {
         }).exec(`source ~/.nvm/nvm.sh && cd my-probus && git pull && pm2 restart all`, {
             out: (data) => console.log(data)
         }).start();
+
+        console.log("Restart Server Success");
     })
+
 
     // SetMode("dev_web")
 
