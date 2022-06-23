@@ -113,7 +113,7 @@ async function BuildRelease() {
             prompts({
                 type: "password",
                 name: "pass",
-                message: "masukkan passwordnya"
+                message: "masukkan passwordnya".blue
             }).then(({
                 pass
             }) => {
@@ -124,7 +124,7 @@ async function BuildRelease() {
                 }).exec(`source ~/.nvm/nvm.sh && cd my-probus && git pull && pm2 restart all && pm2 save`, {
                     out: (data) => console.log(`${data}`.blue)
                 }).start();
-                
+
                 resolve();
             })
 
