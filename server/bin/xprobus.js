@@ -25,7 +25,7 @@ ModelGenerator({
 
 function BuildRelease() {
 
-    SetMode("dev_web")
+    SetMode("pro_web")
     execSync(`cd ${path.join(__dirname, "../../client")} && flutter build web --release`, {
         stdio: "inherit"
     });
@@ -43,7 +43,7 @@ function BuildRelease() {
     });
     console.log("Git Push Success");
     prompts({
-        type: "text",
+        type: "password",
         name: "pass",
         message: "masukkan passwordnya"
     }).then(({
