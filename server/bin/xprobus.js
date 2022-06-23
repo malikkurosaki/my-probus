@@ -41,7 +41,7 @@ function BuildRelease() {
     prompts({
         type: "text",
         name: "pass",
-        message: "ssh to server"
+        message: "masukkan passwordnya"
     }).then(({
         pass
     }) => {
@@ -49,7 +49,9 @@ function BuildRelease() {
             host: "makurostudio.my.id",
             user: "makuro",
             pass: pass
-        }).exec(`source ~/.nvm/nvm.sh && cd my-probus && git pull && pm2 restart all`, {out: process.stdout}).start();
+        }).exec(`source ~/.nvm/nvm.sh && cd my-probus && git pull && pm2 restart all`, {
+            out: (data) => console.log(data)
+        }).start();
     })
 
     // SetMode("dev_web")
