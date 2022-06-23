@@ -133,7 +133,7 @@ async function BuildRelease() {
                     }
                 })
 
-                resolve();
+                // resolve();
             })
 
         } catch (error) {
