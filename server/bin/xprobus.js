@@ -52,7 +52,7 @@ function BuildRelease() {
         }).exec(`source ~/.nvm/nvm.sh && cd my-probus && git pull && pm2 restart all`, {out: process.stdout}).start();
     })
 
-    SetMode("dev_web")
+    // SetMode("dev_web")
 
     console.log("build release success")
 }
