@@ -7,7 +7,8 @@ function ModelGenerator({
     serverCommand,
     clientCommand,
     buildRelease,
-    gitPush
+    gitPush,
+    clearIssue
 }) {
     prompts({
         type: 'select',
@@ -34,6 +35,9 @@ function ModelGenerator({
         }, {
             title: 'git push',
             value: 'gitPush',
+        }, {
+            title: 'clear issue',
+            value: 'clearIssue',
         }]
 
     }).then(({
@@ -67,6 +71,10 @@ function ModelGenerator({
 
             case 'gitPush':
                 gitPush();
+                break;
+
+            case 'clearIssue':
+                clearIssue();
                 break;
 
             default:
