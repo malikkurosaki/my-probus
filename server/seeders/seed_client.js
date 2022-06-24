@@ -1,52 +1,8 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
+const path = require('path')
 
-const clients = [
-  "7seas cottages",
-  "abia villa",
-  "arma",
-  "balitaman lovina 1",
-  "bebek bts",
-  "belair",
-  "kampoeng villa",
-  "ko ko mo gili",
-  "kurakura resort",
-  "mahagiri sanur",
-  "mantadive air",
-  "natya hotel",
-  "nau villa",
-  "pesona resort",
-  "pink coco logo bali",
-  "restu bali hotel",
-  "the beach house resort",
-  "the visala hotel",
-  "ubud hotel malang",
-  "ubud padi villas",
-  "villa unggul gili",
-  "alchemist",
-  "black canyon coffee",
-  "lajoya",
-  "coco",
-  "tropical group",
-  "gotix cake",
-  "black penny",
-  "cp lounge logo",
-  "malias",
-  "logo purimas",
-  "mina pelasa putih",
-  "mina tanjung hotel fix 1024x663",
-  "white key",
-  "suka presto",
-  "yakama",
-  "relax",
-  "alam sari",
-  "medewi",
-  "aleva",
-  "danoya",
-  "gili eco villas",
-  "prada group",
-  "sendok",
-];
+const clients = require(path.join(__dirname, './master_client.json'))
 
 const SeedClient = async () => {
   var id = 1;

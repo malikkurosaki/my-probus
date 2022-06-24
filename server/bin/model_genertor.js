@@ -8,7 +8,13 @@ function ModelGenerator({
     clientCommand,
     buildRelease,
     gitPush,
-    clearIssue
+    clearIssue,
+    modeDev,
+    modePro,
+    modeMobile,
+    nodejsInstallPackage,
+    exportUser,
+    seedClient
 }) {
     prompts({
         type: 'select',
@@ -38,6 +44,24 @@ function ModelGenerator({
         }, {
             title: 'clear issue',
             value: 'clearIssue',
+        }, {
+            title: 'mode dev',
+            value: 'modeDev',
+        }, {
+            title: 'mode pro',
+            value: 'modePro',
+        }, {
+            title: 'mode mobile',
+            value: 'modeMobile',
+        }, {
+            title: 'nodejs install package',
+            value: 'nodejsInstallPackage',
+        }, {
+            title: 'export user',
+            value: 'exportUser',
+        }, {
+            title: 'seed client',
+            value: 'seedClient',
         }]
 
     }).then(({
@@ -75,6 +99,30 @@ function ModelGenerator({
 
             case 'clearIssue':
                 clearIssue();
+                break;
+
+            case 'modeDev':
+                modeDev();
+                break;
+
+            case 'modePro':
+                modePro();
+                break;
+
+            case 'modeMobile':
+                modeMobile();
+                break;
+
+            case 'nodejsInstallPackage':
+                nodejsInstallPackage();
+                break;
+
+            case 'exportUser':
+                exportUser();
+                break;
+
+            case 'seedClient':
+                seedClient();
                 break;
 
             default:

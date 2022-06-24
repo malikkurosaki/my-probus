@@ -123,16 +123,19 @@ class HomeRequestForm extends StatelessWidget {
                       },
                       item: Val.issueTypes.value.val,
                     ),
-                    Select(
-                      subtitle: 'Pilih client yang akan anda ajukan',
-                      value: _client.value.val,
-                      title: 'Select Client',
-                      onSelect: (value) {
-                        _client.value.val = value;
-                        _client.refresh();
-                      },
-                      item: Val.clients.value.val,
+                    SelectCllient(
+                      client: _client,
                     ),
+                    // Select(
+                    //   subtitle: 'Pilih client yang akan anda ajukan',
+                    //   value: _client.value.val,
+                    //   title: 'Select Client',
+                    //   onSelect: (value) {
+                    //     _client.value.val = value;
+                    //     _client.refresh();
+                    //   },
+                    //   item: Val.clients.value.val,
+                    // ),
                     Select(
                       subtitle: 'Pilih product yang akan anda ajukan',
                       value: _product.value.val,

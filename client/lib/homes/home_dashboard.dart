@@ -61,7 +61,8 @@ class HomeDashbord extends StatelessWidget {
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
                                         "Ada ${value.value.val.length} Item Butuh Penanganan Anda",
-                                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+                                        style:
+                                            TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
                                       ),
                                     ),
                                   ),

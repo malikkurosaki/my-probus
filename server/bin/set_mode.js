@@ -1,5 +1,7 @@
 const fs = require("fs");
 const path = require("path");
+const colors = require("colors");
+const execSync = require("child_process").execSync;
 
 /** @param {("dev_web" | "pro_web" | "dev_mobile" )} modenya */
 const SetMode = async (modenya) => {
@@ -34,7 +36,12 @@ const SetMode = async (modenya) => {
         encoding: "utf-8"
     });
 
-    console.log("mode set to " + modenya);
+    execSync(`dart format config.dart`, {
+        stdio: "inherit",
+        cwd: path.join(__dirname, "../../client/lib"),
+    });
+
+    console.log(`mode set to  ${modenya}`.yellow);
 };
 
 module.exports = {

@@ -10,7 +10,7 @@ const _ = require('lodash');
 
 function Generator() {
     /** @type {[]} */
-    const model = require(path.join(__dirname, './model.json'))
+    const model = require(path.join(__dirname, './pkg.json')).project
 
     const items = model.map(item => {
         return `{

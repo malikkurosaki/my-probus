@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:my_probus/components/petunjuk_penggunaan.dart';
 import 'package:my_probus/conn.dart';
 import 'package:my_probus/routes.dart';
 import 'package:my_probus/val.dart';
@@ -155,6 +156,7 @@ class HomeNav extends StatelessWidget {
                   );
                 },
               ),
+              PetunjukPenggunaan()
             ],
           ),
         ),

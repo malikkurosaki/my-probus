@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-
-const {PrismaClient}  = require("@prisma/client")
+const {
+    PrismaClient
+} = require("@prisma/client")
 const prisma = new PrismaClient();
-
 const execSync = require("child_process").execSync;
 const path = require("path");
 const prompts = require("prompts");
@@ -13,23 +13,7 @@ const {
 } = require("./set_mode");
 const SSH = require("simple-ssh");
 const colors = require("colors");
-
-// function BashSync(cmd, cwd) {
-//     return new Promise((resolve, reject) => {
-//         try {
-//             execSync(`flutter build web --release`, {
-//                 stdio: "inherit",
-//                 cwd: path.join(__dirname, "../../client"),
-//             }, );
-//             resolve();
-//         } catch (error) {
-//             reject(error);
-//         }
-//     })
-// }
-
-
-// Generator()
+const { SeedClient } = require("../seeders/seed_client");
 
 ModelGenerator({
     generate: Generator,
@@ -38,37 +22,58 @@ ModelGenerator({
     serverCommand: ServerCommand,
     clientCommand: ClientCommand,
     buildRelease: BuildRelease,
-    clearIssue: clearIssue
+    clearIssue: clearIssue,
+    modeDev: modeDev,
+    modePro: modePro,
+    modeMobile: modeMobile,
+    nodejsInstallPackage: nodejsInstallPackage,
+    exportUser: exportUser,
+    seedClient: seedClient
 })
 
+async function seedClient(){
+    await SeedClient();
+    
+}
 
-async function clearIssue(){
-    // prompts({
-    //     type: "password",
-    //     name: "pass",
-    //     message: "masukkan passwordnya".blue
-    // }).then(async ({
-    //     pass
-    // }) => {
-    //     await new Promise((resolve, reject) => {
-    //         try {
-    //             new SSH({
-    //                 host: "makurostudio.my.id",
-    //                 user: "makuro",
-    //                 pass: pass
-    //             }).exec(`source ~/.nvm/nvm.sh && cd my-probus && git pull && pm2 restart all && pm2 save`, {
-    //                 out: (data) => console.log(`${data}`)
-    //             }).start();
-    //             console.log("Server berhasil di restart".yellow);
-    //             resolve()
-    //         } catch (error) {
-    //             reject(error);
-    //         }
-    //     })
 
-    //     // resolve();
-    // })
+async function exportUser(){
+    const json2csv = require('json2csv').parse;
+    const fs = require('fs');
+    const user = await prisma.users.findMany();
+    const csv = json2csv(user);
 
+    fs.writeFileSync(path.join(__dirname, './../exports/user.csv'), csv);
+    console.log("export success")
+}
+
+function nodejsInstallPackage(){
+    /** @type {[]} */
+    const nodePkg = require(path.join(__dirname, './pkg.json')).nodeJs;
+
+    execSync(`npm install ${nodePkg.join(' ')}`, {
+        stdio: "inherit",
+        cwd: path.join(__dirname, "../../server")
+    });
+
+    console.log("nodejs install success")
+}
+
+
+function modeDev(){
+    SetMode("dev_web")
+}
+
+function modePro(){
+    SetMode("pro_web")
+}
+
+function modeMobile(){
+    SetMode("dev_mobile")
+}
+
+
+async function clearIssue() {
 
     const hapus = await prisma.issues.deleteMany({
         where: {
@@ -123,7 +128,7 @@ async function BuildRelease() {
 
     await new Promise((resolve, reject) => {
         try {
-            execSync(`cp -rf ${path.join(__dirname, "../../client/build/app/outputs/apk/release/app-arm64-v8a-release.apk")} ${path.join(__dirname, './../../server/assets/apk/my_probus_apk')} `, {
+            execSync(`mv ${path.join(__dirname, "../../client/build/app/outputs/apk/release/app-arm64-v8a-release.apk")} ${path.join(__dirname, './../../server/assets/apk/my_probus_apk')} `, {
                 stdio: "inherit"
             });
             console.log("Client apk berhasil di copy".yellow);
@@ -167,7 +172,7 @@ async function BuildRelease() {
                             host: "makurostudio.my.id",
                             user: "makuro",
                             pass: pass
-                        }).exec(`source ~/.nvm/nvm.sh && cd my-probus && git pull && pm2 restart all && pm2 save`, {
+                        }).exec(`source ~/.nvm/nvm.sh && cd my-probus && git pull && cd server && npm install && pm2 restart all && pm2 save`, {
                             out: (data) => console.log(`${data}`)
                         }).start();
                         console.log("Server berhasil di restart".yellow);
