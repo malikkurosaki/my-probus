@@ -80,7 +80,7 @@ class SelectCllient extends StatelessWidget {
       },
       leading: Icon(
         Icons.check_box,
-        color: client.value.val['name'] == null ? Colors.grey: Colors.green,
+        color: client.value.val['name'] == null ? Colors.grey : Colors.green,
       ),
       title: Text(
         "Select Client",
@@ -94,17 +94,17 @@ class SelectCllient extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text("pilih customer "),
-          Visibility(
-            visible: client.value.val.isNotEmpty,
-            child: Text(
-              (client.value.val['name'] ?? "").toString().toUpperCase(),
-              style: TextStyle(
-                color: Colors.blue.shade600,
-                fontWeight: FontWeight.bold,
-                fontSize: 24,
-              ),
-            ),
-          )
+          Obx(() => Visibility(
+                visible: client.value.val.isNotEmpty,
+                child: Text(
+                  (client.value.val['name'] ?? "").toString().toUpperCase(),
+                  style: TextStyle(
+                    color: Colors.blue.shade600,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24,
+                  ),
+                ),
+              ))
         ],
       ),
     );
