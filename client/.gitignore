@@ -49,8 +49,14 @@ app.*.map.json
 /android/app/release
 
 
-!build/
+# !build/
 build/*
 !build/web/
-build/app/outputs/apk/release/*
-!build/app/outputs/apk/release/*.apk
+!build/app/
+build/app/*
+!build/app/outputs/
+build/app/outputs/*
+!build/app/outputs/apk/
+build/app/outputs/apk/*
+!build/app/outputs/apk/release/
+

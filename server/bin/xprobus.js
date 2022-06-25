@@ -36,7 +36,6 @@ async function seedClient(){
     
 }
 
-
 async function exportUser(){
     const json2csv = require('json2csv').parse;
     const fs = require('fs');
@@ -126,17 +125,17 @@ async function BuildRelease() {
     // await BashSync('flutter build apk --release --split-per-abi', path.join(__dirname, "../../client"));
     // console.log("Build Release apk Success");
 
-    await new Promise((resolve, reject) => {
-        try {
-            execSync(`mv ${path.join(__dirname, "../../client/build/app/outputs/apk/release/app-arm64-v8a-release.apk")} ${path.join(__dirname, './../../server/assets/apk/my_probus_apk')} `, {
-                stdio: "inherit"
-            });
-            console.log("Client apk berhasil di copy".yellow);
-            resolve()
-        } catch (error) {
-            reject()
-        }
-    })
+    // await new Promise((resolve, reject) => {
+    //     try {
+    //         execSync(`mv ${path.join(__dirname, "../../client/build/app/outputs/apk/release/app-arm64-v8a-release.apk")} ${path.join(__dirname, './../../server/assets/apk/my_probus_apk')} `, {
+    //             stdio: "inherit"
+    //         });
+    //         console.log("Client apk berhasil di copy".yellow);
+    //         resolve()
+    //     } catch (error) {
+    //         reject()
+    //     }
+    // })
 
     // await BashSync(`cp ${path.join(__dirname, "../../client/build/app/outputs/apk/release/app-arm64-v8a-release.apk")} ${path.join(__dirname, './../../server/assets/apk/my_probus_apk')} `, path.join(__dirname, "../../"));
     // console.log("Copy apk Success");
@@ -190,9 +189,6 @@ async function BuildRelease() {
         }
     })
 
-
-    
-
     await new Promise((resolve, reject) => {
         try {
             SetMode("dev_web")
@@ -233,8 +229,6 @@ function ClientCommand() {
         });
     })
 }
-
-
 
 function RunClientDebug() {
     execSync(`cd ${path.join(__dirname, "../../client")} && flutter run -d chrome`, {

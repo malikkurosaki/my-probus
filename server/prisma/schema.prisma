@@ -11,16 +11,16 @@ datasource db {
 }
 
 model Users {
-  id         String       @id @default(uuid())
-  name       String
-  email      String
-  password   String
-  Profiles   Profiles?
-  Issues     Issues[]
-  Discussion Discussion[]
-  Images     Images[]
-  Role       Roles?       @relation(fields: [rolesId], references: [id])
-  rolesId    String?
+  id           String           @id @default(uuid())
+  name         String
+  email        String
+  password     String
+  Profiles     Profiles?
+  Issues       Issues[]
+  Discussion   Discussion[]
+  Images       Images[]
+  Role         Roles?           @relation(fields: [rolesId], references: [id])
+  rolesId      String?
   AuthToken    AuthToken[]
   IssueHistory IssueHistories[]
 }
@@ -87,6 +87,7 @@ model Issues {
   Discussion        Discussion[]
   Images            Images[]
   IssueHistory      IssueHistories[]
+  submitDate        DateTime?
 }
 
 model IssueHistories {
@@ -133,7 +134,7 @@ model IssueTypes {
 }
 
 model IssueStatuses {
-  id           String         @id @default(uuid())
+  id           String           @id @default(uuid())
   name         String
   Issues       Issues[]
   IssueHistory IssueHistories[]
@@ -192,5 +193,3 @@ model AuthToken {
   expiresAt DateTime @default(now())
   usersId   String
 }
-
-

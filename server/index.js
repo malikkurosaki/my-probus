@@ -50,7 +50,7 @@ app.use(express.static(path.join(__dirname, './../client/build/web')));
 app.use('/login', routeLogin);
 // app.use('/images', routeImage);
 app.get('/my-probus-apk', (req, res) => {
-    res.sendFile(path.join(__dirname, './assets/apk/app-arm64-v8a-release.apk'))
+    res.sendFile(path.join(__dirname, './../client/build/app/outputs/apk/release/app-arm64-v8a-release.apk'))
 })
 
 app.get('/build-debug', (req, res) => {
