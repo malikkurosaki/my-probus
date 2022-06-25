@@ -15,6 +15,7 @@
         "export user",
         "seed client",
         "prisma migrate",
+        "prisma generate",
         "seeders"
     ],
     "flutter": [

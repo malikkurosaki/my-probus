@@ -54,6 +54,9 @@ function ModelGenerator() {
             title: 'prisma migrate',
             value: 'prismaMigrate',
         }, {
+            title: 'prisma generate',
+            value: 'prismaGenerate',
+        }, {
             title: 'seeders',
             value: 'seeders',
         }]
@@ -121,6 +124,10 @@ function ModelGenerator() {
 
             case 'prismaMigrate':
                 new Controll().prismaMigrate();
+                break;
+
+            case 'prismaGenerate':
+                new Controll().prismaGenerate();
                 break;
 
             case 'seeders':

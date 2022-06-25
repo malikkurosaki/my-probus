@@ -67,7 +67,7 @@ CREATE TABLE `Issues` (
     `usersId` VARCHAR(191) NULL,
     `issuePrioritiesId` VARCHAR(191) NULL,
     `departementsId` VARCHAR(191) NULL,
-    `submitDate` DATETIME(3) NULL,
+    `dateSubmit` DATETIME(3) NULL,
 
     UNIQUE INDEX `Issues_idx_key`(`idx`),
     PRIMARY KEY (`id`)
