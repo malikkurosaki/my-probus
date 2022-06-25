@@ -7,6 +7,7 @@ const prompts = require('prompts');
 const { SeedClient } = require('../seeders/seed_client');
 const { SetMode } = require('./set_mode');
 const fs = require('fs');
+const SSH = require('simple-ssh');
 
 class Controll {
     async seeders() {
@@ -148,7 +149,7 @@ class Controll {
                 }).then(async ({
                     pass
                 }) => {
-                    
+
                     await new Promise((resolve, reject) => {
                         try {
                             new SSH({
