@@ -27,7 +27,7 @@ const { SeedUser } = require("./seed_user");
   await SeedClient();
   await SeedIssuePriorit();
   await SeedIssueStatus();
-  await SeedIssue();
+  // await SeedIssue();
   await SeedLeader();
   await SeedTrainer();
   await SeedCs();

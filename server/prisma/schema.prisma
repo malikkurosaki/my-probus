@@ -87,7 +87,7 @@ model Issues {
   Discussion        Discussion[]
   Images            Images[]
   IssueHistory      IssueHistories[]
-  submitDate        DateTime?
+  dateSubmit        DateTime?
 }
 
 model IssueHistories {

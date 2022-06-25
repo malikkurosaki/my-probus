@@ -13,7 +13,9 @@
         "mode mobile",
         "nodejs install package",
         "export user",
-        "seed client"
+        "seed client",
+        "prisma migrate",
+        "seeders"
     ],
     "flutter": [
         "cupertino_icons",
@@ -55,6 +57,6 @@
         "ssh2",
         "uuid",
         "xpress",
-        "json2csv"
+        "moment"
     ]
 }

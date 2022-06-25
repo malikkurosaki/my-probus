@@ -68,7 +68,7 @@ const IssueGet = expressAsyncHandler(async (req, res) => {
           name: true,
         },
       },
-      Discussion: true
+      Discussion: true,
     },
     orderBy: {
       createdAt: "desc",
@@ -82,25 +82,39 @@ const IssueGet = expressAsyncHandler(async (req, res) => {
 });
 
 const IssuePost = expressAsyncHandler(async (req, res) => {
-  const { data, files } = req.body;
+  const data = JSON.parse(req.body.data);
+  const files = JSON.parse(req.body.files);
+
+  console.log(data)
 
   const issue = await prisma.issues.create({
     data: {
-      ...JSON.parse(data),
+      des: data.des ,
+      name: data.name ,
+      clientsId: data.clientsId ,
+      departementsId: data.departementsId ,
+      issueStatusesId: data.issueStatusesId ,
+      dateSubmit: new Date(data.dateSubmit) ,
+      issueTypesId: data.issueTypesId ,
+      issuePrioritiesId: data.issuePrioritiesId ,
+      productsId: data.productsId ,
+      usersId: data.usersId ,
     },
   });
 
-  for (let file of JSON.parse(files)) {
-    await prisma.images.create({
-      data: {
-        name: file.name,
-        Issue: {
-          connect: {
-            id: issue.id,
+  if (files.length > 0) {
+    for (let file of files) {
+      await prisma.images.create({
+        data: {
+          name: file.name,
+          Issue: {
+            connect: {
+              id: issue.id,
+            },
           },
         },
-      },
-    });
+      });
+    }
   }
 
   res.status(201).json({
@@ -144,7 +158,7 @@ const IssuePatch = expressAsyncHandler(async (req, res) => {
               id: req.userId,
             },
           },
-          note: req.body.note ?? undefined,
+          note: req.body.note ,
         },
       },
     },

@@ -26,70 +26,29 @@ class Select extends StatelessWidget {
   Widget build(BuildContext context) {
     return PopupMenuButton(
       tooltip: title,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: ListTile(
+        leading: Icon(
+          Icons.check_box,
+          color: value.isNotEmpty ? Colors.green : Colors.grey,
+        ),
+        title: Text(
+          title,
+        ),
+        subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Icon(
-                Icons.check_box,
-                color: value.isNotEmpty ? Colors.green : Colors.grey,
-              ),
+            Text(
+              subtitle,
             ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 8),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 8),
-                            child: Text(
-                              title,
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          Text(
-                            subtitle,
-                            style: TextStyle(
-                              color: Colors.grey.shade600,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Visibility(
-                      visible: value.isNotEmpty,
-                      child: Text(
-                        (value['name'] ?? "").toString().toUpperCase(),
-                        style: TextStyle(
-                          color: Colors.blue.shade600,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24,
-                        ),
-                      ),
-                    ),
-                  ],
+            Visibility(
+              visible: value.isNotEmpty,
+              child: Text(
+                (value['name'] ?? "").toString().toUpperCase(),
+                style: TextStyle(
+                  color: Colors.blue.shade600,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
                 ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(12),
-              child: Center(
-                child: Icon(Icons.arrow_drop_down),
               ),
             ),
           ],

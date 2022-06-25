@@ -15,13 +15,13 @@ class SelectCllient extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      trailing: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Icon(
-          Icons.arrow_drop_down,
-          color: Colors.black,
-        ),
-      ),
+      // trailing: Padding(
+      //   padding: const EdgeInsets.all(8.0),
+      //   child: Icon(
+      //     Icons.arrow_drop_down,
+      //     color: Colors.black,
+      //   ),
+      // ),
       onTap: () {
         showBottomSheet(
           context: context,
@@ -84,10 +84,6 @@ class SelectCllient extends StatelessWidget {
       ),
       title: Text(
         "Select Client",
-        style: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-        ),
       ),
       isThreeLine: true,
       subtitle: Column(

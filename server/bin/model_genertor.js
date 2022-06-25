@@ -1,21 +1,9 @@
 const prompts = require('prompts');
+const Generator = require('./generator.js');
+const Controll = require('./controll');
+const cntrl = new Controll();
 
-function ModelGenerator({
-    generate,
-    runClientDebug,
-    runServerDebug,
-    serverCommand,
-    clientCommand,
-    buildRelease,
-    gitPush,
-    clearIssue,
-    modeDev,
-    modePro,
-    modeMobile,
-    nodejsInstallPackage,
-    exportUser,
-    seedClient
-}) {
+function ModelGenerator() {
     prompts({
         type: 'select',
         name: 'pilih',
@@ -62,6 +50,12 @@ function ModelGenerator({
         }, {
             title: 'seed client',
             value: 'seedClient',
+        }, {
+            title: 'prisma migrate',
+            value: 'prismaMigrate',
+        }, {
+            title: 'seeders',
+            value: 'seeders',
         }]
 
     }).then(({
@@ -70,59 +64,67 @@ function ModelGenerator({
         switch (pilih) {
 
             case 'generate':
-                generate();
+                new Controll().generate();
                 break;
 
             case 'runClientDebug':
-                runClientDebug();
+                new Controll().runClientDebug();
                 break;
 
             case 'runServerDebug':
-                runServerDebug();
+                new Controll().runServerDebug();
                 break;
 
             case 'serverCommand':
-                serverCommand();
+                new Controll().serverCommand();
                 break;
 
             case 'clientCommand':
-                clientCommand();
+                new Controll().clientCommand();
                 break;
 
             case 'buildRelease':
-                buildRelease();
+                new Controll().buildRelease();
                 break;
 
             case 'gitPush':
-                gitPush();
+                new Controll().gitPush();
                 break;
 
             case 'clearIssue':
-                clearIssue();
+                new Controll().clearIssue();
                 break;
 
             case 'modeDev':
-                modeDev();
+                new Controll().modeDev();
                 break;
 
             case 'modePro':
-                modePro();
+                new Controll().modePro();
                 break;
 
             case 'modeMobile':
-                modeMobile();
+                new Controll().modeMobile();
                 break;
 
             case 'nodejsInstallPackage':
-                nodejsInstallPackage();
+                new Controll().nodejsInstallPackage();
                 break;
 
             case 'exportUser':
-                exportUser();
+                new Controll().exportUser();
                 break;
 
             case 'seedClient':
-                seedClient();
+                new Controll().seedClient();
+                break;
+
+            case 'prismaMigrate':
+                new Controll().prismaMigrate();
+                break;
+
+            case 'seeders':
+                new Controll().seeders();
                 break;
 
             default:
