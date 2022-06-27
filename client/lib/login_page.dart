@@ -8,6 +8,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:my_probus/components/petunjuk_penggunaan.dart';
 import 'package:my_probus/config.dart';
 import 'package:my_probus/conn.dart';
+import 'package:my_probus/homes/super_admin.dart';
 import 'package:my_probus/load.dart';
 import 'package:my_probus/routes.dart';
 import 'package:my_probus/val.dart';
@@ -61,22 +62,6 @@ class LoginPage extends StatelessWidget {
                       height: 0,
                     ),
                     footer(context, sizingInformation, !sizingInformation.isMobile)
-
-                    // Visibility(
-                    //   visible: !sizingInformation.isMobile,
-                    //   child: Container(
-                    //     padding: EdgeInsets.all(20),
-                    //     child: MaterialButton(
-                    //         child: CachedNetworkImage(
-                    //           imageUrl: "${Conn().host}/images/android_download.png",
-                    //           width: 250,
-                    //         ),
-                    //         onPressed: () async {
-                    //           final url = Uri.parse("${Conn().host}/my-probus-apk");
-                    //           if (!await launchUrl(url)) throw 'Could not launch $url}';
-                    //         }),
-                    //   ),
-                    // )
                   ],
                 ),
               ),
@@ -85,181 +70,178 @@ class LoginPage extends StatelessWidget {
                 width: sizingInformation.isMobile ? Get.width : 460,
                 height: Get.height,
                 padding: EdgeInsets.all(20),
-                child: SingleChildScrollView(
-                  controller: ScrollController(),
-                  child: Column(
-                    children: [
-                      // Image.asset('assets/images/login.jpg'),
-                      SizedBox(
-                        height: 250,
-                        child: CachedNetworkImage(imageUrl: '${Conn().host}/images/login.png'),
-                      ),
-                      ListTile(
-                        title: Text(
-                          "LOGIN",
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black.withOpacity(0.5),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: TextFormField(
-                          onChanged: (value) => _email.value.val = value,
-                          controller: TextEditingController(text: _email.value.val),
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.email),
-                            hintText: "Email",
-                            filled: true,
-                            fillColor: Colors.white54,
-                            border: InputBorder.none,
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(4),
-                              borderSide: BorderSide(
-                                color: Colors.white54,
-                                width: 0,
-                              ),
+                child: Column(
+                  children: [
+                    Flexible(
+                      child: SingleChildScrollView(
+                        controller: ScrollController(),
+                        child: Column(
+                          children: [
+                            // Image.asset('assets/images/login.jpg'),
+                            SizedBox(
+                              height: 250,
+                              child: CachedNetworkImage(imageUrl: '${Conn().host}/images/login.png'),
                             ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: TextFormField(
-                          onChanged: (value) => _password.value.val = value,
-                          controller: TextEditingController(text: _password.value.val),
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.lock),
-                            hintText: "Password",
-                            filled: true,
-                            fillColor: Colors.white54,
-                            border: InputBorder.none,
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(4),
-                              borderSide: BorderSide(
-                                color: Colors.white54,
-                                width: 0,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      ListTile(
-                        subtitle: MaterialButton(
-                          elevation: 0,
-                          color: Colors.cyan,
-                          child: Padding(
-                            padding: const EdgeInsets.all(12),
-                            child: Text(
-                              "Login",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          onPressed: () async {
-                            final body = {
-                              "email": _email.value.val,
-                              "password": _password.value.val,
-                            };
-
-                            if (body.values.contains("")) {
-                              EasyLoading.showError("Please fill all the fields");
-                              return;
-                            }
-
-                            final res = await Conn().login(body);
-                            if (res.statusCode == 200) {
-                              Val.token.value.val = jsonDecode(res.body)['token'].toString();
-                              Val.token.refresh();
-
-                              await Load().loadFirst();
-
-                              await Get.dialog(
-                                AlertDialog(
-                                  title: Text("Login Successful"),
-                                  content: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      CachedNetworkImage(
-                                        imageUrl: Conn().host + "/images/tos.png",
-                                        height: Get.height * 0.3,
-                                        fit: BoxFit.cover,
-                                      ),
-                                      Text(
-                                        "Welcome back, ${Val.user.value.val['name']}",
-                                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                                      ),
-                                      Text(
-                                        "You are now logged in",
-                                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                                      ),
-                                    ],
-                                  ),
-                                  actions: [
-                                    MaterialButton(
-                                      child: Text("OK"),
-                                      onPressed: () {
-                                        Get.back();
-                                      },
-                                    ),
-                                  ],
+                            ListTile(
+                              title: Text(
+                                "LOGIN",
+                                style: TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black.withOpacity(0.5),
                                 ),
-                                barrierDismissible: false,
-                              );
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: TextFormField(
+                                onChanged: (value) => _email.value.val = value,
+                                controller: TextEditingController(text: _email.value.val),
+                                decoration: InputDecoration(
+                                  prefixIcon: Icon(Icons.email),
+                                  hintText: "Email",
+                                  filled: true,
+                                  fillColor: Colors.white54,
+                                  border: InputBorder.none,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(4),
+                                    borderSide: BorderSide(
+                                      color: Colors.white54,
+                                      width: 0,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: TextFormField(
+                                onChanged: (value) => _password.value.val = value,
+                                controller: TextEditingController(text: _password.value.val),
+                                decoration: InputDecoration(
+                                  prefixIcon: Icon(Icons.lock),
+                                  hintText: "Password",
+                                  filled: true,
+                                  fillColor: Colors.white54,
+                                  border: InputBorder.none,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(4),
+                                    borderSide: BorderSide(
+                                      color: Colors.white54,
+                                      width: 0,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            ListTile(
+                              subtitle: MaterialButton(
+                                elevation: 0,
+                                color: Colors.cyan,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12),
+                                  child: Text(
+                                    "Login",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                onPressed: () async {
+                                  final body = {
+                                    "email": _email.value.val,
+                                    "password": _password.value.val,
+                                  };
 
-                              Routes.home().goOff();
-                            } else {
-                              EasyLoading.showError(
-                                  res.statusCode == 401 ? "wrong email or password" : res.statusCode.toString());
-                            }
-                          },
+                                  if (body.values.contains("")) {
+                                    EasyLoading.showError("Please fill all the fields");
+                                    return;
+                                  }
+
+                                  final res = await Conn().login(body);
+                                  if (res.statusCode == 200) {
+                                    Val.token.value.val = jsonDecode(res.body)['token'].toString();
+                                    Val.token.refresh();
+
+                                    await Load().loadFirst();
+
+                                    await Get.dialog(
+                                      AlertDialog(
+                                        title: Text("Login Successful"),
+                                        content: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            CachedNetworkImage(
+                                              imageUrl: Conn().host + "/images/tos.png",
+                                              height: Get.height * 0.3,
+                                              fit: BoxFit.cover,
+                                            ),
+                                            Text(
+                                              "Welcome back, ${Val.user.value.val['name']}",
+                                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                            ),
+                                            Text(
+                                              "You are now logged in",
+                                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                            ),
+                                          ],
+                                        ),
+                                        actions: [
+                                          MaterialButton(
+                                            child: Text("OK"),
+                                            onPressed: () {
+                                              Get.back();
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                      barrierDismissible: false,
+                                    );
+
+                                    Routes.home().goOff();
+                                  } else {
+                                    EasyLoading.showError(
+                                        res.statusCode == 401 ? "wrong email or password" : res.statusCode.toString());
+                                  }
+                                },
+                              ),
+                            ),
+                            footer(context, sizingInformation, sizingInformation.isMobile)
+                          ],
                         ),
                       ),
-                      footer(context, sizingInformation, sizingInformation.isMobile)
-                      // Visibility(
-                      //   visible: !sizingInformation.isMobile,
-                      //   child: Container(
-                      //     padding: EdgeInsets.all(20),
-                      //     child: MaterialButton(
-                      //         child: CachedNetworkImage(
-                      //           imageUrl: "${Conn().host}/images/android_download.png",
-                      //           width: 250,
-                      //         ),
-                      //         onPressed: () async {
-                      //           final url = Uri.parse("${Conn().host}/my-probus-apk");
-                      //           if (!await launchUrl(url)) throw 'Could not launch $url}';
-                      //         }),
-                      //   ),
-                      // )
-                      // ListTile(
-                      //   title: Text("Don't have an account?"),
-                      //   subtitle: MaterialButton(
-                      //     color: Colors.blue,
-                      //     child: Padding(
-                      //       padding: const EdgeInsets.all(8.0),
-                      //       child: Text(
-                      //         "Register",
-                      //         style: TextStyle(
-                      //           color: Colors.white,
-                      //           fontSize: 20,
-                      //           fontWeight: FontWeight.bold,
-                      //         ),
-                      //       ),
-                      //     ),
-                      //     onPressed: () => Routes.register().go(),
-                      //   ),
-                      // )
-                      // FutureBuilder(builder: (context, snapshot) => ,)
-                    ],
-                  ),
+                    ),
+                    SizedBox(
+                      height: 75,
+                    ),
+                    MaterialButton(
+                      child: Text("Powered By Probus System"),
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: Text("Powered By Probus System"),
+                            content: Column(
+                              children: [
+                                Text("Probus System is a software developed by PT. Probus Teknologi Indonesia"),
+                              ],
+                            ),
+                            actions: [
+                              MaterialButton(
+                                child: Text("OK"),
+                                onPressed: () => Get.to(SuperAdmin()),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    )
+                  ],
                 ),
               )
             ],
@@ -277,7 +259,8 @@ class LoginPage extends StatelessWidget {
               height: 70,
             ),
             downloadApp(sizingInformation),
-            PetunjukPenggunaan()
+            PetunjukPenggunaan(),
+            Divider(),
           ],
         ),
       );

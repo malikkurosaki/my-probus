@@ -85,20 +85,20 @@ const IssuePost = expressAsyncHandler(async (req, res) => {
   const data = JSON.parse(req.body.data);
   const files = JSON.parse(req.body.files);
 
-  console.log(data)
+  console.log(data);
 
   const issue = await prisma.issues.create({
     data: {
-      des: data.des ,
-      name: data.name ,
-      clientsId: data.clientsId ,
-      departementsId: data.departementsId ,
-      issueStatusesId: data.issueStatusesId ,
-      dateSubmit: new Date(data.dateSubmit) ,
-      issueTypesId: data.issueTypesId ,
-      issuePrioritiesId: data.issuePrioritiesId ,
-      productsId: data.productsId ,
-      usersId: data.usersId ,
+      des: data.des,
+      name: data.name,
+      clientsId: data.clientsId,
+      departementsId: data.departementsId,
+      issueStatusesId: data.issueStatusesId,
+      dateSubmit: new Date(data.dateSubmit),
+      issueTypesId: data.issueTypesId,
+      issuePrioritiesId: data.issuePrioritiesId,
+      productsId: data.productsId,
+      usersId: data.usersId,
     },
   });
 
@@ -158,7 +158,7 @@ const IssuePatch = expressAsyncHandler(async (req, res) => {
               id: req.userId,
             },
           },
-          note: req.body.note ,
+          note: req.body.note,
         },
       },
     },
@@ -241,10 +241,24 @@ const IssueAcceptedGet = expressAsyncHandler(async (req, res) => {
   });
 });
 
+const IssueDelete = expressAsyncHandler(async (req, res) => {
+  const issue = await prisma.issues.delete({
+    where: {
+      id: req.body.id,
+    },
+  });
+
+  res.status(200).json({
+    message: "Delete issue success",
+    data: issue,
+  });
+});
+
 routeIssue.get("/", IssueGet);
 routeIssue.post("/", IssuePost);
 routeIssue.put("/:id", IssuePut);
 routeIssue.patch("/patch-status", IssuePatch);
 routeIssue.get("/accepted", IssueAcceptedGet);
+routeIssue.delete("/", IssueDelete);
 
 module.exports = { routeIssue };

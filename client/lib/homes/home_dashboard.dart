@@ -94,7 +94,7 @@ class HomeDashbord extends StatelessWidget {
                                         );
                                       }
 
-                                      HomeIssueLaps().onLoad();
+                                      HomeIssueController.onLoad();
                                     },
                                   )
                                 ],

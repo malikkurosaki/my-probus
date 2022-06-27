@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -302,14 +304,34 @@ class HomeListIssueView extends StatelessWidget {
                                                         ),
                                                         onPressed: () {}),
                                                     MaterialButton(
-                                                        child: Row(
-                                                          mainAxisSize: MainAxisSize.min,
-                                                          children: [
-                                                            Icon(Icons.delete),
-                                                            Text("Delete"),
-                                                          ],
-                                                        ),
-                                                        onPressed: () {}),
+                                                      child: Row(
+                                                        mainAxisSize: MainAxisSize.min,
+                                                        children: [
+                                                          Icon(Icons.delete),
+                                                          Text("Delete"),
+                                                        ],
+                                                      ),
+                                                      onPressed: () async{
+                                                        try {
+                                                          final hapus = await Conn()
+                                                              .issueDelete(<String, dynamic>{"id": e['id']});
+
+                                                          await Load().loadIssue();
+
+                                                          // final issue = jsonDecode(hapus.body)['data'];
+                                                          // Val.issues.value.val.removeWhere((element) => element['id'] == issue['id']);
+                                                          // Val.issues.refresh();
+
+                                                          HomeIssueController.onLoad();
+
+                                                          EasyLoading.showToast("Delete Success");
+
+                                                        } catch (e) {
+                                                          EasyLoading.showToast("Failed to delete");
+                                                        }
+                                                        
+                                                      },
+                                                    ),
                                                   ],
                                                 ),
                                                 Padding(
@@ -378,7 +400,7 @@ class HomeListIssueView extends StatelessWidget {
                                                                                 await Conn().issuePatchStatus(body);
                                                                             debugPrint(ptc.body);
 
-                                                                            await HomeIssueLaps().onLoad();
+                                                                            await HomeIssueController.onLoad();
 
                                                                             if (ptc.statusCode == 200) {
                                                                               // await Load().loadIssue();

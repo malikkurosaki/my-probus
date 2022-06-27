@@ -16,26 +16,22 @@ import 'package:responsive_builder/responsive_builder.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-class HomeIssueLaps extends StatelessWidget {
-  HomeIssueLaps({Key? key}) : super(key: key);
 
-  // final Val.seletctedCategory = <String, dynamic>{"id": "all", "name": "all"}.val("Val.seletctedCategory").obs;
-  // final Val.selectedStatus = <String, dynamic>{"id": "all", "name": "all"}.val("Val.selectedStatus").obs;
+class HomeIssueController{
+  static final listIssue = [].val("HomeMain_listIssue").obs;
+  static final listIssueBackup = [].val("HomeMain_listIssueBackup").obs;
+  static final listIssueStatusBackup = [].val("HomeMain_listIssueStatusBackup").obs;
+  static final selectDate = DateTime.now().val("HomeMain_selectDate").obs;
 
-  final _listIssue = [].val("HomeMain_listIssue").obs;
-  final _listIssueBackup = [].val("HomeMain_listIssueBackup").obs;
-  final _listIssueStatusBackup = [].val("HomeMain_listIssueStatusBackup").obs;
-  final _selectDate = DateTime.now().val("HomeMain_selectDate").obs;
+  static final search = "".val("HomeMain_search").obs;
 
-  final _search = "".val("HomeMain_search").obs;
-
-  onLoad() async {
+  static onLoad() async {
     await Load().loadIssue();
 
-    _listIssue.value.val = Val.issues.value.val;
+    listIssue.value.val = Val.issues.value.val;
     // _listIssueBackup.value.val = Val.issues.value.val;
-    _listIssueStatusBackup.value.val = _listIssue.value.val;
-    _listIssue.refresh();
+    listIssueStatusBackup.value.val = listIssue.value.val;
+    listIssue.refresh();
 
     final types = List.from(
       Val.issues.value.val.where(
@@ -44,27 +40,36 @@ class HomeIssueLaps extends StatelessWidget {
     );
 
     if (types.isNotEmpty) {
-      _listIssue.value.val = types;
-      _listIssue.refresh();
+      listIssue.value.val = types;
+      listIssue.refresh();
     }
 
     final statuses = List.from(
-      _listIssueStatusBackup.value.val.where(
+      listIssueStatusBackup.value.val.where(
         (e) => e['issueStatusesId'].toString() == Val.selectedStatus.value.val['id'].toString(),
       ),
     );
 
     if (statuses.isNotEmpty) {
-      _listIssue.value.val = statuses;
-      _listIssue.refresh();
+      listIssue.value.val = statuses;
+      listIssue.refresh();
     }
 
     // debugPrint("_listIssue.value.val: ${_listIssue.value.val}");
   }
+}
+
+class HomeIssueLaps extends StatelessWidget {
+  const HomeIssueLaps({Key? key}) : super(key: key);
+
+  // final Val.seletctedCategory = <String, dynamic>{"id": "all", "name": "all"}.val("Val.seletctedCategory").obs;
+  // final Val.selectedStatus = <String, dynamic>{"id": "all", "name": "all"}.val("Val.selectedStatus").obs;
+
+  
 
   @override
   Widget build(BuildContext context) {
-    onLoad();
+    HomeIssueController.onLoad();
     return Material(
       color: Colors.grey.shade100,
       child: ResponsiveBuilder(
@@ -81,17 +86,17 @@ class HomeIssueLaps extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: TextFormField(
                           onChanged: (e) {
-                            _search.value.val = e;
-                            _listIssue.value.val = Val.issues.value.val;
+                            HomeIssueController.search.value.val = e;
+                            HomeIssueController.listIssue.value.val = Val.issues.value.val;
 
-                            _listIssue.value.val = List.from(_listIssue.value.val)
+                            HomeIssueController.listIssue.value.val = List.from(HomeIssueController.listIssue.value.val)
                                 .where((x) =>
                                     x['name'].toString().toLowerCase().contains(e.toString().toLowerCase()) ||
                                     x['idx'].toString().toLowerCase().contains(e.toString().toLowerCase()))
                                 .toList();
-                            _listIssue.refresh();
+                            HomeIssueController.listIssue.refresh();
                           },
-                          controller: TextEditingController(text: _search.value.val),
+                          controller: TextEditingController(text: HomeIssueController.search.value.val),
                           decoration: InputDecoration(
                             fillColor: Colors.white,
                             filled: true,
@@ -115,7 +120,7 @@ class HomeIssueLaps extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                DateFormat('dd MMMM yyyy').format(_selectDate.value.val),
+                                DateFormat('dd MMMM yyyy').format(HomeIssueController.selectDate.value.val),
                                 style: TextStyle(
                                   fontSize: 20,
                                   color: Colors.cyan,
@@ -131,15 +136,15 @@ class HomeIssueLaps extends StatelessWidget {
                         onPressed: () async {
                           final date = await showDatePicker(
                             context: context,
-                            initialDate: _selectDate.value.val,
+                            initialDate: HomeIssueController.selectDate.value.val,
                             firstDate: DateTime(2020),
                             lastDate: DateTime(2030),
                           );
 
-                          _selectDate.value.val = date!;
-                          _selectDate.refresh();
+                          HomeIssueController.selectDate.value.val = date!;
+                          HomeIssueController.selectDate.refresh();
 
-                          _listIssue.value.val = Val.issues.value.val
+                          HomeIssueController.listIssue.value.val = Val.issues.value.val
                               .where((element) =>
                                   DateFormat('dd MMMM yyyy').format(DateTime.parse(element['createdAt'])) ==
                                   DateFormat('dd MMMM yyyy').format(date))
@@ -154,18 +159,18 @@ class HomeIssueLaps extends StatelessWidget {
                     children: [
                       // issue type
                       HomeSelectIssueType(
-                          listIssue: _listIssue,
-                          listIssueStatusBackup: _listIssueStatusBackup,
+                          listIssue: HomeIssueController.listIssue,
+                          listIssueStatusBackup: HomeIssueController.listIssueStatusBackup,
                           selectedStatus: Val.selectedStatus,
                           seletctedCategory: Val.seletctedCategory),
                       HomeSelectIssueStatus(
                           selectedStatus: Val.selectedStatus,
-                          listIssue: _listIssue,
-                          listIssueStatusBackup: _listIssueStatusBackup),
+                          listIssue: HomeIssueController.listIssue,
+                          listIssueStatusBackup: HomeIssueController.listIssueStatusBackup),
                       Flexible(
                         child: HomeListIssueView(
-                          listIssue: _listIssue,
-                          listIssueBackup: _listIssueBackup,
+                          listIssue: HomeIssueController.listIssue,
+                          listIssueBackup: HomeIssueController.listIssueBackup,
                           lebarItem: 150.0,
                         ),
                       )

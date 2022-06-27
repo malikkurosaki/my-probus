@@ -25,6 +25,7 @@ class Select extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton(
+      position: PopupMenuPosition.under,
       tooltip: title,
       child: ListTile(
         leading: Icon(
