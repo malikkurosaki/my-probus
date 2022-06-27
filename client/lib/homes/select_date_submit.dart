@@ -26,11 +26,11 @@ class SelectDateIndent extends StatelessWidget {
           dateSubmit.refresh();
         }
       },
-      title: Text("Pilih Tanggal Indent"),
+      title: Text("Pilih Date Submit"),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Tanggal Indent ( optional )"),
+          Text("Indent Date Submit ( optional )"),
           Obx(
             () => dateSubmit.value.val.isEmpty
                 ? SizedBox.shrink()
