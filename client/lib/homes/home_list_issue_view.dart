@@ -95,7 +95,7 @@ class HomeListIssueView extends StatelessWidget {
                                     child: Builder(
                                       builder: (context) {
                                         try {
-                                          return Text(
+                                          final widget = Text(
                                             DateFormat('dd/MM/yyyy').format(
                                               DateTime.parse(
                                                 e['dateSubmit'].toString(),
@@ -103,15 +103,19 @@ class HomeListIssueView extends StatelessWidget {
                                             ),
                                             style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
                                           );
+
+                                          return widget;
                                         } catch (err) {
-                                          return Text(
+                                          final widget = Text(
                                             DateFormat('dd/MM/yyyy').format(
                                               DateTime.parse(
-                                                e['createAt'].toString(),
+                                                e['createdAt'].toString(),
                                               ),
                                             ),
                                             style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
                                           );
+
+                                          return widget;
                                         }
                                       },
                                     ),
@@ -139,7 +143,7 @@ class HomeListIssueView extends StatelessWidget {
                                       width: lebarItem,
                                       child: Builder(builder: (context) {
                                         try {
-                                          return Text(
+                                          final widget = Text(
                                             timeago
                                                 .format(
                                                   DateTime.parse(
@@ -150,18 +154,22 @@ class HomeListIssueView extends StatelessWidget {
                                                 .toUpperCase(),
                                             style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
                                           );
+
+                                          return widget;
                                         } catch (err) {
-                                          return Text(
+                                          final widget =  Text(
                                             timeago
                                                 .format(
                                                   DateTime.parse(
-                                                    e['dateSubmit'].toString(),
+                                                    e['createdAt'].toString(),
                                                   ),
                                                 )
                                                 .toString()
                                                 .toUpperCase(),
                                             style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
                                           );
+
+                                          return widget;
                                         }
                                       }),
                                     ),
