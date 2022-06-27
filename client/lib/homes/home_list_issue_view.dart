@@ -92,13 +92,28 @@ class HomeListIssueView extends StatelessWidget {
                                   Container(
                                     width: double.infinity,
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      DateFormat('dd/MM/yyyy').format(
-                                        DateTime.parse(
-                                          e['createdAt'].toString(),
-                                        ),
-                                      ),
-                                      style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
+                                    child: Builder(
+                                      builder: (context) {
+                                        try {
+                                          return Text(
+                                            DateFormat('dd/MM/yyyy').format(
+                                              DateTime.parse(
+                                                e['dateSubmit'].toString(),
+                                              ),
+                                            ),
+                                            style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
+                                          );
+                                        } catch (err) {
+                                          return Text(
+                                            DateFormat('dd/MM/yyyy').format(
+                                              DateTime.parse(
+                                                e['createAt'].toString(),
+                                              ),
+                                            ),
+                                            style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
+                                          );
+                                        }
+                                      },
                                     ),
                                   )
                                 ],
@@ -122,17 +137,33 @@ class HomeListIssueView extends StatelessWidget {
                                     elevation: 0,
                                     child: SizedBox(
                                       width: lebarItem,
-                                      child: Text(
-                                        timeago
-                                            .format(
-                                              DateTime.parse(
-                                                e['createdAt'].toString(),
-                                              ),
-                                            )
-                                            .toString()
-                                            .toUpperCase(),
-                                        style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
-                                      ),
+                                      child: Builder(builder: (context) {
+                                        try {
+                                          return Text(
+                                            timeago
+                                                .format(
+                                                  DateTime.parse(
+                                                    e['dateSubmit'].toString(),
+                                                  ),
+                                                )
+                                                .toString()
+                                                .toUpperCase(),
+                                            style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+                                          );
+                                        } catch (err) {
+                                          return Text(
+                                            timeago
+                                                .format(
+                                                  DateTime.parse(
+                                                    e['dateSubmit'].toString(),
+                                                  ),
+                                                )
+                                                .toString()
+                                                .toUpperCase(),
+                                            style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+                                          );
+                                        }
+                                      }),
                                     ),
                                   ),
                                   Wrap(
@@ -311,7 +342,7 @@ class HomeListIssueView extends StatelessWidget {
                                                           Text("Delete"),
                                                         ],
                                                       ),
-                                                      onPressed: () async{
+                                                      onPressed: () async {
                                                         try {
                                                           final hapus = await Conn()
                                                               .issueDelete(<String, dynamic>{"id": e['id']});
@@ -325,11 +356,9 @@ class HomeListIssueView extends StatelessWidget {
                                                           HomeIssueController.onLoad();
 
                                                           EasyLoading.showToast("Delete Success");
-
                                                         } catch (e) {
                                                           EasyLoading.showToast("Failed to delete");
                                                         }
-                                                        
                                                       },
                                                     ),
                                                   ],

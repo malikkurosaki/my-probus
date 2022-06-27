@@ -10,6 +10,7 @@ const IssueGet = expressAsyncHandler(async (req, res) => {
       des: true,
       id: true,
       idx: true,
+      dateSubmit: true,
       issueStatusesId: true,
       clientsId: true,
       departementsId: true,

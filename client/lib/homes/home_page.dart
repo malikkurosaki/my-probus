@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
+import 'package:my_probus/clients/client_list.dart';
 import 'package:my_probus/homes/home_dashboard.dart';
 import 'package:my_probus/homes/home_issue_detail.dart';
 import 'package:my_probus/homes/home_issue_history.dart';
@@ -116,7 +117,7 @@ class HomePage extends StatelessWidget {
       'index': 11,
       'title': 'List Client',
       'icon': Icons.auto_stories_sharp,
-      'page': UnderConstruction(),
+      'page': ClientList(),
       'menu': true,
     },
   ];
