@@ -43,7 +43,7 @@ const BackupDatabase = expressAsyncHandler(async (req, res) => {
   let tbl = {};
   for(let table of listTable){
     tbl[table] = await prisma[table].findMany();
-    fs.writeFileSync(path.join(__dirname, `./../backup/${table}.json`), JSON.stringify(tbl[table]));
+    // fs.writeFileSync(path.join(__dirname, `./../backup/${table}.json`), JSON.stringify(tbl[table]));
   }
 
   res.status(200).json({
