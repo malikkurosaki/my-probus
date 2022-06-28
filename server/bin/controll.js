@@ -44,21 +44,20 @@ class Controll {
       name: "pass",
       message: "masukkan passwordnya".blue,
     }).then(async ({ pass }) => {
-      await new Promise((resolve, reject) => {
-        new SSH({
-          host: "makurostudio.my.id",
-          user: "makuro",
-          pass: pass,
-        })
-          .exec(
-            `source ~/.nvm/nvm.sh && cd my-probus && git pull && cd server && npm install && pm2 restart all && pm2 save`,
-            {
-              out: (data) => console.log(`${data}`),
-            }
-          )
-          .start();
-        console.log("Server berhasil di restart".yellow);
-      });
+      new SSH({
+        host: "makurostudio.my.id",
+        user: "makuro",
+        pass: pass,
+      })
+        .exec(
+          `source ~/.nvm/nvm.sh && cd my-probus && git pull && cd server && npm install && pm2 restart all && pm2 save`,
+          {
+            out: (data) => console.log(`${data}`.green),
+          }
+        )
+        .start();
+
+      console.log("Git push Success".yellow);
     });
   }
 
