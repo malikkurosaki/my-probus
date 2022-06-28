@@ -17,9 +17,6 @@ import 'package:my_probus/models/model_status.dart';
 import 'package:my_probus/pref.dart';
 import 'package:my_probus/val.dart';
 
-
-
-
 class HomeIssueDetail extends StatelessWidget {
   HomeIssueDetail({Key? key}) : super(key: key);
   final _contentController = TextEditingController();
@@ -67,8 +64,7 @@ class HomeIssueDetail extends StatelessWidget {
       );
 
   // leader button action (accept, reject)
-  Widget _leaderButton() => 
-  Visibility(
+  Widget _leaderButton() => Visibility(
         visible: Pref().isLeader && Val.issueDetail.value.val['issueStatusesId'] == '1',
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -79,8 +75,7 @@ class HomeIssueDetail extends StatelessWidget {
                 color: Colors.blue,
                 child: Text("Accept", style: TextStyle(color: Colors.white)),
                 onPressed: () {
-                  final noteText = 
-                  Get.dialog(
+                  final noteText = Get.dialog(
                     AlertDialog(
                       title: Text("Accept"),
                       content: Column(
@@ -88,18 +83,14 @@ class HomeIssueDetail extends StatelessWidget {
                         children: [
                           Text("Are you sure to accept this issue?"),
                           // pilih prioritas
-                          Priority(
-                              title: "Please Select Priority".toUpperCase(),
-                              item: Val.issuePriorities.value.val,
-                              value: _priority,
-                              subtitle: "berikan prioritas untuk issue ini"),
-                          TextFormField(
-                            decoration: InputDecoration(
-                              fillColor: Colors.grey.shade50,
-                              filled: true,
-                              hintText: ""
-                            ),
-                          )
+                          // Priority(
+                          //     title: "Please Select Priority".toUpperCase(),
+                          //     item: Val.issuePriorities.value.val,
+                          //     value: _priority,
+                          //     subtitle: "berikan prioritas untuk issue ini"),
+                          // TextFormField(
+                          //   decoration: InputDecoration(fillColor: Colors.grey.shade50, filled: true, hintText: ""),
+                          // )
                         ],
                       ),
                       actions: [
@@ -113,7 +104,7 @@ class HomeIssueDetail extends StatelessWidget {
 
                             final body = {
                               "issueId": Val.issueDetail.value.val['id'],
-                              "issuePriorityId": _priority.value.val['id'],
+                              // "issuePriorityId": _priority.value.val['id'],
                               "issueStatusesId": "2",
                               "note": "",
                             };
@@ -354,6 +345,7 @@ class HomeIssueDetail extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
+              
               MaterialButton(
                 color: Colors.blue,
                 child: Text("Progress", style: TextStyle(color: Colors.white)),
@@ -491,9 +483,9 @@ class HomeIssueDetail extends StatelessWidget {
                 _moderatorButton(),
                 // _leaderButton(),
                 ButtonStatus(
-                  visibleFor:Pref().isLeader, 
-                  paramA: ModelStatus.accepted(), 
-                  paramB: ModelStatus.rejected(), 
+                  visibleFor: Pref().isLeader && Val.issueDetail.value.val['issueStatusesId'] == '4',
+                  paramA: ModelStatus.accepted(),
+                  paramB: ModelStatus.rejected(),
                   issueId: Val.issueDetail.value.val['id'],
                 ),
                 _adminButton(),
@@ -512,11 +504,10 @@ class HomeIssueDetail extends StatelessWidget {
               visible: Pref().isAdmin,
               child: Text("Adimin section"),
             ),
+
             _ketDetail("type", (Val.issueDetail.value.val["IssueType"]?['name'] ?? "null").toString()),
 
             _ketDetail("Title", (Val.issueDetail.value.val["name"] ?? "null").toString()),
-
-            _ketDetail("Description", Val.issueDetail.value.val["des"].toString()),
 
             _ketDetail("Client", (Val.issueDetail.value.val["Client"]?['name'] ?? "null").toString()),
 
@@ -524,16 +515,14 @@ class HomeIssueDetail extends StatelessWidget {
 
             _ketDetail("Create At",
                 DateFormat('dd MMMM yyyy').format(DateTime.parse(Val.issueDetail.value.val['createdAt'])).toString()),
-
+            
             Val.issueDetail.value.val["IssuePriority"] == null
                 ? const SizedBox.shrink()
                 : _ketDetail("Priority", Val.issueDetail.value.val["IssuePriority"]['value'].toString()),
 
             _ketDetail("Module", (Val.issueDetail.value.val["Departement"]?['name'] ?? "null").toString()),
-            // Text(Val.issueDetail.value.val["IssueRejecteds"].toString()),
-            // Text(Val.issueDetail.value.val["IssueAccepts"].toString()),
-            // Text(Val.issueDetail.value.val["IssueForwardedTo"].toString()),
-            // Text(Val.issueDetail.value.val["Discussion"].toString()),
+            _ketDetail("Description", Val.issueDetail.value.val["des"].toString()),
+     
             Val.issueDetail.value.val['Images'] == null || Val.issueDetail.value.val['Images'].length < 0
                 ? Text(Val.issueDetail.value.val['Images'].toString())
                 : Wrap(
@@ -584,6 +573,7 @@ class HomeIssueDetail extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Text(Val.issueDetail.value.val.toString()),
           Container(
             color: Colors.white,
             child: Container(

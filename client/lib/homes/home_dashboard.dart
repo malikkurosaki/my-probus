@@ -9,6 +9,8 @@ import 'package:my_probus/load.dart';
 import 'package:my_probus/pref.dart';
 import 'package:my_probus/val.dart';
 
+import 'home_issue_controller.dart';
+
 class HomeDashbord extends StatelessWidget {
   HomeDashbord({Key? key}) : super(key: key);
   final _listApproved = [].val('HomeDashbord_listApproved').obs;

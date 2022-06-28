@@ -30,6 +30,9 @@ function ModelGenerator() {
             title: 'git push',
             value: 'gitPush',
         }, {
+            title: 'git clear cached',
+            value: 'gitClearCached',
+        }, {
             title: 'clear issue',
             value: 'clearIssue',
         }, {
@@ -59,6 +62,9 @@ function ModelGenerator() {
         }, {
             title: 'seeders',
             value: 'seeders',
+        }, {
+            title: 'backup csv',
+            value: 'backupCsv',
         }]
 
     }).then(({
@@ -92,6 +98,10 @@ function ModelGenerator() {
 
             case 'gitPush':
                 new Controll().gitPush();
+                break;
+
+            case 'gitClearCached':
+                new Controll().gitClearCached();
                 break;
 
             case 'clearIssue':
@@ -132,6 +142,10 @@ function ModelGenerator() {
 
             case 'seeders':
                 new Controll().seeders();
+                break;
+
+            case 'backupCsv':
+                new Controll().backupCsv();
                 break;
 
             default:

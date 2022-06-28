@@ -6,6 +6,7 @@ import 'package:my_probus/homes/home_dashboard.dart';
 import 'package:my_probus/homes/home_issue_detail.dart';
 import 'package:my_probus/homes/home_issue_history.dart';
 import 'package:my_probus/homes/home_nav.dart';
+import 'package:my_probus/homes/master.dart';
 import 'package:my_probus/homes/under_construction.dart';
 import 'package:my_probus/load.dart';
 import 'package:my_probus/val.dart';
@@ -118,6 +119,13 @@ class HomePage extends StatelessWidget {
       'title': 'List Client',
       'icon': Icons.auto_stories_sharp,
       'page': ClientList(),
+      'menu': true,
+    },
+    {
+      'index': 12,
+      'title': 'Master',
+      'icon': Icons.auto_stories_sharp,
+      'page': Master(),
       'menu': true,
     },
   ];

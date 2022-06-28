@@ -4,6 +4,7 @@ import 'package:my_probus/conn.dart';
 import 'package:my_probus/load.dart';
 import 'package:my_probus/models/model_status.dart';
 import 'package:get/get.dart';
+import 'package:my_probus/val.dart';
 
 class ButtonStatus extends StatelessWidget {
   const ButtonStatus(
@@ -24,6 +25,7 @@ class ButtonStatus extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
+            
             MaterialButton(
               color: Colors.blue,
               child: Text(paramA.name.toString(), style: TextStyle(color: Colors.white)),
@@ -36,25 +38,25 @@ class ButtonStatus extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text("Are you sure to accept this issue?"),
-                        TextFormField(
-                          controller: note,
-                          decoration: InputDecoration(fillColor: Colors.grey.shade50, filled: true, hintText: ""),
-                        )
+                        // TextFormField(
+                        //   controller: note,
+                        //   decoration: InputDecoration(fillColor: Colors.grey.shade50, filled: true, hintText: ""),
+                        // )
                       ],
                     ),
                     actions: [
                       MaterialButton(
                         child: Text("Yes"),
                         onPressed: () async {
-                          if (note.text.isEmpty) {
-                            EasyLoading.showError("Please fill note");
-                            return;
-                          }
+                          // if (note.text.isEmpty) {
+                          //   EasyLoading.showError("Please fill note");
+                          //   return;
+                          // }
 
                           final body = {
                             "issueId": issueId,
                             "issueStatusesId": paramA.id,
-                            "note": note.text,
+                            "note": "",
                           };
 
                           final ptc = await Conn().issuePatchStatus(body);
@@ -93,31 +95,31 @@ class ButtonStatus extends StatelessWidget {
                       children: [
                         Text("Are you sure to reject this issue?"),
                         // pilih prioritas
-                        TextFormField(
-                          // onChanged: (value) => _noteController.value.val = value,
-                          controller: note,
-                          maxLength: 100,
-                          maxLines: 5,
-                          decoration: InputDecoration(
-                            labelText: "Reason",
-                            hintText: "Please enter reason",
-                          ),
-                        )
+                        // TextFormField(
+                        //   // onChanged: (value) => _noteController.value.val = value,
+                        //   controller: note,
+                        //   maxLength: 100,
+                        //   maxLines: 5,
+                        //   decoration: InputDecoration(
+                        //     labelText: "Reason",
+                        //     hintText: "Please enter reason",
+                        //   ),
+                        // )
                       ],
                     ),
                     actions: [
                       MaterialButton(
                         child: Text("Yes"),
                         onPressed: () async {
-                          if (note.text.isEmpty) {
-                            EasyLoading.showError("Please enter reason");
-                            return;
-                          }
+                          // if (note.text.isEmpty) {
+                          //   EasyLoading.showError("Please enter reason");
+                          //   return;
+                          // }
 
                           final body = {
                             "issueId": issueId,
                             "issueStatusesId": paramB.id,
-                            "note": note.text,
+                            "note": "",
                           };
 
                           final ptc = await Conn().issuePatchStatus(body);

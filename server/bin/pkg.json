@@ -7,6 +7,7 @@
         "client command",
         "build release",
         "git push",
+        "git clear cached",
         "clear issue",
         "mode dev",
         "mode pro",
@@ -16,7 +17,8 @@
         "seed client",
         "prisma migrate",
         "prisma generate",
-        "seeders"
+        "seeders",
+        "backup csv"
     ],
     "flutter": [
         "cupertino_icons",

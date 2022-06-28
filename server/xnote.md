@@ -1,10 +1,21 @@
+# request 1
 
+- desciption kebawah di detail (mbk ayu)
+- accept tanpa harus note (dewi)}
+- peringatan jika sudah seminggu lebih (mbk ayu)
+- client list tambah dan update (pengembangan)
+- issue edit (pengembangan)
+- tambah di module INSTALL SYSTEM, REPORT , OTHER (dewi)
+- buat master file csv / tabulator (pengembangan)
+- report dasboard berdasar role (pengembangan)
 
-- kalender opertional
+# request 2
 
-
-
-
+- jadwal kunjungan client
+- remake tampilan awal
+- user experient dashboard
+- leader bisa langung ke admin
+- moderator hanya untuk pengembangan saja
 
 
 

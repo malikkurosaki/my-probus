@@ -6,7 +6,11 @@ const routClient = express.Router();
 
 
 const ClientGet = expressAsyncHandler(async (req, res) => {
-    const clients = await prisma.clients.findMany();
+    const clients = await prisma.clients.findMany({
+        orderBy: {
+            name: "asc"
+        }
+    });
     res.status(200).json({
         message: 'Get all clients success',
         data: clients

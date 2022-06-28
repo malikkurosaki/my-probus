@@ -14,6 +14,7 @@ const { createServer } = require("http");
 const httpServer = createServer(app);
 const path = require('path');
 
+
 const io = new Server(httpServer, {
     allowEIO3: true,
     cors: {
@@ -23,6 +24,7 @@ const io = new Server(httpServer, {
 });
 const fs = require('fs');
 const { routeDashboard } = require('./controllers/dashboard');
+const { routeMaster } = require('./controllers/master');
 
 // const { routeImage } = require('./controllers/image');
 
@@ -62,6 +64,9 @@ const cobaApi = express.Router();
 cobaApi.use("/dashboard", routeDashboard);
 app.use(cobaApi)
 
+
+app.use("/master", routeMaster);
+
 // dafri upload image
 app.get('/image/:name', (req, res) => {
     if (fs.existsSync(__dirname + '/uploads/' + req.params.name )) {
@@ -80,6 +85,7 @@ app.get('/images/:name', (req, res) => {
         res.type('image/png').sendFile('./assets/images/noimage.png', { root: __dirname });
     }
 });
+
 
 app.use(apiRoot, async (req, res, next) => {
     const authHeader = req.headers['authorization']

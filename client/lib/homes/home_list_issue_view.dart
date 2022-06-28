@@ -15,6 +15,8 @@ import 'package:my_probus/pref.dart';
 import 'package:my_probus/val.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
+import 'home_issue_controller.dart';
+
 class HomeListIssueView extends StatelessWidget {
   const HomeListIssueView({Key? key, required this.listIssue, required this.listIssueBackup, required this.lebarItem})
       : super(key: key);
@@ -25,6 +27,7 @@ class HomeListIssueView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    HomeIssueController.onLoad();
     return RefreshIndicator(
       onRefresh: () async {
         await Load().loadIssue(alert: true);
