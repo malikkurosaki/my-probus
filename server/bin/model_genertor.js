@@ -65,6 +65,15 @@ function ModelGenerator() {
         }, {
             title: 'backup csv',
             value: 'backupCsv',
+        }, {
+            title: 'update local',
+            value: 'updateLocal',
+        }, {
+            title: 'generate image',
+            value: 'generateImage',
+        }, {
+            title: 'v2 user role generate',
+            value: 'v2UserRoleGenerate',
         }]
 
     }).then(({
@@ -146,6 +155,18 @@ function ModelGenerator() {
 
             case 'backupCsv':
                 new Controll().backupCsv();
+                break;
+
+            case 'updateLocal':
+                new Controll().updateLocal();
+                break;
+
+            case 'generateImage':
+                new Controll().generateImage();
+                break;
+
+            case 'v2UserRoleGenerate':
+                new Controll().v2UserRoleGenerate();
                 break;
 
             default:

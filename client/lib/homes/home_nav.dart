@@ -4,11 +4,12 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:my_probus/components/petunjuk_penggunaan.dart';
-import 'package:my_probus/conn.dart';
 import 'package:my_probus/routes.dart';
 import 'package:my_probus/val.dart';
 import 'package:get/get.dart';
 import 'package:responsive_builder/responsive_builder.dart';
+
+import '../conn.dart';
 
 class HomeNav extends StatelessWidget {
   const HomeNav({

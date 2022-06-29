@@ -1,5 +1,6 @@
 // const Generator = require('./generator');
 const execSync = require("child_process").execSync;
+const _ = require("lodash");
 const path = require("path");
 const _server = path.join(__dirname, "../../server");
 const _client = path.join(__dirname, "../../client");
@@ -9,9 +10,180 @@ const { SetMode } = require("./set_mode");
 const fs = require("fs");
 const SSH = require("simple-ssh");
 const papaparse = require("papaparse");
+const { PrismaClient } = require("@prisma/client");
+const prisma = new PrismaClient();
+const exios = require("axios").default;
+const csvtojson = require("csvtojson");
+const jsBeautify = require("js-beautify");
+
+function ssh(pass, command) {
+    return new SSH({
+        host: "makurostudio.my.id",
+        user: "makuro",
+        pass: pass,
+    }).exec(`source ~/.nvm/nvm.sh && cd my-probus && ${command}`, {
+        out: (data) => console.log(`${data}`.green),
+    }).start()
+}
 
 class Controll {
-  async backupCsv() {}
+  async v2UserRoleGenerate() {
+    let role = await prisma.roles.findMany();
+    console.log(role);
+  }
+  async generateImage() {
+    // image dir server
+    const targetPath = path.join(__dirname, "../../server/assets/images");
+    const resultPath = path.join(
+      __dirname,
+      "../../client/lib/v2/v2_image_widget.dart"
+    );
+    const listImage = fs.readdirSync(targetPath);
+
+    let items = listImage.map((itm) => {
+      let url = '"${V2Config.host}/images/' + itm + '"';
+      return `
+            static Widget ${_.camelCase(
+              itm.split(".")[0]
+            )}({double? height}) => CachedNetworkImage(
+                    height: height,
+                    imageUrl: ${url},
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) => const Center(
+                    child: CircularProgressIndicator(),
+                    ),
+                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                    filterQuality: FilterQuality.low,
+                    memCacheHeight: 100,
+                    memCacheWidth: 100,
+                );
+            `;
+    });
+
+    let template = `
+        import 'package:cached_network_image/cached_network_image.dart';
+        import 'package:flutter/material.dart';
+        import 'package:my_probus/v2/v2_config.dart';
+
+        class V2ImageWidget {
+            ${items.join("\n")}
+        }
+        `;
+
+    fs.writeFileSync(resultPath, template);
+    execSync(`dart format ${resultPath}`, {
+      stdio: "inherit",
+    });
+    console.log("generate image widget success");
+  }
+
+  async updateLocal() {
+    const {pass} = await prompts({
+        type: "password",
+        name: "pass",
+        message: "Enter your password",
+    })
+
+    ssh(pass, `ls`);
+    
+
+  }
+
+  async updateLocal_bak() {
+    const dir = fs.readdirSync(path.join(__dirname, "../backup"));
+    let fileConfig = fs
+      .readFileSync(path.join(__dirname, "./backup_config.js"))
+      .toString();
+    const namas = [];
+
+    if (!fileConfig.includes("@prisma/client")) {
+      fileConfig =
+        `
+        const {
+        PrismaClient
+        } = require("@prisma/client");
+        const prisma = new PrismaClient();
+        const fs = require("fs");
+        const csvtojson = require("csvtojson");
+        const path = require("path");
+        const _ = require("lodash");
+      ` + fileConfig;
+    }
+
+    for (let itm of dir) {
+      await prisma[itm.replace(".csv", "")].deleteMany({
+        where: {
+          id: {
+            not: undefined,
+          },
+        },
+      });
+
+      if (!fileConfig.includes("Update" + itm.replace(".csv", ""))) {
+        namas.push("await Update" + itm.replace(".csv", "") + "()");
+        
+        fileConfig = fileConfig + `
+        async function Update${itm.replace(".csv", "")}() {
+            let dataTarget = fs.readFileSync(path.join(__dirname, "../backup/${itm}")).toString();
+            const data = await csvtojson().fromString(dataTarget);
+
+            for (let itm of data) {
+                let ky = Object.keys(itm);
+                    for (let i of ky) {
+                    if (_.isEmpty(itm[i])) {
+                        itm[i] = undefined;
+                    }
+
+                    if(_.isNumber(itm[i])){
+                        itm[i] = Number(itm[i]);
+                    }
+                }
+                await prisma.${itm.replace(".csv", "")}.create({
+                    data: itm
+                });
+            }
+
+            console.log("${itm.replace(".csv", "")} success");
+        }
+        `;
+
+        
+      }
+    }
+
+    console.log("delete success");
+
+    fileConfig = fileConfig + "\n ;(async() => { " + namas.join("\n") + " })();";
+
+    // let template = ``;
+    // if (fileConfig.includes("module.exports")) {
+    //   template = `module.exports = { ${namas.join(", ")} `;
+    //   fileConfig = fileConfig.replace("module.exports = {", template);
+    // } else {
+    //   template = `module.exports = { ${namas.join(", ")} };`;
+    //   fileConfig += template;
+    // }
+
+    fs.writeFileSync(
+      path.join(__dirname, "./backup_config.js"),
+      jsBeautify(fileConfig, { indent_size: 2 })
+    );
+        let ini = "1";
+        console.log(_.isNumber(ini));
+    execSync(`node ./backup_config.js`, { stdio: "inherit", cwd: __dirname });
+  }
+
+  async backupCsv() {
+    let bak = await exios.get("http://103.171.85.55:3001/master/backup");
+
+    for (let itm of Object.keys(bak.data.data)) {
+      fs.writeFileSync(
+        path.join(__dirname, `./../backup/${itm}.csv`),
+        papaparse.unparse(bak.data.data[itm])
+      );
+    }
+    console.log("backup success");
+  }
   async gitClearCached() {
     execSync(`git rm -r --cached .`, {
       stdio: "inherit",

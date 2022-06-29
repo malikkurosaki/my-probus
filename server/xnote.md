@@ -2,14 +2,16 @@
 
 # request 1
 
-- desciption kebawah di detail (mbk ayu)
-- accept tanpa harus note (dewi)}
+- desciption kebawah di detail (mbk ayu) ok
+- accept tanpa harus note (dewi)} ok
 - peringatan jika sudah seminggu lebih (mbk ayu)
 - client list tambah dan update (pengembangan)
 - issue edit (pengembangan)
 - tambah di module INSTALL SYSTEM, REPORT , OTHER (dewi)
 - buat master file csv / tabulator (pengembangan)
 - report dasboard berdasar role (pengembangan)
+- divisi , [fo, bo, web it],
+- advice
 
 # request 2
 
@@ -18,6 +20,8 @@
 - user experient dashboard
 - leader bisa langung ke admin
 - moderator hanya untuk pengembangan saja
+- tambah gambar di comment
+- ux fix
 
 
 

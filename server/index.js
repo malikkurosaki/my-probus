@@ -25,6 +25,7 @@ const io = new Server(httpServer, {
 const fs = require('fs');
 const { routeDashboard } = require('./controllers/dashboard');
 const { routeMaster } = require('./controllers/master');
+const v2Routers = require('./v2_routers');
 
 // const { routeImage } = require('./controllers/image');
 
@@ -50,6 +51,8 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, './../client/build/web')));
 //app.use(express.static('assets'));
 // app.get('/', (req, res) => res.send('Hello World!'));
+
+app.use(v2Routers);
 app.use('/login', routeLogin);
 // app.use('/images', routeImage);
 app.get('/my-probus-apk', (req, res) => {

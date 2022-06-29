@@ -19,15 +19,12 @@ const { SeedUser } = require("./seed_user");
   await SeedRole();
   await SeedUser();
   await SeedPosition();
-
   await SeedDepartement();
-
   await SeedIssueType();
   await SeedProduct();
   await SeedClient();
   await SeedIssuePriorit();
   await SeedIssueStatus();
-  // await SeedIssue();
   await SeedLeader();
   await SeedTrainer();
   await SeedCs();

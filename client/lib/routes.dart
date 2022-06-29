@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_probus/regitter_page.dart';
 
 import 'homes/home_page.dart';
 import 'login_page.dart';
+import 'regitter_page.dart';
 import 'root_page.dart';
 
 class Routes {

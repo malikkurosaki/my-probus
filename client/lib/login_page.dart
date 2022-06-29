@@ -6,17 +6,18 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:my_probus/components/petunjuk_penggunaan.dart';
-import 'package:my_probus/config.dart';
 import 'package:my_probus/conn.dart';
+
 import 'package:my_probus/homes/super_admin.dart';
 import 'package:my_probus/load.dart';
-import 'package:my_probus/routes.dart';
 import 'package:my_probus/val.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
+
+import 'routes.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({Key? key}) : super(key: key);

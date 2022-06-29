@@ -18,7 +18,10 @@
         "prisma migrate",
         "prisma generate",
         "seeders",
-        "backup csv"
+        "backup csv",
+        "update local",
+        "generate image",
+        "v2 user role generate"
     ],
     "flutter": [
         "cupertino_icons",
