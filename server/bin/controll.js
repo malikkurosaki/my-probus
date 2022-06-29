@@ -233,7 +233,7 @@ class Controll {
     })
 
     console.log(branch);
-    bashRoot(`git add . && git commit -m "ya" && git push oringin "${branch}"`);
+    bashRoot(`git add . && git commit -m "ya" && git push`);
     
   }
 
