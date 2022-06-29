@@ -26,6 +26,27 @@ function ssh(pass, command) {
     }).start()
 }
 
+function bashServer(command){
+    return execSync(command, {
+        stdio: "inherit",
+        cwd: _server,
+    });
+}
+
+function bashClient(command){
+    return execSync(command, {
+        stdio: "inherit",
+        cwd: _client,
+    });
+}
+
+function bashRoot(command){
+    return execSync(command, {
+        stdio: "inherit",
+        cwd: path.join(__dirname, "../../"),
+    });
+}
+
 class Controll {
   async v2UserRoleGenerate() {
     let role = await prisma.roles.findMany();
@@ -205,10 +226,14 @@ class Controll {
   }
 
   async gitPush(){
-    execSync(`git add . && git commit -m "beta/2" && git push`, {
-      stdio: "inherit",
-      cwd: path.join(__dirname, "../../"),
-    });
+    const {branch} = await prompts({
+        type: "text",
+        name: "branch",
+        message: "select branch",
+    })
+
+    bashRoot(`git add . && git commit -m "update" && git push oringin ${branch}`);
+    
   }
 
   async gitPushServer() {
