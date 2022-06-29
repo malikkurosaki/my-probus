@@ -44,6 +44,7 @@ const SetMode = async (modenya) => {
     console.log(`mode set to  ${modenya}`.yellow);
 };
 
+
 module.exports = {
     SetMode
 };
