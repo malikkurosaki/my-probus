@@ -204,7 +204,14 @@ class Controll {
     });
   }
 
-  async gitPush() {
+  async gitPush(){
+    execSync(`git add . && git commit -m "beta/2" && git push`, {
+      stdio: "inherit",
+      cwd: path.join(__dirname, "../../"),
+    });
+  }
+
+  async gitPushServer() {
     execSync(`git add . && git commit -m "ya" && git push`, {
       stdio: "inherit",
       cwd: path.join(__dirname, "../../"),

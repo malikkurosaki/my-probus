@@ -25,7 +25,7 @@ void main() {
   // socket.on('fromServer', (_) => print(_));
 
   GetStorage.init();
-  runApp(MainApp());
+  runApp(V2MainApp());
 }
 
 class V2MainApp extends StatelessWidget {
