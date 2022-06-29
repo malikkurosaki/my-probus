@@ -6,7 +6,7 @@ const execSync = require("child_process").execSync;
 /** @param {("dev_web" | "pro_web" | "dev_mobile" )} modenya */
 const SetMode = async (modenya) => {
     let devWeb = "http://localhost:3001";
-    let proWeb = "https://probus.makurostudio.my.id";
+    let proWeb = "http://103.171.85.55:3001";
     let devMobile = "http://192.168.43.112:3001";
     let con = "";
 
