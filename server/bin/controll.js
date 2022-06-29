@@ -233,11 +233,9 @@ class Controll {
     })
 
     console.log(branch);
-    bashRoot(`git add . && git commit -m "update" && git push oringin ${branch}`);
+    bashRoot(`git add . && git commit -m "ya" && git push oringin ${branch}`);
     
   }
-
-  
 
   async gitPushServer() {
     execSync(`git add . && git commit -m "ya" && git push`, {
