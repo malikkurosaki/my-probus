@@ -237,6 +237,8 @@ class Controll {
     
   }
 
+  
+
   async gitPushServer() {
     execSync(`git add . && git commit -m "ya" && git push`, {
       stdio: "inherit",
