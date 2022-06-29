@@ -232,6 +232,7 @@ class Controll {
         message: "select branch",
     })
 
+    console.log(branch);
     bashRoot(`git add . && git commit -m "update" && git push oringin ${branch}`);
     
   }
