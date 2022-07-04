@@ -27,6 +27,4 @@ v2Routers.get("/discution-by-issue-id/:id", V2Discution.getDiscutionByIssueId);
 v2Routers.post("/discution-create", V2Discution.createDiscution);
 v2Routers.get("/update-issue-status/:id", V2Issue.updateIssueStatus);
 
-
-
 module.exports = v2Routers;
