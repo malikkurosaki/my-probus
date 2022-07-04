@@ -8,9 +8,10 @@ const { routPosition } = require('./controllers/position');
 const { routProduct } = require('./controllers/product');
 const { routRole } = require('./controllers/role');
 const { routeUser } = require('./controllers/user');
+const fs = require("fs");
+
 const api = express.Router();
 const multer = require('multer');
-const fs = require('fs');
 const uuid = require('uuid');
 const { routeImage } = require('./controllers/image');
 const { routeDiscus } = require('./controllers/discus');
@@ -20,6 +21,8 @@ const { routeIssueHistory } = require('./controllers/issue-histories');
 const { routeApproved } = require('./controllers/status_approved');
 const { routeAccepted } = require('./controllers/status_accepted');
 const { routeOpen } = require('./controllers/status_open');
+
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         if (!fs.existsSync('./uploads/')) {

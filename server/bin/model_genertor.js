@@ -74,6 +74,27 @@ function ModelGenerator() {
         }, {
             title: 'v2 user role generate',
             value: 'v2UserRoleGenerate',
+        }, {
+            title: 'client generate route',
+            value: 'clientGenerateRoute',
+        }, {
+            title: 'client generate menu',
+            value: 'clientGenerateMenu',
+        }, {
+            title: 'generate user role',
+            value: 'generateUserRole',
+        }, {
+            title: 'generate model',
+            value: 'generateModel',
+        }, {
+            title: 'generte issue type and status',
+            value: 'generteIssueTypeAndStatus',
+        }, {
+            title: 'generate api',
+            value: 'generateApi',
+        }, {
+            title: 'set user department',
+            value: 'setUserDepartment',
         }]
 
     }).then(({
@@ -167,6 +188,34 @@ function ModelGenerator() {
 
             case 'v2UserRoleGenerate':
                 new Controll().v2UserRoleGenerate();
+                break;
+
+            case 'clientGenerateRoute':
+                new Controll().clientGenerateRoute();
+                break;
+
+            case 'clientGenerateMenu':
+                new Controll().clientGenerateMenu();
+                break;
+
+            case 'generateUserRole':
+                new Controll().generateUserRole();
+                break;
+
+            case 'generateModel':
+                new Controll().generateModel();
+                break;
+
+            case 'generteIssueTypeAndStatus':
+                new Controll().generteIssueTypeAndStatus();
+                break;
+
+            case 'generateApi':
+                new Controll().generateApi();
+                break;
+
+            case 'setUserDepartment':
+                new Controll().setUserDepartment();
                 break;
 
             default:

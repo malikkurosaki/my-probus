@@ -7,10 +7,12 @@ class V2IsMobileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ResponsiveBuilder(builder: (context, sizingInformation) {
-      return SafeArea(
-        child: isMobile(sizingInformation.isMobile)
-      );
-    });
+    return ResponsiveBuilder(
+      builder: (context, sizingInformation) {
+        return Scaffold(
+          body: SafeArea(child: isMobile(sizingInformation.isMobile)),
+        );
+      },
+    );
   }
 }

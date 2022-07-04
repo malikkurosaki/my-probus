@@ -9,9 +9,12 @@ import 'package:my_probus/v2/v2_api.dart';
 import 'package:my_probus/v2/v2_image_widget.dart';
 import 'package:my_probus/v2/v2_ismobile_widget.dart';
 import 'package:my_probus/v2/v2_routes.dart';
+import 'package:my_probus/v2/v2_storage.dart';
 import 'package:my_probus/v2/v2_val.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+
+import 'v2_models/v2_user_model.dart';
 
 class V2LoginView extends StatelessWidget {
   V2LoginView({Key? key}) : super(key: key);
@@ -108,11 +111,16 @@ class V2LoginView extends StatelessWidget {
                     final lgn = await V2Api.login(body);
 
                     try {
+                      V2Val().logout();
                       EasyLoading.dismiss();
                       V2Val.user.value.val = jsonDecode(lgn.body);
-                      Get.offAllNamed(V2Routes.home);
+                      V2Storage.user.val = jsonDecode(lgn.body);
+                      await V2Val.homeControll.loadIssueDashboard();
+                      Get.offAllNamed(V2Routes.home().key);
                     } catch (e) {
                       EasyLoading.showError("Something went wrong");
+                      throw("error disini : $e");
+                      
                     }
                   },
                   child: Container(

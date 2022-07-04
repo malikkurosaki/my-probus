@@ -1,27 +1,56 @@
+import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
+import 'package:my_probus/v2/v2_issue_create_view.dart';
+import 'package:my_probus/v2/v2_home_detail_view.dart';
+import 'package:my_probus/v2/v2_login_view.dart';
 import 'package:my_probus/v2/v2_root_view.dart';
-
 import 'v2_home_view.dart';
-import 'v2_login_view.dart';
 
-class V2Routes{
-  static const String root = '/';
-  static const String login = '/login';
-  static const String home = '/home';
 
-  static List <GetPage> listRoute = <GetPage>[
-    GetPage(
-      name: root,
-      page: () => V2RootView(),
-    ),
-    GetPage(
-      name: login,
-      page: () => V2LoginView(),
-    ),
-    GetPage(
-      name: home,
-      page: () => V2HomeView(),
-    ),
+class V2Routes {
+    V2Routes._();
+    late String key;
 
-  ];
+    GetPage getPage({
+        Widget ? page
+    }) => GetPage(
+        name: key,
+        page: () => Material(
+            child: page ?? Text(key),
+        ),
+    );
+
+    // a1 do not remove this line
+    V2Routes.root(): key = '/root';
+    V2Routes.login(): key = '/login';
+    V2Routes.register(): key = '/register';
+    V2Routes.home(): key = '/home';
+    V2Routes.profile(): key = '/profile';
+    V2Routes.logout(): key = '/logout';
+    V2Routes.about(): key = '/about';
+    V2Routes.contact(): key = '/contact';
+    V2Routes.development(): key = '/development';
+    V2Routes.issues(): key = '/issues';
+    V2Routes.createIssue(): key = '/create-issue';
+    V2Routes.issueDetail(): key = '/issue-detail';
+
+    // a2 do not remove this line
+    static final all = < GetPage > [
+        V2Routes.root().getPage(page: V2RootView()),
+        V2Routes.login().getPage(page: V2LoginView()),
+        V2Routes.register().getPage(),
+        V2Routes.home().getPage(page: V2HomeView()),
+        V2Routes.profile().getPage(),
+        V2Routes.logout().getPage(),
+        V2Routes.about().getPage(),
+        V2Routes.contact().getPage(),
+        V2Routes.development().getPage(),
+        V2Routes.issues().getPage(),
+        V2Routes.createIssue().getPage(page: V2IssueCreateView()),
+        V2Routes.issueDetail().getPage(page: V2HomeDetailView()),
+
+
+    ];
+
+
 }

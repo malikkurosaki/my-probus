@@ -23,6 +23,8 @@ model Users {
   rolesId      String?
   AuthToken    AuthToken[]
   IssueHistory IssueHistories[]
+  Departement  Departements?    @relation(fields: [departementsId], references: [id])
+  departementsId String?
 }
 
 model Profiles {
@@ -53,6 +55,7 @@ model Departements {
   name      String
   Positions Positions[]
   Issues    Issues[]
+  Users     Users[]
 }
 
 model Roles {

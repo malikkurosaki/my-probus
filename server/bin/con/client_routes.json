@@ -1,0 +1,51 @@
+[
+    {
+        "name": "root",
+        "path": "/"
+    },
+    {
+        "name": "login",
+        "path": "/login"
+    },
+    {
+        "name": "register",
+        "path": "/register"
+    },
+    {
+        "name": "home",
+        "path": "/home"
+    },
+    {
+        "name": "profile",
+        "path": "/profile"
+    },
+    {
+        "name": "logout",
+        "path": "/logout"
+    },
+    {
+        "name": "about",
+        "path": "/about"
+    },
+    {
+        "name": "contact",
+        "path": "/contact"
+    },
+    {
+        "name": "development",
+        "path": "/development"
+    },
+    {
+        "name": "issues",
+        "path": "/issues"
+    },
+    {
+        "name": "create issue",
+        "path": "/create-issue"
+    },
+    {
+        "name": "issue detail",
+        "path": "/issue-detail"
+    }
+    
+]

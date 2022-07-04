@@ -26,6 +26,7 @@ const fs = require('fs');
 const { routeDashboard } = require('./controllers/dashboard');
 const { routeMaster } = require('./controllers/master');
 const v2Routers = require('./v2_routers');
+const V2Login = require('./v2_controller/v2_login');
 
 // const { routeImage } = require('./controllers/image');
 
@@ -52,8 +53,8 @@ app.use(express.static(path.join(__dirname, './../client/build/web')));
 //app.use(express.static('assets'));
 // app.get('/', (req, res) => res.send('Hello World!'));
 
-app.use(v2Routers);
-app.use('/login', routeLogin);
+app.use('/api/v2', v2Routers);
+app.use('/login', V2Login);
 // app.use('/images', routeImage);
 app.get('/my-probus-apk', (req, res) => {
     res.sendFile(path.join(__dirname, './../client/build/app/outputs/apk/release/app-arm64-v8a-release.apk'))

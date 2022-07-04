@@ -21,7 +21,14 @@
         "backup csv",
         "update local",
         "generate image",
-        "v2 user role generate"
+        "v2 user role generate",
+        "client generate route",
+        "client generate menu",
+        "generate user role",
+        "generate model",
+        "generte issue type and status",
+        "generate api",
+        "set user department"
     ],
     "flutter": [
         "cupertino_icons",

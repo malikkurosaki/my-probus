@@ -4,7 +4,9 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/route_manager.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:my_probus/routes.dart';
+import 'package:my_probus/skt.dart';
 import 'package:my_probus/v2/v2_404.dart';
+import 'package:my_probus/v2/v2_config.dart';
 import 'package:my_probus/v2/v2_routes.dart';
 import 'package:my_probus/v2/v2_val.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
@@ -12,17 +14,17 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'root_page.dart';
 
 void main() {
-  // IO.Socket socket = IO.io(Conn().host);
-  // socket.onConnect(
-  //   (_) {
-  //     Skt.onConnect(socket);
-  //     // debugPrint('connect');
-  //     // socket.emit('msg', 'test');
-  //   },
-  // );
-  // socket.on('event', (data) => print(data));
-  // socket.onDisconnect((_) => print('disconnect'));
-  // socket.on('fromServer', (_) => print(_));
+  IO.Socket socket = IO.io(V2Config.host);
+  socket.onConnect(
+    (_) {
+      Skt.onConnect(socket);
+      // debugPrint('connect');
+      // socket.emit('msg', 'test');
+    },
+  );
+  socket.on('event', (data) => print(data));
+  socket.onDisconnect((_) => print('disconnect'));
+  socket.on('fromServer', (_) => print(_));
 
   GetStorage.init();
   runApp(V2MainApp());
@@ -39,9 +41,9 @@ class V2MainApp extends StatelessWidget {
         primarySwatch: Colors.cyan,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      initialRoute: "/",
+      initialRoute: "/root",
       debugShowCheckedModeBanner: false,
-      getPages: V2Routes.listRoute,
+      getPages: V2Routes.all,
       defaultTransition: Transition.noTransition,
       builder: EasyLoading.init(),
       unknownRoute: GetPage(
