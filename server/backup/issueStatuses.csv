@@ -1,0 +1,11 @@
+id,name
+1,open
+10,reopened
+2,accepted
+3,rejected
+4,approved
+5,decline
+6,progress
+7,resolved
+8,closed
+9,pending

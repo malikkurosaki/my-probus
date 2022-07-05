@@ -1,0 +1,5 @@
+id,content,issuesId,usersId,createdAt,updatedAt,imagesId
+4b1678f7-689f-49e2-b6cd-e8f9690ab1b7,"pending - tadi input pembelian >15 item - save, lalu langsung klik NEW tanpa close form, input lagi pembelian > 15 item  saat save yg ke tiga atau ke 4 kalau ga salah baru muncul out of range",f86d3538-303a-42fc-990b-f59d5b6e09ec,7,2022-06-27T07:00:57.181Z,2022-06-27T07:00:57.181Z,
+6026057c-744c-49f2-b7bb-04a16d2b9c44,bjbhbhbh,f2d2562c-cd88-4f56-bcc3-25440c972f2f,7,2022-06-28T05:54:16.582Z,2022-06-28T05:54:16.582Z,
+7fb3d0aa-7850-435d-8013-91fd57493f72,"aku test dengan exe baru juga sama sama hasil nya ",f86d3538-303a-42fc-990b-f59d5b6e09ec,7,2022-06-27T07:02:14.233Z,2022-06-27T07:02:14.233Z,
+b6984c50-4dda-4f83-93dd-e239a3c7beb4,"jadi terakhir seperti ini case nya di klien, dia input langsung dr tombol new langsung, setelah input beberapa kali > 15 item baru muncul pesan error out of range nya ",f86d3538-303a-42fc-990b-f59d5b6e09ec,7,2022-06-27T07:02:00.971Z,2022-06-27T07:02:00.971Z,

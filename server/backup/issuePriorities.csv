@@ -1,0 +1,4 @@
+id,name,value,des
+1,primary,1,pilih jika anda rasa adalah yang ringan
+2,warning,2,pilih jika anda rasa adalah sejenis issue info untuk diketahui
+3,danger,3,"pilih jika anda rasa adalah issue penting "
