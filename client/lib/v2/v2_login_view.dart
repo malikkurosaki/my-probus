@@ -13,6 +13,7 @@ import 'package:my_probus/v2/v2_storage.dart';
 import 'package:my_probus/v2/v2_val.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:soundpool/soundpool.dart';
 
 import 'v2_models/v2_user_model.dart';
 
@@ -51,6 +52,7 @@ class V2LoginView extends StatelessWidget {
                 child: ListView(
                   children: [
                     V2ImageWidget.login(height: 200),
+                    
                     Center(
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -107,21 +109,24 @@ class V2LoginView extends StatelessWidget {
                     }
 
                     EasyLoading.show(status: "Logging in...");
-
                     final lgn = await V2Api.login(body);
+                    if(lgn.statusCode == 200) {
+                     try {
+                        V2Val().logout();
+                        EasyLoading.dismiss();
 
-                    try {
-                      V2Val().logout();
-                      EasyLoading.dismiss();
-                      V2Val.user.value.val = jsonDecode(lgn.body);
-                      V2Storage.user.val = jsonDecode(lgn.body);
-                      await V2Val.homeControll.loadIssueDashboard();
-                      Get.offAllNamed(V2Routes.home().key);
-                    } catch (e) {
-                      EasyLoading.showError("Something went wrong");
-                      throw("error disini : $e");
-                      
+                        V2Val.user.value.val = jsonDecode(lgn.body);
+
+                        await V2Val.homeControll.loadIssueDashboard();
+                        Get.offAllNamed(V2Routes.home().key);
+                      } catch (e) {
+                        EasyLoading.showError("Something went wrong");
+                        throw e.toString();
+                      }
+                    } else {
+                      EasyLoading.showError("Login failed wrong email or password");
                     }
+                    
                   },
                   child: Container(
                     width: double.infinity,

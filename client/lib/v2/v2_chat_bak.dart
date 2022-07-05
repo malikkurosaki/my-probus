@@ -202,27 +202,27 @@ class _V2ChatBakState extends State<V2ChatBak> {
                                     return;
                                   }
 
-                                  final con = {
-                                    "content": _contentText.text,
-                                    "issuesId": _issueValue['id'],
-                                    "usersId": V2Storage.user.val["id"]
-                                    //imagesId
-                                  };
+                                  // final con = {
+                                  //   "content": _contentText.text,
+                                  //   "issuesId": _issueValue['id'],
+                                  //   "usersId": V2Storage.user.val["id"]
+                                  //   //imagesId
+                                  // };
 
-                                  final body = {"type": "text", "dataText": jsonEncode(con)};
+                                  // final body = {"type": "text", "dataText": jsonEncode(con)};
 
-                                  final discution = await V2Api.discutionCreate().postData(body);
+                                  // final discution = await V2Api.discutionCreate().postData(body);
 
-                                  try {
-                                    setState(() {});
-                                    _listDiscution.add(Map.from(jsonDecode(discution.body)));
-                                    _contentText.clear();
-                                    _fokus.requestFocus();
-                                    _scrollController.animateTo(_scrollController.position.maxScrollExtent + 50,
-                                        duration: Duration(milliseconds: 500), curve: Curves.ease);
-                                  } catch (e) {
-                                    print("hahaha");
-                                  }
+                                  // try {
+                                  //   setState(() {});
+                                  //   _listDiscution.add(Map.from(jsonDecode(discution.body)));
+                                  //   _contentText.clear();
+                                  //   _fokus.requestFocus();
+                                  //   _scrollController.animateTo(_scrollController.position.maxScrollExtent + 50,
+                                  //       duration: Duration(milliseconds: 500), curve: Curves.ease);
+                                  // } catch (e) {
+                                  //   print("hahaha");
+                                  // }
                                 },
                               ),
                             ),
@@ -237,52 +237,53 @@ class _V2ChatBakState extends State<V2ChatBak> {
     ;
   }
 
-  Widget _chatItem(bool isMobile, Map itm) => Center(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SizedBox(
-            width: isMobile ? double.infinity : Get.width / 1.5,
-            child: Row(
-              mainAxisAlignment: (itm["User"]?['id'] ?? "a") == V2Storage.user.val['id']
-                  ? MainAxisAlignment.end
-                  : MainAxisAlignment.start,
-              children: [
-                Card(
-                  elevation: 0,
-                  child: Container(
-                    constraints: BoxConstraints(maxWidth: Get.width / (isMobile ? 2 : 3)),
-                    padding: EdgeInsets.all(8),
-                    child: Column(
-                      crossAxisAlignment: (itm["User"]['id'] ?? "a") == V2Val.user.value.val['id']
-                          ? CrossAxisAlignment.end
-                          : CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            itm["User"]['name'].toString(),
-                            style: TextStyle(color: Colors.cyan, fontSize: 16),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: itm['imagesId'] != null
-                              ? CachedNetworkImage(
-                                  imageUrl: V2Config.host + "/image/" + itm['Image']['name'].toString(),
-                                  fit: BoxFit.cover,
-                                )
-                              : Text(itm['content'].toString()),
-                        ),
-                      ],
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
-      );
+  Widget _chatItem(bool isMobile, Map itm) => Text("bak");
+  // Center(
+  //       child: Padding(
+  //         padding: const EdgeInsets.all(8.0),
+  //         child: SizedBox(
+  //           width: isMobile ? double.infinity : Get.width / 1.5,
+  //           child: Row(
+  //             mainAxisAlignment: (itm["User"]?['id'] ?? "a") == V2Storage.user.val['id']
+  //                 ? MainAxisAlignment.end
+  //                 : MainAxisAlignment.start,
+  //             children: [
+  //               Card(
+  //                 elevation: 0,
+  //                 child: Container(
+  //                   constraints: BoxConstraints(maxWidth: Get.width / (isMobile ? 2 : 3)),
+  //                   padding: EdgeInsets.all(8),
+  //                   child: Column(
+  //                     crossAxisAlignment: (itm["User"]['id'] ?? "a") == V2Val.user.value.val['id']
+  //                         ? CrossAxisAlignment.end
+  //                         : CrossAxisAlignment.start,
+  //                     children: [
+  //                       Padding(
+  //                         padding: const EdgeInsets.all(8.0),
+  //                         child: Text(
+  //                           itm["User"]['name'].toString(),
+  //                           style: TextStyle(color: Colors.cyan, fontSize: 16),
+  //                           overflow: TextOverflow.ellipsis,
+  //                         ),
+  //                       ),
+  //                       Padding(
+  //                         padding: const EdgeInsets.all(8.0),
+  //                         child: itm['imagesId'] != null
+  //                             ? CachedNetworkImage(
+  //                                 imageUrl: V2Config.host + "/image/" + itm['Image']['name'].toString(),
+  //                                 fit: BoxFit.cover,
+  //                               )
+  //                             : Text(itm['content'].toString()),
+  //                       ),
+  //                     ],
+  //                   ),
+  //                 ),
+  //               )
+  //             ],
+  //           ),
+  //         ),
+  //       ),
+  //     );
 
   Future<String?> _singleImageUploadHandler() async {
     final upload = http.MultipartRequest('POST', Uri.parse("${V2Config.host}/api/v2/upload-image-single"));

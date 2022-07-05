@@ -8,6 +8,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:my_probus/skt.dart';
 import 'package:my_probus/v2/v2_image_widget.dart';
 import 'package:my_probus/v2/v2_ismobile_widget.dart';
 import 'package:my_probus/v2/v2_storage.dart';
@@ -17,10 +18,11 @@ import 'v2_api.dart';
 import 'v2_config.dart';
 import 'v2_val.dart';
 
-
-
 class V2Chat extends StatelessWidget {
-  const V2Chat({Key? key}) : super(key: key);
+  V2Chat({Key? key}) : super(key: key);
+  final _scrollController = ScrollController();
+  final _fokus = FocusNode();
+  final _contentText = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +82,7 @@ class V2Chat extends StatelessWidget {
                 Obx(
                   () => ListView(
                     addAutomaticKeepAlives: true,
-                    controller: V2Val.detailControll.scrollController,
+                    controller: _scrollController,
                     children: [
                       for (final itm in V2Val.chatControll.listDiscution.value.val)
                         Builder(builder: (context) {
@@ -124,12 +126,19 @@ class V2Chat extends StatelessWidget {
                         V2Val.chatControll.listDiscution.value.val.add(Map.from(jsonDecode(discution.body)));
                         V2Val.chatControll.listDiscution.refresh();
 
-                        V2Val.detailControll.fokus.requestFocus();
+                        _fokus.requestFocus();
 
-                        V2Val.detailControll.scrollController.animateTo(
-                            V2Val.detailControll.scrollController.position.maxScrollExtent + 300,
+                        _scrollController.animateTo(
+                            _scrollController.position.maxScrollExtent + 300,
                             duration: Duration(milliseconds: 500),
                             curve: Curves.ease);
+
+                        Skt.notifWithIssue(
+                          title: "new message",
+                          content: "[ image ]",
+                          jenis: "msg",
+                        );
+                        
                       } else {
                         EasyLoading.showToast("hemmm ...");
                       }
@@ -142,8 +151,8 @@ class V2Chat extends StatelessWidget {
                   Expanded(
                     child: TextField(
                       autofocus: true,
-                      focusNode: V2Val.detailControll.fokus,
-                      controller: V2Val.detailControll.contentText,
+                      focusNode: _fokus,
+                      controller: _contentText,
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -159,35 +168,41 @@ class V2Chat extends StatelessWidget {
                         hintStyle: TextStyle(color: Colors.white),
                       ),
                       onSubmitted: (value) async {
-                        if (V2Val.detailControll.contentText.text.isEmpty) {
+                        if (_contentText.text.isEmpty) {
                           EasyLoading.showToast("Tulis sesuatu");
-                          V2Val.detailControll.fokus.requestFocus();
+                          _fokus.requestFocus();
                           return;
                         }
 
                         final con = {
-                          "content": V2Val.detailControll.contentText.text,
+                          "content": _contentText.text,
                           "issuesId": V2Val.detailControll.content.value.val['id'],
-                          "usersId": V2Storage.user.val["id"]
+                          "usersId": V2Val.user.value.val['id']
                           //imagesId
                         };
 
                         final body = {"type": "text", "dataText": jsonEncode(con)};
 
                         final discution = await V2Api.discutionCreate().postData(body);
-
+                        debugPrint(discution.body);
                         try {
                           V2Val.chatControll.listDiscution.value.val.add(Map.from(jsonDecode(discution.body)));
                           V2Val.chatControll.listDiscution.refresh();
 
-                          V2Val.detailControll.contentText.clear();
-                          V2Val.detailControll.fokus.requestFocus();
-                          V2Val.detailControll.scrollController.animateTo(
-                              V2Val.detailControll.scrollController.position.maxScrollExtent + 100,
+                          Skt.notifWithIssue(
+                            title: "new message",
+                            content: _contentText.text,
+                            jenis: "msg",
+                          );
+
+                          _contentText.clear();
+                          _fokus.requestFocus();
+                          _scrollController.animateTo(
+                              _scrollController.position.maxScrollExtent + 100,
                               duration: Duration(milliseconds: 500),
                               curve: Curves.ease);
                         } catch (e) {
-                          print("hahaha");
+                          debugPrint(e.toString());
                         }
                       },
                     ),
@@ -207,7 +222,7 @@ class V2Chat extends StatelessWidget {
           child: SizedBox(
             width: isMobile ? double.infinity : Get.width / 1.5,
             child: Row(
-              mainAxisAlignment: (itm["User"]?['id'] ?? "a") == V2Storage.user.val['id']
+              mainAxisAlignment: (itm["User"]?['id'] ?? "a") == V2Val.user.value.val['id']
                   ? MainAxisAlignment.end
                   : MainAxisAlignment.start,
               children: [

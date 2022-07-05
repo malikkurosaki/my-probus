@@ -11,20 +11,21 @@ datasource db {
 }
 
 model Users {
-  id           String           @id @default(uuid())
-  name         String
-  email        String
-  password     String
-  Profiles     Profiles?
-  Issues       Issues[]
-  Discussion   Discussion[]
-  Images       Images[]
-  Role         Roles?           @relation(fields: [rolesId], references: [id])
-  rolesId      String?
-  AuthToken    AuthToken[]
-  IssueHistory IssueHistories[]
-  Departement  Departements?    @relation(fields: [departementsId], references: [id])
+  id             String           @id @default(uuid())
+  name           String
+  email          String
+  password       String
+  Profiles       Profiles?
+  Issues         Issues[]
+  Discussion     Discussion[]
+  Images         Images[]
+  Role           Roles?           @relation(fields: [rolesId], references: [id])
+  rolesId        String?
+  AuthToken      AuthToken[]
+  IssueHistory   IssueHistories[]
+  Departement    Departements?    @relation(fields: [departementsId], references: [id])
   departementsId String?
+  Notif          Notif[]
 }
 
 model Profiles {
@@ -91,6 +92,7 @@ model Issues {
   Images            Images[]
   IssueHistory      IssueHistories[]
   dateSubmit        DateTime?
+  Notif             Notif[]
 }
 
 model IssueHistories {
@@ -195,4 +197,17 @@ model AuthToken {
   updatedAt DateTime @updatedAt
   expiresAt DateTime @default(now())
   usersId   String
+}
+
+model Notif {
+  id        String   @id @default(uuid())
+  User      Users?   @relation(fields: [usersId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  usersId   String
+  Issue     Issues?  @relation(fields: [issuesId], references: [id])
+  issuesId  String?
+  title     String?
+  content   String?
+  jenis     String?  @default("msg")
 }

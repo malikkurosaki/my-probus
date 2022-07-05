@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:my_probus/skt.dart';
 import 'package:my_probus/v2/v2_api.dart';
 import 'package:my_probus/v2/v2_image_widget.dart';
 import 'package:my_probus/v2/v2_ismobile_widget.dart';
@@ -179,6 +180,14 @@ class V2IssueCreateView extends StatelessWidget {
                                         actions: [MaterialButton(child: Text("OK"), onPressed: () => Get.back())],
                                       ));
 
+                                      V2Val.homeControll.loadIssueDashboard();
+                                      
+                                       Skt.notifWithIssue(
+                                        title: "new message",
+                                        content: "new Image Message",
+                                        jenis: "msg",
+                                      );
+                                      
                                       return;
                                     }
                                   },
@@ -191,7 +200,9 @@ class V2IssueCreateView extends StatelessWidget {
               ),
               Align(
                 alignment: Alignment.topLeft,
-                child: BackButton(),
+                child: BackButton(
+                  onPressed: () => Get.toNamed(V2Routes.home().key),
+                ),
               )
             ],
           ),

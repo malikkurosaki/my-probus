@@ -84,7 +84,6 @@ class V2DashboardLeader extends StatelessWidget {
               ],
             ),
           ),
-          
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
@@ -139,21 +138,43 @@ class V2DashboardLeader extends StatelessWidget {
                                               children: [
                                                 (itm['dateSubmit'] ?? "").toString().isEmpty
                                                     ? SizedBox.shrink()
-                                                    : Chip(
-                                                        label: Text(timeago.format(DateTime.parse(itm['dateSubmit']))),
+                                                    : Padding(
+                                                        padding: const EdgeInsets.all(2.0),
+                                                        child: Chip(
+                                                          label:
+                                                              Text(timeago.format(DateTime.parse(itm['dateSubmit']))),
+                                                        ),
                                                       ),
-                                                Chip(
-                                                  label: Text(itm['Departement']['name'].toString()),
+                                                Padding(
+                                                  padding: const EdgeInsets.all(2),
+                                                  child: Chip(
+                                                    label: Text(itm['Departement']['name'].toString()),
+                                                  ),
                                                 ),
-                                                Chip(
-                                                  label: Text(itm['Product']['name'].toString()),
+                                                Padding(
+                                                  padding: const EdgeInsets.all(2.0),
+                                                  child: Chip(
+                                                    label: Text(itm['Product']['name'].toString()),
+                                                  ),
                                                 ),
-                                                Chip(
-                                                  label: Text(itm['IssueType']['name'].toString()),
+                                                (itm['IssueType']?['name'] ?? "").toString().isEmpty
+                                                    ? SizedBox.shrink()
+                                                    : Padding(
+                                                        padding: const EdgeInsets.all(2.0),
+                                                        child: Chip(
+                                                          label: Text((itm['IssueType']?['name'] ?? "").toString()),
+                                                        ),
+                                                      ),
+                                                Padding(
+                                                  padding: const EdgeInsets.all(2.0),
+                                                  child: Chip(
+                                                    label: Text(itm['CreatedBy']['name'].toString()),
+                                                  ),
                                                 ),
-                                                Chip(
-                                                  label: Text(itm['CreatedBy']['name'].toString()),
-                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.all(2.0),
+                                                  child: Chip(label: Text(itm['IssuesStatus']['name'].toString())),
+                                                )
                                               ],
                                             ),
                                           ],
@@ -162,7 +183,7 @@ class V2DashboardLeader extends StatelessWidget {
                                     ),
                                     // todo : add button accept or reject
                                     // V2Val.homeControll.acceptOrRejectButton()
-                                    V2Role().buttonStatusByRole
+                                    V2Role().buttonStatusByRole(itm['id'])
                                   ],
                                 ),
                               ),

@@ -8,6 +8,7 @@ import 'package:my_probus/v2/v2_api.dart';
 import 'package:my_probus/v2/v2_chat.dart';
 import 'package:my_probus/v2/v2_role.dart';
 import 'package:my_probus/v2/v2_status.dart';
+import 'package:my_probus/val.dart';
 
 class V2Val {
   static final isMobile = false.val('isMobile').obs;
@@ -46,17 +47,24 @@ class V2HomeController {
   final listIssueDashboard = [].val("listIssueDashboard").obs;
   final selectedIssueId = "".val("selectedIssueId").obs;
 
-  Widget acceptOrRejectButton() => PopupMenuButton(
-        onSelected: (value) {
-          if (value == V2Status.accepted().id) {
+  _update(Object value, String issueId) async {
+    final body = {
+      "issueStatusesId": value.toString(),
+      "usersId": V2Val.user.value.val['id'],
+    };
 
-            print("accept");
-            
-          } else if (value == V2Status.rejected().id) {
-            print("reject");
-          }
+    final data = await V2Api.updateIssueStatus().postDataParam(issueId, body);
+    if (data.statusCode == 200) {
+      await V2Val.homeControll.loadIssueDashboard();
+      EasyLoading.showToast("Updated");
+    } else {
+      EasyLoading.showToast("Error");
+    }
+  }
 
-        
+  Widget acceptOrRejectButton(String issueId) => PopupMenuButton(
+        onSelected: (value) async {
+          _update(value!, issueId);
         },
         itemBuilder: (context) => [
           PopupMenuItem(
@@ -70,7 +78,10 @@ class V2HomeController {
         ],
       );
 
-  Widget approveOrDeclineButton() => PopupMenuButton(
+  Widget approveOrDeclineButton(String issueId) => PopupMenuButton(
+        onSelected: (value) async {
+          _update(value!, issueId);
+        },
         itemBuilder: (context) => [
           PopupMenuItem(
             child: Text(V2Status.approved().name),
@@ -83,7 +94,10 @@ class V2HomeController {
         ],
       );
 
-  Widget statusButton() => PopupMenuButton(
+  Widget pendingProgresButton(String issueId) => PopupMenuButton(
+        onSelected: (value) async {
+          _update(value!, issueId);
+        },
         itemBuilder: (context) => [
           PopupMenuItem(
             child: Text(V2Status.pending().name),
@@ -93,6 +107,22 @@ class V2HomeController {
             child: Text(V2Status.progress().name),
             value: V2Status.progress().id,
           ),
+          PopupMenuItem(
+            child: Text(V2Status.closed().name),
+            value: V2Status.closed().id,
+          ),
+          
+        ],
+      );
+    
+
+
+  Widget resolveCloseButton(String issueId) => 
+  PopupMenuButton(
+        onSelected: (value) async {
+          _update(value!, issueId);
+        },
+        itemBuilder: (context) => [
           PopupMenuItem(
             child: Text(V2Status.resolved().name),
             value: V2Status.resolved().id,
@@ -105,10 +135,16 @@ class V2HomeController {
       );
 
   Future<void> loadDiscutionByIssueId() async {
-    final data = await V2Api.discutionByIssueId().getByParams(V2Val.homeControll.selectedIssueId.value.val);
-    V2Val.chatControll.listDiscution.value.val = jsonDecode(data.body);
-    V2Val.chatControll.listDiscution.refresh();
-    debugPrint("ambil data discution");
+    try {
+      final data = await V2Api.discutionByIssueId().getByParams(V2Val.homeControll.selectedIssueId.value.val);
+
+      V2Val.chatControll.listDiscution.value.val = jsonDecode(data.body);
+      V2Val.chatControll.listDiscution.refresh();
+      debugPrint("ambil data discution");
+    } catch (e) {
+      EasyLoading.showToast(e.toString());
+      throw e.toString();
+    }
   }
 
   Future<void> loadIssueDashboard() async {
@@ -130,17 +166,14 @@ class V2IHomeDetailController {
   final content = {}.val("V2IssueDetail_content").obs;
   final image = "".val("V2IssueDetail_image").obs;
   // final listDiscution = [].val("V2IssueDetail_listDiscution").obs;
-  final scrollController = ScrollController();
-  final fokus = FocusNode();
-  final contentText = TextEditingController();
-
+  
   clear() {
     type.value.val = {};
     showDetail.value.val = false;
     content.value.val = {};
     image.value.val = "";
     // listDiscution.value.val = [];
-    contentText.text = "";
+    // contentText.text = "";
   }
 }
 

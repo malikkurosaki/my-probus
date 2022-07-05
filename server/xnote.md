@@ -10,7 +10,7 @@
 - tambah di module INSTALL SYSTEM, REPORT , OTHER (dewi)
 - buat master file csv / tabulator (pengembangan)
 - report dasboard berdasar role (pengembangan)
-- divisi , [fo, bo, web it],
+- divisi , [fo/pos, bo, web , it, ecomers],
 - advice
 
 # request 2
@@ -23,7 +23,12 @@
 - tambah gambar di comment
 - ux fix
 
+### request 4
 
+- summary report dashboard
+- admin change status with note reason
+- waktu pengerjaan di mas ahmad estimasi
+- jika module fo dan ecomers masgun, sisanya dewi
 
 note :
 

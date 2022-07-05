@@ -15,6 +15,7 @@ import 'package:responsive_builder/responsive_builder.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:soundpool/soundpool.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'routes.dart';
@@ -50,6 +51,7 @@ class LoginPage extends StatelessWidget {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+
                     Container(
                       width: Get.width - 460,
                       padding: EdgeInsets.all(20),
@@ -78,7 +80,6 @@ class LoginPage extends StatelessWidget {
                         controller: ScrollController(),
                         child: Column(
                           children: [
-                            // Image.asset('assets/images/login.jpg'),
                             SizedBox(
                               height: 250,
                               child: CachedNetworkImage(imageUrl: '${Conn().host}/images/login.png'),

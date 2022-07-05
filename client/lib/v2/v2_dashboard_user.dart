@@ -159,7 +159,7 @@ class V2DashboardUser extends StatelessWidget {
                                     ),
                                     // todo : add button accept or reject
                                     // V2Val.homeControll.acceptOrRejectButton()
-                                    V2Role().buttonStatusByRole
+                                    V2Role().buttonStatusByRole(itm['id'])
                                   ],
                                 ),
                               ),

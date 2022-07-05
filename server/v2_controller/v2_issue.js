@@ -224,15 +224,7 @@ const getIssueById = expressAsyncHandler(async (req, res) => {
 });
 
 const updateIssueStatus = expressAsyncHandler(async (req, res) => {
-  const data = JSON.parse(req.body.data);
-
-  // const history = await prisma.issueHistories.create({
-  //   data: {
-  //     issuesId: req.params.id,  
-  //     usersId: data.usersId,
-  //     issueStatusesId: data.issueStatusesId,
-  //   },
-  // });
+  const data = req.body;
 
   const issue = await prisma.issues.update({
     where: {
@@ -247,6 +239,8 @@ const updateIssueStatus = expressAsyncHandler(async (req, res) => {
       }
     },
   });
+
+  res.status(200).json(issue);
 });
 
 const V2Issue = {

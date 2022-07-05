@@ -67,15 +67,15 @@ class V2Role {
    
   }
 
-  Widget get buttonStatusByRole {
+  Widget buttonStatusByRole(String issueId) {
      if (V2Role().myRoleName == V2Role.user().name) {
       return SizedBox.shrink();
     } else if (V2Role().myRoleName == V2Role.leader().name) {
-      return V2HomeController().acceptOrRejectButton();
+      return V2HomeController().acceptOrRejectButton(issueId);
     } else if (V2Role().myRoleName == V2Role.moderator().name) {
-      return V2HomeController().approveOrDeclineButton();
+      return V2HomeController().approveOrDeclineButton(issueId);
     } else if (V2Role().myRoleName == V2Role.admin().name) {
-      return V2HomeController().statusButton();
+      return V2HomeController().pendingProgresButton(issueId);
     } else {
       return Text("ini kosong");
     }
