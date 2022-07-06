@@ -65,10 +65,13 @@ function bashRoot(command) {
 
 class Controll {
     async buildPushGithub() {
-        execSync(`flutter build web --release --base-href /client/build/web/`, {
+        execSync(
+          `flutter build web --release --base-href /my-probus/client/build/web/`,
+          {
             stdio: "inherit",
             cwd: path.join(__dirname, "../../client"),
-        });
+          }
+        );
 
         execSync(`git add . && git commit -m "ya" && git push origin beta/2`, {
             stdio: "inherit",
