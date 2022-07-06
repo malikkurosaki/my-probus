@@ -63,6 +63,12 @@ function bashRoot(command) {
 }
 
 class Controll {
+    async buildGithub() {
+        execSync(`flutter build web --release --`, {
+            stdio: "inherit",
+            cwd: _client,
+        });
+    }
     async setUserDepartment() {
         setUserDepartementExtend.setDepartement()
     }
@@ -99,7 +105,7 @@ class Controll {
             "../../client/lib/v2/v2_image_widget.dart"
         );
         const listImage = fs.readdirSync(targetPath);
-        
+
 
         let items = listImage.map((itm) => {
             let url = '"${V2Config.host}/images/' + itm + '"';

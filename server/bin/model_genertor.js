@@ -27,6 +27,9 @@ function ModelGenerator() {
             title: 'build release',
             value: 'buildRelease',
         }, {
+            title: 'build github',
+            value: 'buildGithub',
+        }, {
             title: 'git push',
             value: 'gitPush',
         }, {
@@ -124,6 +127,10 @@ function ModelGenerator() {
 
             case 'buildRelease':
                 new Controll().buildRelease();
+                break;
+
+            case 'buildGithub':
+                new Controll().buildGithub();
                 break;
 
             case 'gitPush':

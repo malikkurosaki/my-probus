@@ -6,6 +6,7 @@
         "server command",
         "client command",
         "build release",
+        "build github",
         "git push",
         "git clear cached",
         "clear issue",
