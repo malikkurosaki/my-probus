@@ -180,6 +180,7 @@ class V2Chat extends StatelessWidget {
                           "usersId": V2Val.user.val['id']
                           //imagesId
                         };
+                        
 
                         final body = {"type": "text", "dataText": jsonEncode(con)};
 
