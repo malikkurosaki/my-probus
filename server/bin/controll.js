@@ -62,6 +62,7 @@ function bashRoot(command) {
     });
 }
 
+
 class Controll {
     async buildGithub() {
         execSync(
