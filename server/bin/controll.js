@@ -64,13 +64,29 @@ function bashRoot(command) {
 
 
 class Controll {
+    async gitPushBeta2() {
+        execSync(`git add . && git commit -m "ya" && git push origin beta/2`, {
+          stdio: "inherit",
+          cwd: path.join(__dirname, "../../"),
+        });
+    }
+    async buildPushServerOnly() {
+        execSync(`git add . && git commit -m "ya" && git push origin main`, {
+            stdio: "inherit",
+            cwd: path.join(__dirname, "../../"),
+        });
+
+
+    }
+
+
+
     async buildPushGithub() {
         execSync(
-          `flutter build web --release --base-href /my-probus/client/build/web/`,
-          {
-            stdio: "inherit",
-            cwd: path.join(__dirname, "../../client"),
-          }
+            `flutter build web --release --base-href /my-probus/client/build/web/`, {
+                stdio: "inherit",
+                cwd: path.join(__dirname, "../../client"),
+            }
         );
 
         execSync(`git add . && git commit -m "ya" && git push origin beta/2`, {

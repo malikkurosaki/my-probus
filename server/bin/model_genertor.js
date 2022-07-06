@@ -33,11 +33,17 @@ function ModelGenerator() {
             title: 'build push github',
             value: 'buildPushGithub',
         }, {
+            title: 'build push server only',
+            value: 'buildPushServerOnly',
+        }, {
             title: 'git push',
             value: 'gitPush',
         }, {
             title: 'git clear cached',
             value: 'gitClearCached',
+        }, {
+            title: 'git push beta/2',
+            value: 'gitPushBeta2',
         }, {
             title: 'clear issue',
             value: 'clearIssue',
@@ -140,12 +146,20 @@ function ModelGenerator() {
                 new Controll().buildPushGithub();
                 break;
 
+            case 'buildPushServerOnly':
+                new Controll().buildPushServerOnly();
+                break;
+
             case 'gitPush':
                 new Controll().gitPush();
                 break;
 
             case 'gitClearCached':
                 new Controll().gitClearCached();
+                break;
+
+            case 'gitPushBeta2':
+                new Controll().gitPushBeta2();
                 break;
 
             case 'clearIssue':
