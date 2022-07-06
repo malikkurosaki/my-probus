@@ -64,10 +64,22 @@ function bashRoot(command) {
 
 
 class Controll {
+    async buildPushGithub() {
+        execSync(`flutter build web --release --base-href /client/build/web/`, {
+            stdio: "inherit",
+            cwd: path.join(__dirname, "../../client"),
+        });
+
+        execSync(`git add . && git commit -m "ya" && git push origin beta/2`, {
+            stdio: "inherit",
+            cwd: path.join(__dirname, "../../"),
+        });
+    }
+
     async buildGithub() {
         execSync(`flutter build web --release --base-href /client/build/web/`, {
-          stdio: "inherit",
-          cwd: _client,
+            stdio: "inherit",
+            cwd: _client,
         });
     }
     async setUserDepartment() {

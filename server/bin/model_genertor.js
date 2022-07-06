@@ -30,6 +30,9 @@ function ModelGenerator() {
             title: 'build github',
             value: 'buildGithub',
         }, {
+            title: 'build push github',
+            value: 'buildPushGithub',
+        }, {
             title: 'git push',
             value: 'gitPush',
         }, {
@@ -131,6 +134,10 @@ function ModelGenerator() {
 
             case 'buildGithub':
                 new Controll().buildGithub();
+                break;
+
+            case 'buildPushGithub':
+                new Controll().buildPushGithub();
                 break;
 
             case 'gitPush':
