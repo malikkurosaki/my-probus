@@ -17,13 +17,13 @@ import 'v2_api.dart';
 import 'v2_config.dart';
 import 'v2_val.dart';
 
-class V2ChatBak extends StatefulWidget {
-  const V2ChatBak({Key? key}) : super(key: key);
+class V2ChatBak2 extends StatefulWidget {
+  const V2ChatBak2({Key? key}) : super(key: key);
   @override
-  State<V2ChatBak> createState() => _V2ChatBakState();
+  State<V2ChatBak2> createState() => _V2ChatBakState();
 }
 
-class _V2ChatBakState extends State<V2ChatBak> {
+class _V2ChatBakState extends State<V2ChatBak2> {
   bool _showDetail = false;
   Map _issueValue = {};
   List _listDiscution = [];
@@ -154,7 +154,7 @@ class _V2ChatBakState extends State<V2ChatBak> {
                                   final con = {
                                     "content": "",
                                     "issuesId": _issueValue['id'],
-                                    "usersId": V2Val.user.value.val["id"],
+                                    "usersId": V2Val.user.val["id"],
                                     "imagesId": img['data']['id']
                                   };
 
@@ -254,7 +254,7 @@ class _V2ChatBakState extends State<V2ChatBak> {
   //                   constraints: BoxConstraints(maxWidth: Get.width / (isMobile ? 2 : 3)),
   //                   padding: EdgeInsets.all(8),
   //                   child: Column(
-  //                     crossAxisAlignment: (itm["User"]['id'] ?? "a") == V2Val.user.value.val['id']
+  //                     crossAxisAlignment: (itm["User"]['id'] ?? "a") == V2Val.user.val['id']
   //                         ? CrossAxisAlignment.end
   //                         : CrossAxisAlignment.start,
   //                     children: [

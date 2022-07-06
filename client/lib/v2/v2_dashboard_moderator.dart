@@ -39,11 +39,11 @@ class V2DashboardModerator extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          V2Val.user.value.val['name'].toString(),
+                          V2Val.user.val['name'].toString(),
                           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          V2Val.user.value.val['Role']['name'].toString(),
+                          V2Val.user.val['Role']['name'].toString(),
                           style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                         ),
                       ],
@@ -196,8 +196,8 @@ class V2DashboardModerator extends StatelessWidget {
                                     child: Text("Detail"),
                                     onPressed: () async {
                                       V2Val.detailControll.content.value.val = itm;
-                                      V2Val.homeControll.selectedIssueId.value.val = itm['id'];
-                                      await V2Val.homeControll.loadDiscutionByIssueId();
+                                      V2Val.selectedIssueId.val = itm['id'];
+                                      await V2Load.loadDiscutionByIssueId();
                                       Get.toNamed(V2Routes.issueDetail().key);
                                     },
                                   ),

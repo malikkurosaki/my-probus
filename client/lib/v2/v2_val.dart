@@ -13,12 +13,13 @@ import 'package:my_probus/val.dart';
 class V2Val {
   static final isMobile = false.val('isMobile').obs;
   static final hasLogin = false.val('hasLogin').obs;
-  static final user = {}.val('user').obs;
+  static final user = {}.val('user');
   static final listIssueByUser = [].val("listIssueByUser").obs;
   static final listIssueByLeader = [].val("listIssueByLeader").obs;
   static final listIssueByModerator = [].val("listIssueByModerator").obs;
   static final listIssueByAdmin = [].val("listIssueByAdmin").obs;
   static final issueDetailId = "".val("issueDetailId").obs;
+  static final selectedIssueId = "".val("V2Val_selectedIssueId");
 
   static final homeControll = V2HomeController();
   static final detailControll = V2IHomeDetailController();
@@ -27,7 +28,7 @@ class V2Val {
   clear() {
     isMobile.value.val = false;
     hasLogin.value.val = false;
-    user.value.val = {};
+    user.val = {};
     listIssueByUser.value.val = [];
     listIssueByAdmin.value.val = [];
     listIssueByLeader.value.val = [];
@@ -43,14 +44,32 @@ class V2Val {
   }
 }
 
+
+class V2Load{
+
+   static Future<void> loadDiscutionByIssueId() async {
+    try {
+      debugPrint("lihat lihat disini");
+      debugPrint(V2Val.selectedIssueId.val.toString());
+      // final data = await V2Api.discutionByIssueId().getByParams(V2Val.selectedIssueId.val);
+      // V2Val.chatControll.listDiscution.value.val = jsonDecode(data.body) as List<Map<String, dynamic>>;
+      // V2Val.chatControll.listDiscution.refresh();
+      // debugPrint("ambil data discution");
+    } catch (e) {
+      EasyLoading.showToast(e.toString());
+      throw e.toString();
+    }
+  }
+}
+
 class V2HomeController {
   final listIssueDashboard = [].val("listIssueDashboard").obs;
-  final selectedIssueId = "".val("selectedIssueId").obs;
+  // final selectedIssueId = "".val("selectedIssueId").obs;
 
   _update(Object value, String issueId) async {
     final body = {
       "issueStatusesId": value.toString(),
-      "usersId": V2Val.user.value.val['id'],
+      "usersId": V2Val.user.val['id'],
     };
 
     final data = await V2Api.updateIssueStatus().postDataParam(issueId, body);
@@ -134,18 +153,20 @@ class V2HomeController {
         ],
       );
 
-  Future<void> loadDiscutionByIssueId() async {
-    try {
-      final data = await V2Api.discutionByIssueId().getByParams(V2Val.homeControll.selectedIssueId.value.val);
+  // Future<void> loadDiscutionByIssueId() async {
+  //   try {
 
-      V2Val.chatControll.listDiscution.value.val = jsonDecode(data.body);
-      V2Val.chatControll.listDiscution.refresh();
-      debugPrint("ambil data discution");
-    } catch (e) {
-      EasyLoading.showToast(e.toString());
-      throw e.toString();
-    }
-  }
+  //     debugPrint("lihat lihat disini");
+  //     debugPrint(V2Val.selectedIssueId.val.toString());
+  //     // final data = await V2Api.discutionByIssueId().getByParams(V2Val.selectedIssueId.val);
+  //     // V2Val.chatControll.listDiscution.value.val = jsonDecode(data.body) as List<Map<String, dynamic>>;
+  //     // V2Val.chatControll.listDiscution.refresh();
+  //     // debugPrint("ambil data discution");
+  //   } catch (e) {
+  //     EasyLoading.showToast(e.toString());
+  //     throw e.toString();
+  //   }
+  // }
 
   Future<void> loadIssueDashboard() async {
     final data = await V2Api.issueByStatusId().getByParams(V2Role().myStatusId);
@@ -156,7 +177,7 @@ class V2HomeController {
 
   clear() {
     listIssueDashboard.value.val = [];
-    selectedIssueId.value.val = "";
+    V2Val.selectedIssueId.val = "";
   }
 }
 

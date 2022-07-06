@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
 import 'skt.dart';
@@ -22,7 +23,7 @@ void main() {
 
 print("ini ada ddimana");
 
-  // GetStorage.init();
+  GetStorage.init();
   runApp(V2MainApp());
 }
 

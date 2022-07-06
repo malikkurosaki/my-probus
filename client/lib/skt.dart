@@ -51,7 +51,7 @@ class Skt {
   static notifWithIssue(
       {required String title, required String content, required String jenis}) {
     final dataNotif = {
-      "usersId": V2Val.user.value.val['id'],
+      "usersId": V2Val.user.val['id'],
       "title": title,
       "content": content,
       "jenis": jenis,

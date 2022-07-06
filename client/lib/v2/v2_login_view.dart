@@ -115,7 +115,7 @@ class V2LoginView extends StatelessWidget {
                         V2Val().logout();
                         EasyLoading.dismiss();
 
-                        V2Val.user.value.val = jsonDecode(lgn.body);
+                        V2Val.user.val = jsonDecode(lgn.body);
 
                         await V2Val.homeControll.loadIssueDashboard();
                         Get.offAllNamed(V2Routes.home().key);

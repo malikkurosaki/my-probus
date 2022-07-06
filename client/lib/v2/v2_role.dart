@@ -47,10 +47,10 @@ class V2Role {
         V2Role.user(),
       ];
 
-  bool isMe() => V2Val.user.value.val['Role']['id'] == id;
+  bool isMe() => V2Val.user.val['Role']['id'] == id;
 
-  String get myRoleId => V2Val.user.value.val['Role']['id'];
-  String get myRoleName => V2Val.user.value.val['Role']['name'];
+  String get myRoleId => V2Val.user.val['Role']['id'];
+  String get myRoleName => V2Val.user.val['Role']['name'];
 
   String get myStatusId {
     if(V2Role().myRoleName == V2Role.user().name){

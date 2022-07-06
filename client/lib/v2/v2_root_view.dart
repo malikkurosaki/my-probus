@@ -12,7 +12,7 @@ class V2RootView extends StatelessWidget {
   
   _onLoad()async{
     await 0.1.delay();
-    if (V2Val.user.value.val.isEmpty) {
+    if (V2Val.user.val.isEmpty) {
       Get.toNamed(V2Routes.login().key);
     }else{
       Get.toNamed(V2Routes.home().key);

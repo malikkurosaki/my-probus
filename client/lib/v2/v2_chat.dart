@@ -116,7 +116,7 @@ class V2Chat extends StatelessWidget {
                         final con = {
                           "content": "",
                           "issuesId": V2Val.detailControll.content.value.val['id'],
-                          "usersId": V2Val.user.value.val["id"],
+                          "usersId": V2Val.user.val["id"],
                           "imagesId": img['data']['id']
                         };
 
@@ -128,17 +128,17 @@ class V2Chat extends StatelessWidget {
 
                         _fokus.requestFocus();
 
-                        _scrollController.animateTo(
-                            _scrollController.position.maxScrollExtent + 300,
-                            duration: Duration(milliseconds: 500),
-                            curve: Curves.ease);
+                        _scrollController.animateTo(_scrollController.position.maxScrollExtent + 300,
+                            duration: Duration(milliseconds: 500), curve: Curves.ease);
 
                         Skt.notifWithIssue(
                           title: "new message",
                           content: "[ image ]",
                           jenis: "msg",
                         );
-                        
+
+                        debugPrint("halo disini chat image");
+                        await V2Load.loadDiscutionByIssueId();
                       } else {
                         EasyLoading.showToast("hemmm ...");
                       }
@@ -164,7 +164,7 @@ class V2Chat extends StatelessWidget {
                         ),
                         fillColor: Colors.cyan.shade300,
                         filled: true,
-                        hintText: "Tulis sesuatu",
+                        hintText: "Type Something",
                         hintStyle: TextStyle(color: Colors.white),
                       ),
                       onSubmitted: (value) async {
@@ -177,14 +177,14 @@ class V2Chat extends StatelessWidget {
                         final con = {
                           "content": _contentText.text,
                           "issuesId": V2Val.detailControll.content.value.val['id'],
-                          "usersId": V2Val.user.value.val['id']
+                          "usersId": V2Val.user.val['id']
                           //imagesId
                         };
 
                         final body = {"type": "text", "dataText": jsonEncode(con)};
 
                         final discution = await V2Api.discutionCreate().postData(body);
-                        debugPrint(discution.body);
+                        debugPrint("discution.body");
                         try {
                           V2Val.chatControll.listDiscution.value.val.add(Map.from(jsonDecode(discution.body)));
                           V2Val.chatControll.listDiscution.refresh();
@@ -197,10 +197,11 @@ class V2Chat extends StatelessWidget {
 
                           _contentText.clear();
                           _fokus.requestFocus();
-                          _scrollController.animateTo(
-                              _scrollController.position.maxScrollExtent + 100,
-                              duration: Duration(milliseconds: 500),
-                              curve: Curves.ease);
+                          _scrollController.animateTo(_scrollController.position.maxScrollExtent + 100,
+                              duration: Duration(milliseconds: 500), curve: Curves.ease);
+
+                          debugPrint("halo disini chat");
+                          await V2Load.loadDiscutionByIssueId();
                         } catch (e) {
                           debugPrint(e.toString());
                         }
@@ -222,9 +223,8 @@ class V2Chat extends StatelessWidget {
           child: SizedBox(
             width: isMobile ? double.infinity : Get.width / 1.5,
             child: Row(
-              mainAxisAlignment: (itm["User"]?['id'] ?? "a") == V2Val.user.value.val['id']
-                  ? MainAxisAlignment.end
-                  : MainAxisAlignment.start,
+              mainAxisAlignment:
+                  (itm["User"]?['id'] ?? "a") == V2Val.user.val['id'] ? MainAxisAlignment.end : MainAxisAlignment.start,
               children: [
                 Card(
                   elevation: 0,
@@ -232,7 +232,7 @@ class V2Chat extends StatelessWidget {
                     constraints: BoxConstraints(maxWidth: Get.width / (isMobile ? 2 : 3)),
                     padding: EdgeInsets.all(8),
                     child: Column(
-                      crossAxisAlignment: (itm["User"]['id'] ?? "a") == V2Val.user.value.val['id']
+                      crossAxisAlignment: (itm["User"]['id'] ?? "a") == V2Val.user.val['id']
                           ? CrossAxisAlignment.end
                           : CrossAxisAlignment.start,
                       children: [
