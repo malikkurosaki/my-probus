@@ -64,10 +64,13 @@ function bashRoot(command) {
 
 class Controll {
     async buildGithub() {
-        execSync(`flutter build web --release --`, {
+        execSync(
+          `flutter build web --release --base-href /my-probus/client/build/web/`,
+          {
             stdio: "inherit",
             cwd: _client,
-        });
+          }
+        );
     }
     async setUserDepartment() {
         setUserDepartementExtend.setDepartement()
