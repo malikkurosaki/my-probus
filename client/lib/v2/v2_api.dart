@@ -10,6 +10,7 @@ class V2Api {
   static Future < http.Response > login(Map body) => http.post(Uri.parse('${V2Config.host}/login'), body: body);
 
   // a1 do not remove this line
+  V2Api.propertiesAll(): path = '/properties-all';
   V2Api.updateIssueStatus(): path = '/update-issue-status';
   V2Api.uploadImageSingle(): path = '/upload-image-single';
   V2Api.discutionCreate(): path = '/discution-create';

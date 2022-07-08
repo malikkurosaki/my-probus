@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:my_probus/v2/v2_val.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
 import 'skt.dart';
@@ -9,21 +10,20 @@ import 'v2/v2_404.dart';
 import 'v2/v2_routes.dart';
 import 'v2/v2_sound.dart';
 
-void main() {
-  V2Sound.init();
-  Skt.init();
-  // Skt.socket.onConnect(
-  //   (_) {
-  //     Skt.onConnect(Skt.socket);
-  //     // debugPrint('connect');
-  //     // socket.emit('msg', 'test');
-  //   },
-  // );
-
-
-print("ini ada ddimana");
-
-  GetStorage.init();
+void main() async{
+  debugPrint("load sound");
+  await V2Sound.init();
+  debugPrint("load sound done");
+  debugPrint("load sokecet");
+  await Skt.init();
+  debugPrint("load sokecet done");
+  debugPrint("load storage");
+  await GetStorage.init();
+  debugPrint("load storage done");
+  debugPrint("load properties");
+  await V2Load.propertiesAll();
+  debugPrint("load properties done");
+  debugPrint("run");
   runApp(V2MainApp());
 }
 

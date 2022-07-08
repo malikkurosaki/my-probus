@@ -4,6 +4,7 @@ const V2Image = require("./v2_controller/v2_image");
 const V2Issue = require("./v2_controller/v2_issue");
 const V2Module = require("./v2_controller/v2_module");
 const V2Product = require("./v2_controller/v2_product");
+const V2Properties = require("./v2_controller/v2_properties");
 const V2Status = require("./v2_controller/v2_status");
 const V2Type = require("./v2_controller/v2_type");
 const v2Routers = require("express").Router();
@@ -26,6 +27,7 @@ v2Routers.get("/status-get-all", V2Status.getAll);
 v2Routers.get("/discution-by-issue-id/:id", V2Discution.getDiscutionByIssueId);
 v2Routers.post("/discution-create", V2Discution.createDiscution);
 v2Routers.post("/update-issue-status/:id", V2Issue.updateIssueStatus);
+v2Routers.get("/properties-all", V2Properties.all);
 
 module.exports = v2Routers;
 

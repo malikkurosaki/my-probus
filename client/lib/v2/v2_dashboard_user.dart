@@ -54,6 +54,7 @@ class V2DashboardUser extends StatelessWidget {
                     ),
                   ),
                 ),
+                V2Val.clock,
                 IconButton(
                     onPressed: () async {
                       await V2Val.homeControll.loadIssueDashboard();
@@ -103,7 +104,7 @@ class V2DashboardUser extends StatelessWidget {
                 // Text(V2Val.homeControll.listIssueDashboard.value.val.toString()),
                 Wrap(
                   children: [
-                    for (final itm in V2Val.homeControll.listIssueDashboard.value.val)
+                    for (final itm in V2Val.listIssueDashboard.value.val)
                       SizedBox(
                         width: Get.width / (isMobile ? 0 : 3),
                         child: Card(

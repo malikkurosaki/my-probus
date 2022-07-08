@@ -54,6 +54,8 @@ dependencies:
   tab_container: ^2.0.0
   queen_alerts: ^0.0.4-beta
   soundpool: ^2.3.0
+  printing: ^5.9.1
+  slide_digital_clock: ^1.0.2
 
 dev_dependencies:
   flutter_test:

@@ -94,20 +94,20 @@ class V2IssueCreateView extends StatelessWidget {
 
                               // select type
                               // _selectFuture(V2Api.type().getData(), "Select Type"),
-                              V2SelectFuture(hint: "Select Type", future: V2Api.type().getData(), value: _type),
+                              V2SelectFuture(hint: "Select Type", sources: V2Val.listType.value.val, value: _type),
 
                               // select client
                               // _selectFuture(V2Api.client().getData(), "Select Client"),
-                              V2SelectFuture(hint: "Select Client ", future: V2Api.client().getData(), value: _client),
+                              V2SelectFuture(hint: "Select Client ", sources: V2Val.listClient.value.val, value: _client),
 
                               // select product
                               // _selectFuture(V2Api.products().getData(), "Select Product"),
                               V2SelectFuture(
-                                  hint: "Select Product", future: V2Api.products().getData(), value: _product),
+                                  hint: "Select Product", sources: V2Val.listProduct.value.val, value: _product),
 
                               // module
                               // _selectFuture(V2Api.modules().getData(), "Select Module"),
-                              V2SelectFuture(hint: "Select Module", future: V2Api.modules().getData(), value: _module),
+                              V2SelectFuture(hint: "Select Module", sources: V2Val.listModule.value.val, value: _module),
 
                               Padding(
                                 padding: const EdgeInsets.symmetric(horizontal: 18),
@@ -189,6 +189,8 @@ class V2IssueCreateView extends StatelessWidget {
                                       );
                                       
                                       return;
+                                    }else{
+                                      EasyLoading.showError(issue.body.toString());
                                     }
                                   },
                                 ),

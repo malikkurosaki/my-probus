@@ -20,7 +20,7 @@ class Skt {
   //   autoConnect: false,
   // );
 
-  static init(){
+  static init()async{
     socket.onConnect((data) => {
       onConnect(socket)
     });

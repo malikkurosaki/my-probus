@@ -9,6 +9,7 @@ import 'package:my_probus/v2/v2_chat.dart';
 import 'package:my_probus/v2/v2_role.dart';
 import 'package:my_probus/v2/v2_status.dart';
 import 'package:my_probus/val.dart';
+import 'package:slide_digital_clock/slide_digital_clock.dart';
 
 class V2Val {
   static final isMobile = false.val('isMobile').obs;
@@ -21,9 +22,22 @@ class V2Val {
   static final issueDetailId = "".val("issueDetailId").obs;
   static final selectedIssueId = "".val("V2Val_selectedIssueId");
 
+  static final listIssueDashboard = [].val("listIssueDashboard").obs;
+  static final backupListIssueDashboard = [].val("backupListIssueDashboard").obs;
+
   static final homeControll = V2HomeController();
   static final detailControll = V2IHomeDetailController();
   static final chatControll = V2ChatController();
+
+  static final listType = [].val("V2Val_listType").obs;
+  static final listStatus = [].val("V2Val_listStatus").obs;
+  static final listRole = [].val("V2Val_listRole").obs;
+  static final listUser = [].val("V2Val_listUser").obs;
+  static final listIssue = [].val("V2Val_listIssue").obs;
+  static final listModule = [].val("V2Val_listModule").obs;
+  static final listProduct = [].val("V2Val_listProduct").obs;
+  static final listClient = [].val("V2Val_listClient").obs;
+
 
   clear() {
     isMobile.value.val = false;
@@ -42,12 +56,37 @@ class V2Val {
     V2Val.detailControll.clear();
     V2Val.chatControll.clear();
   }
+
+  static final clock = DigitalClock(
+    areaAligment: AlignmentDirectional.topEnd,
+    areaDecoration: const BoxDecoration(
+      color: Colors.transparent,
+    ),
+    hourMinuteDigitTextStyle: const TextStyle(
+      fontSize: 30,
+      color: Colors.black,
+    ),
+    secondDigitTextStyle: const TextStyle(
+      color: Colors.black,
+      fontSize: 30,
+    ),
+    amPmDigitTextStyle: const TextStyle(
+      color: Colors.black,
+      fontSize: 20,
+    ),
+    is24HourTimeFormat: true,
+    hourMinuteDigitDecoration: const BoxDecoration(
+      color: Colors.transparent,
+    ),
+    showSecondsDigit: true,
+    secondDigitDecoration: const BoxDecoration(
+      color: Colors.transparent,
+    ),
+  );
 }
 
-
-class V2Load{
-
-   static Future<void> loadDiscutionByIssueId() async {
+class V2Load {
+  static Future<void> loadDiscutionByIssueId() async {
     try {
       debugPrint("lihat lihat disini");
       debugPrint(V2Val.selectedIssueId.val.toString());
@@ -60,10 +99,30 @@ class V2Load{
       throw e.toString();
     }
   }
+
+  static Future<void> propertiesAll() async {
+    try {
+      final data = await V2Api.propertiesAll().getData();
+      final all = jsonDecode(data.body);
+
+      V2Val.listType.value.val = List<Map>.from(all['issueTypes']);
+      V2Val.listStatus.value.val = List<Map>.from(all['issueStatuses']);
+      V2Val.listRole.value.val = List<Map>.from(all['roles']);
+      V2Val.listUser.value.val = List<Map>.from(all['users']);
+      V2Val.listModule.value.val = List<Map>.from(all['departements']);
+      V2Val.listProduct.value.val = List<Map>.from(all['products']);
+      V2Val.listClient.value.val = List<Map>.from(all['clients']);
+
+      debugPrint("ambil data properties");
+    } catch (e) {
+      // EasyLoading.showToast(e.toString());
+      throw e.toString();
+    }
+  }
 }
 
 class V2HomeController {
-  final listIssueDashboard = [].val("listIssueDashboard").obs;
+  // final listIssueDashboard = [].val("listIssueDashboard").obs;
   // final selectedIssueId = "".val("selectedIssueId").obs;
 
   _update(Object value, String issueId) async {
@@ -93,6 +152,26 @@ class V2HomeController {
           PopupMenuItem(
             child: Text(V2Status.rejected().name),
             value: V2Status.rejected().id,
+          ),
+        ],
+      );
+
+  Widget accepttRejectApproveButton(String issueId) => PopupMenuButton(
+        onSelected: (value) async {
+          _update(value!, issueId);
+        },
+        itemBuilder: (context) => [
+          PopupMenuItem(
+            child: Text(V2Status.accepted().name),
+            value: V2Status.accepted().id,
+          ),
+          PopupMenuItem(
+            child: Text(V2Status.rejected().name),
+            value: V2Status.rejected().id,
+          ),
+          PopupMenuItem(
+            child: Text(V2Status.approved().name),
+            value: V2Status.approved().id,
           ),
         ],
       );
@@ -130,14 +209,10 @@ class V2HomeController {
             child: Text(V2Status.closed().name),
             value: V2Status.closed().id,
           ),
-          
         ],
       );
-    
 
-
-  Widget resolveCloseButton(String issueId) => 
-  PopupMenuButton(
+  Widget resolveCloseButton(String issueId) => PopupMenuButton(
         onSelected: (value) async {
           _update(value!, issueId);
         },
@@ -170,13 +245,15 @@ class V2HomeController {
 
   Future<void> loadIssueDashboard() async {
     final data = await V2Api.issueByStatusId().getByParams(V2Role().myStatusId);
-    V2Val.homeControll.listIssueDashboard.value.val = jsonDecode(data.body);
-    V2Val.homeControll.listIssueDashboard.refresh();
+    V2Val.listIssueDashboard.value.val = List<Map>.from(jsonDecode(data.body)) ;
+    V2Val.listIssueDashboard.refresh();
+    V2Val.backupListIssueDashboard.value.val =  List<Map>.from(jsonDecode(data.body));
+
     debugPrint("ambil data issue by ${V2Role().myRoleName}");
   }
 
   clear() {
-    listIssueDashboard.value.val = [];
+    V2Val.listIssueDashboard.value.val = [];
     V2Val.selectedIssueId.val = "";
   }
 }
@@ -187,7 +264,7 @@ class V2IHomeDetailController {
   final content = {}.val("V2IssueDetail_content").obs;
   final image = "".val("V2IssueDetail_image").obs;
   // final listDiscution = [].val("V2IssueDetail_listDiscution").obs;
-  
+
   clear() {
     type.value.val = {};
     showDetail.value.val = false;

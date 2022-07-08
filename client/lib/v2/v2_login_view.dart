@@ -13,6 +13,8 @@ import 'package:my_probus/v2/v2_storage.dart';
 import 'package:my_probus/v2/v2_val.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:my_probus/val.dart';
+import 'package:slide_digital_clock/slide_digital_clock.dart';
 import 'package:soundpool/soundpool.dart';
 
 import 'v2_models/v2_user_model.dart';
@@ -36,6 +38,11 @@ class V2LoginView extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 V2ImageWidget.logo(height: 200),
+                Container(
+                  alignment: Alignment.bottomRight,
+                  padding: const EdgeInsets.all(16),
+                  child: Center(child: V2Val.clock),
+                )
               ],
             ),
           ),

@@ -18,8 +18,13 @@ import 'package:timeago/timeago.dart' as timeago;
 class V2HomeView extends StatelessWidget {
   const V2HomeView({Key? key}) : super(key: key);
 
+   _onLoad() async {
+    await V2Val.homeControll.loadIssueDashboard();
+  }
+
   @override
   Widget build(BuildContext context) {
+    _onLoad();
     return V2IsMobileWidget(
         isMobile: (isMobile) => Scaffold(
               body: Row(
@@ -32,9 +37,15 @@ class V2HomeView extends StatelessWidget {
         child: ListView(
           controller: ScrollController(),
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: V2ImageWidget.logo(),
+            Container(
+              padding: EdgeInsets.all(8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  V2ImageWidget.logo(),
+                  
+                ],
+              ),
             ),
             for (final itm in V2Menu.all) itm,
             MaterialButton(

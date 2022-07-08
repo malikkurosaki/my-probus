@@ -12,7 +12,8 @@ const create = expressAsyncHandler(async (req, res) => {
   const data = JSON.parse(req.body.data);
   const images = JSON.parse(req.body.images);
 
-  data["dateSubmit"] = new Date(Date.parse(req.body["dateSubmit"]));
+  data["dateSubmit"] = new Date(Date.parse(data["dateSubmit"]));
+
   const issue = await prisma.issues.create({ data });
 
   if (!_.isEmpty(images)) {
@@ -27,7 +28,7 @@ const create = expressAsyncHandler(async (req, res) => {
     }
   }
 
-  res.status(200).json("issue");
+  res.status(200).json(issue);
 });
 
 const issueByRole = expressAsyncHandler(async (req, res) => {
@@ -100,8 +101,13 @@ const issueByOpen = expressAsyncHandler(async (req, res) => {
   res.status(200).json(status);
 });
 
+
 const issueByStatusId = expressAsyncHandler(async (req, res) => {
   const status = await prisma.issues.findMany({
+    orderBy: {
+      // dateSubmit: "desc",
+      idx: "desc",
+    },
     where: {
       issueStatusesId: req.params.id,
     },

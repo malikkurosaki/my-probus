@@ -2,33 +2,42 @@
 
 # request 1
 
-- desciption kebawah di detail (mbk ayu) ok
-- accept tanpa harus note (dewi)} ok
-- peringatan jika sudah seminggu lebih (mbk ayu)
-- client list tambah dan update (pengembangan)
-- issue edit (pengembangan)
-- tambah di module INSTALL SYSTEM, REPORT , OTHER (dewi)
-- buat master file csv / tabulator (pengembangan)
-- report dasboard berdasar role (pengembangan)
-- divisi , [fo/pos, bo, web , it, ecomers],
-- advice
+- [X] desciption kebawah di detail (mbk ayu) ok
+- [X] accept tanpa harus note (dewi)} ok
+- [ ] peringatan jika sudah seminggu lebih (mbk ayu)
+- [ ] client list tambah dan update (pengembangan)
+- [ ] issue edit (pengembangan)
+- [ ] tambah di module INSTALL SYSTEM, REPORT , OTHER (dewi)
+- [ ] buat master file csv / tabulator (pengembangan)
+- [ ] report dasboard berdasar role (pengembangan)
+- [X] divisi , [fo/pos, bo, web , it, ecomers], ( ok - xprobus - seed_module )
+- [ ] advice
+- [X] bug max 2hari red , request max 5 ( ok )
+- [ ] client di item dashboard
+- [ ] fitrer produt 2end
+- [ ] print nama client
+- [ ] group by client
+- [ ] prindate - module - client,  (name > title ) problem
+- [ ] tambah taggal create di report
 
 # request 2
 
-- jadwal kunjungan client
-- remake tampilan awal
-- user experient dashboard
-- leader bisa langung ke admin
-- moderator hanya untuk pengembangan saja
-- tambah gambar di comment
-- ux fix
+- [ ] jadwal kunjungan client
+- [X] remake tampilan awal
+- [ ] user experient dashboard
+- [ ] leader bisa langung ke admin
+- [ ] moderator hanya untuk pengembangan saja
+- [X] tambah gambar di comment
+- [ ] ux fix
 
 ### request 4
 
-- summary report dashboard
-- admin change status with note reason
-- waktu pengerjaan di mas ahmad estimasi
-- jika module fo dan ecomers masgun, sisanya dewi
+- [ ] summary report dashboard
+- [ ] admin change status with note reason
+- [ ] waktu pengerjaan di mas ahmad estimasi
+- [ ] jika module fo dan ecomers masgun, sisanya dewi
+- [ ] mas ahmat tampilan utama bug
+- [X] tambah jam
 
 note :
 
@@ -41,6 +50,11 @@ note :
 7. count list per type
 8. nomer
 9. id issue
+
+
+
+
+
 
 | PROBLEM PENDING |                       |                |    |                                       |                                                     |      |                                                                                             |                                                                                                                                              |                                         |               |                   |               |         |        |                                                                           |               |                                                                                                                                                                                                       |          |  |                                                                                                   |                                                                                                               |  |
 | --------------- | --------------------- | -------------- | -- | ------------------------------------- | --------------------------------------------------- | ---- | ------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------- | ------------- | ----------------- | ------------- | ------- | ------ | ------------------------------------------------------------------------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | - | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | - |

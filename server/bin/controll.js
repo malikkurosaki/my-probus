@@ -28,6 +28,7 @@ const generateIssueTypeStatusExtend = require("./con/generate_issue_type_status"
 const generate_api_extend = require("./con/generate_api_extend");
 const generateApiExtend = require("./con/generate_api_extend");
 const setUserDepartementExtend = require("./con/set_user_departement_extend");
+const SeedModule = require("./con/seed_module");
 
 function ssh(pass, command) {
     return new SSH({
@@ -64,10 +65,13 @@ function bashRoot(command) {
 
 
 class Controll {
+    async seedModule() {
+        SeedModule.deleteInser();
+    }
     async gitPushBeta2() {
         execSync(`git add . && git commit -m "ya" && git push origin beta/2`, {
-          stdio: "inherit",
-          cwd: path.join(__dirname, "../../"),
+            stdio: "inherit",
+            cwd: path.join(__dirname, "../../"),
         });
     }
     async buildPushServerOnly() {

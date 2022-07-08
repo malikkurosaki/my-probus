@@ -63,9 +63,6 @@ function ModelGenerator() {
             title: 'export user',
             value: 'exportUser',
         }, {
-            title: 'seed client',
-            value: 'seedClient',
-        }, {
             title: 'prisma migrate',
             value: 'prismaMigrate',
         }, {
@@ -74,6 +71,12 @@ function ModelGenerator() {
         }, {
             title: 'seeders',
             value: 'seeders',
+        }, {
+            title: 'seed module',
+            value: 'seedModule',
+        }, {
+            title: 'seed client',
+            value: 'seedClient',
         }, {
             title: 'backup csv',
             value: 'backupCsv',
@@ -186,10 +189,6 @@ function ModelGenerator() {
                 new Controll().exportUser();
                 break;
 
-            case 'seedClient':
-                new Controll().seedClient();
-                break;
-
             case 'prismaMigrate':
                 new Controll().prismaMigrate();
                 break;
@@ -200,6 +199,14 @@ function ModelGenerator() {
 
             case 'seeders':
                 new Controll().seeders();
+                break;
+
+            case 'seedModule':
+                new Controll().seedModule();
+                break;
+
+            case 'seedClient':
+                new Controll().seedClient();
                 break;
 
             case 'backupCsv':

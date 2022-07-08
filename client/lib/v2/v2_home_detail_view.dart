@@ -50,7 +50,7 @@ class V2HomeDetailView extends StatelessWidget {
                       child: ListView(
                         controller: ScrollController(),
                         children: [
-                          for (final itm in V2Val.homeControll.listIssueDashboard.value.val)
+                          for (final itm in V2Val.listIssueDashboard.value.val)
                             ListTile(
                               selected: itm['id'] == V2Val.selectedIssueId.val,
                               onTap: () async {

@@ -71,7 +71,7 @@ class V2Role {
      if (V2Role().myRoleName == V2Role.user().name) {
       return SizedBox.shrink();
     } else if (V2Role().myRoleName == V2Role.leader().name) {
-      return V2HomeController().acceptOrRejectButton(issueId);
+      return V2HomeController().accepttRejectApproveButton(issueId);
     } else if (V2Role().myRoleName == V2Role.moderator().name) {
       return V2HomeController().approveOrDeclineButton(issueId);
     } else if (V2Role().myRoleName == V2Role.admin().name) {

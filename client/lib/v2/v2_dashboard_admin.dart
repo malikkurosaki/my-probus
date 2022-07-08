@@ -51,6 +51,7 @@ class V2DashboardAdmin extends StatelessWidget {
                     ),
                   ),
                 ),
+                V2Val.clock,
                 IconButton(
                     onPressed: () async {
                       await V2Val.homeControll.loadIssueDashboard();
@@ -83,12 +84,7 @@ class V2DashboardAdmin extends StatelessWidget {
                     child: Text("Date Is Empty"),
                   ),
                 ),
-                MaterialButton(
-                    child: Text("Tekan Ja"),
-                    onPressed: () {
-                      Skt.socket.emit("client", "hahaha");
-                    
-                    }),
+               
                 Divider(),
               ],
             ),
@@ -106,7 +102,7 @@ class V2DashboardAdmin extends StatelessWidget {
                 // Text(V2Val.homeControll.listIssueDashboard.value.val.toString()),
                 Wrap(
                   children: [
-                    for (final itm in V2Val.homeControll.listIssueDashboard.value.val)
+                    for (final itm in V2Val.listIssueDashboard.value.val)
                       SizedBox(
                         width: Get.width / (isMobile ? 0 : 3),
                         child: Card(

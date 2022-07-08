@@ -69,7 +69,8 @@ class V2Chat extends StatelessWidget {
                           ],
                         ),
                       ),
-                    )
+                    ),
+                    V2Val.clock
                   ],
                 ),
               ),
