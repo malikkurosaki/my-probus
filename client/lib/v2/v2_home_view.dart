@@ -7,6 +7,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:my_probus/v2/v2_home_detail_view.dart';
 import 'package:my_probus/v2/v2_image_widget.dart';
 import 'package:my_probus/v2/v2_ismobile_widget.dart';
+import 'package:my_probus/v2/v2_load.dart';
 import 'package:my_probus/v2/v2_role.dart';
 import 'package:my_probus/v2/v2_status.dart';
 import 'package:my_probus/v2/v2_list_menu.dart';
@@ -20,6 +21,7 @@ class V2HomeView extends StatelessWidget {
 
    _onLoad() async {
     await V2Val.homeControll.loadIssueDashboard();
+    await V2Load.issuegetAll();
   }
 
   @override
@@ -28,7 +30,7 @@ class V2HomeView extends StatelessWidget {
     return V2IsMobileWidget(
         isMobile: (isMobile) => Scaffold(
               body: Row(
-                children: [Visibility(visible: !isMobile, child: _drawer()), Expanded(child: V2Role().dashboardByRolw)],
+                children: [Visibility(visible: !isMobile, child: _drawer()), Expanded(child: V2Role().dashboardByRole)],
               ),
             ));
   }

@@ -37,7 +37,7 @@ class V2Menu {
         V2Menu.formTodo().menuItem(),
         V2Menu.issueSubmission().menuItem(),
         V2Menu.issueDetail().menuItem(),
-        V2Menu.issueList().menuItem(),
+        V2Menu.issueList().menuItem(onTap: () => Get.toNamed(V2Routes.issueList().key)),
         V2Menu.absensi().menuItem(),
         V2Menu.formCuti().menuItem(),
         V2Menu.formIzin().menuItem(),

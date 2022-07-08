@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'v2_load.dart';
 import 'v2_role.dart';
 import 'v2_routes.dart';
 import 'v2_val.dart';

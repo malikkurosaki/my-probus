@@ -18,6 +18,8 @@ import 'package:my_probus/v2/v2_routes.dart';
 import 'package:my_probus/v2/v2_status.dart';
 import 'package:my_probus/v2/v2_val.dart';
 
+import 'v2_load.dart';
+
 
 
 class V2HomeDetailView extends StatelessWidget {

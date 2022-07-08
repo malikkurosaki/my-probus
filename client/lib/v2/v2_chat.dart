@@ -16,6 +16,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'v2_api.dart';
 import 'v2_config.dart';
+import 'v2_load.dart';
 import 'v2_val.dart';
 
 class V2Chat extends StatelessWidget {

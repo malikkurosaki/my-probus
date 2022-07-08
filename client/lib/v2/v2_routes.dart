@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:my_probus/v2/v2_issue_create_view.dart';
 import 'package:my_probus/v2/v2_home_detail_view.dart';
+import 'package:my_probus/v2/v2_issue_list.dart';
 import 'package:my_probus/v2/v2_login_view.dart';
 import 'package:my_probus/v2/v2_root_view.dart';
 import 'v2_home_view.dart';
@@ -21,6 +22,7 @@ class V2Routes {
     );
 
     // a1 do not remove this line
+    V2Routes.issueList(): key = '/issue-list';
     V2Routes.root(): key = '/root';
     V2Routes.login(): key = '/login';
     V2Routes.register(): key = '/register';
@@ -36,6 +38,7 @@ class V2Routes {
 
     // a2 do not remove this line
     static final all = < GetPage > [
+        V2Routes.issueList().getPage(page: V2IssueList()),
         V2Routes.root().getPage(page: V2RootView()),
         V2Routes.login().getPage(page: V2LoginView()),
         V2Routes.register().getPage(),
@@ -48,8 +51,6 @@ class V2Routes {
         V2Routes.issues().getPage(),
         V2Routes.createIssue().getPage(page: V2IssueCreateView()),
         V2Routes.issueDetail().getPage(page: V2HomeDetailView()),
-
-
     ];
 
 

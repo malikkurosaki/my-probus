@@ -46,6 +46,10 @@
     {
         "name": "issue detail",
         "path": "/issue-detail"
+    },
+    {
+        "name": "issue list",
+        "path": "/issue-list"
     }
     
 ]

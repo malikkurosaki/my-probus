@@ -81,7 +81,7 @@ class V2Role {
     }
   }
 
-  Widget get dashboardByRolw {
+  Widget get dashboardByRole {
      if (V2Role().myRoleName == V2Role.user().name) {
       return V2DashboardUser();
     } else if (V2Role().myRoleName == V2Role.leader().name) {

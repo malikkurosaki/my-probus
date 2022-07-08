@@ -174,9 +174,9 @@ class V2IssueCreateView extends StatelessWidget {
 
                                     final issue = await V2Api.issueCreate().postData(body);
                                     if (issue.statusCode == 200) {
-                                      Get.dialog(AlertDialog(
+                                      await Get.dialog(AlertDialog(
                                         title: Text("Terimakasih Atas Kontribusinya"),
-                                        content: V2ImageWidget.jempol(),
+                                        content: V2ImageWidget.jempol(height: 200),
                                         actions: [MaterialButton(child: Text("OK"), onPressed: () => Get.back())],
                                       ));
 
@@ -188,7 +188,7 @@ class V2IssueCreateView extends StatelessWidget {
                                         jenis: "msg",
                                       );
                                       
-                                      return;
+                                      _clearContent();
                                     }else{
                                       EasyLoading.showError(issue.body.toString());
                                     }

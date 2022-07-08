@@ -4,8 +4,62 @@ const expressAsyncHandler = require("express-async-handler");
 const _ = require("lodash");
 
 const getAll = expressAsyncHandler(async (req, res) => {
-  const products = await prisma.issues.findMany();
-  res.status(200).json(products);
+  const dataIssue = await prisma.issues.findMany({
+    orderBy: {
+      // dateSubmit: "desc",
+      idx: "desc",
+    },
+    select: {
+      id: true,
+      name: true,
+      dateSubmit: true,
+      Client: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+      CreatedBy: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+      Departement: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+      des: true,
+      idx: true,
+      IssueType: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+      IssuesStatus: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+      Images: {
+        select: {
+          id: true,
+          name: true,
+        }
+      },
+      Product: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+    },
+  });
+  res.status(200).json(dataIssue);
 });
 
 const create = expressAsyncHandler(async (req, res) => {
@@ -101,7 +155,6 @@ const issueByOpen = expressAsyncHandler(async (req, res) => {
   res.status(200).json(status);
 });
 
-
 const issueByStatusId = expressAsyncHandler(async (req, res) => {
   const status = await prisma.issues.findMany({
     orderBy: {
@@ -132,6 +185,12 @@ const issueByStatusId = expressAsyncHandler(async (req, res) => {
           id: true,
           name: true,
         },
+      },
+      Images: {
+        select: {
+          id: true,
+          name: true,
+        }
       },
       des: true,
       idx: true,
@@ -217,6 +276,12 @@ const getIssueById = expressAsyncHandler(async (req, res) => {
           name: true,
         },
       },
+      Images: {
+        select: {
+          id: true,
+          name: true,
+        }
+      },
       Client: {
         select: {
           id: true,
@@ -241,12 +306,22 @@ const updateIssueStatus = expressAsyncHandler(async (req, res) => {
       IssueHistory: {
         create: {
           usersId: data.usersId,
-        }
-      }
+        },
+      },
     },
   });
 
   res.status(200).json(issue);
+});
+
+const issueList = expressAsyncHandler(async (req, res) => {
+  const data = await prisma.issues.findMany({
+    orderBy: {
+      idx: "asc",
+    },
+  });
+
+  res.json(data);
 });
 
 const V2Issue = {
@@ -259,6 +334,7 @@ const V2Issue = {
   rubahStatus,
   getIssueById,
   updateIssueStatus,
+  issueList,
 };
 
 module.exports = V2Issue;

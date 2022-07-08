@@ -7,6 +7,7 @@ import 'package:socket_io_client/socket_io_client.dart';
 
 import 'skt.dart';
 import 'v2/v2_404.dart';
+import 'v2/v2_load.dart';
 import 'v2/v2_routes.dart';
 import 'v2/v2_sound.dart';
 
