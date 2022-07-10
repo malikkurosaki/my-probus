@@ -50,6 +50,14 @@
     {
         "name": "issue list",
         "path": "/issue-list"
+    },
+    {
+        "name": "Developer",
+        "path": "/developer"
+    },
+    {
+        "name": "Form Todo",
+        "path": "/form-todo"
     }
     
 ]

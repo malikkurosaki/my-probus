@@ -4,36 +4,42 @@ const PrismaClient = require('@prisma/client').PrismaClient
 const prisma = new PrismaClient();
 
 
-let idx = 1;
-csv()
-  .fromFile(csvFilePath)
-  .then(async (json) => {
-    await prisma.issues.deleteMany({
-        where: {
-            id: {
-                not: undefined
-            }
-        }
-    })
+async function coba1(){
+   const query = await prisma.$queryRaw`ALTER TABLE issues DROP INDEX idx`;
+   console.log(query)
+}
 
-    for( let d of json){
-        await prisma.issues.create({
-          data: {
-            idx: idx,
-            name: d.name,
-            des: d.des,
-            issueTypesId: d.issueTypesId,
-            issueStatusesId: d.issueStatusesId,
-            clientsId: d.clientsId,
-            productsId: d.productsId,
-            usersId: d.usersId,
-            departementsId: d.departementsId,
-            dateSubmit: new Date(Date.parse("2022-06-27T00:00:00.000Z")),
-          },
-        });
 
-        idx++;
-    }
+// let idx = 1;
+// csv()
+//   .fromFile(csvFilePath)
+//   .then(async (json) => {
+//     await prisma.issues.deleteMany({
+//         where: {
+//             id: {
+//                 not: undefined
+//             }
+//         }
+//     })
 
-    console.log("berhasil")
-  });
+//     for( let d of json){
+//         await prisma.issues.create({
+//           data: {
+//             idx: idx,
+//             name: d.name,
+//             des: d.des,
+//             issueTypesId: d.issueTypesId,
+//             issueStatusesId: d.issueStatusesId,
+//             clientsId: d.clientsId,
+//             productsId: d.productsId,
+//             usersId: d.usersId,
+//             departementsId: d.departementsId,
+//             dateSubmit: new Date(Date.parse("2022-06-27T00:00:00.000Z")),
+//           },
+//         });
+
+//         idx++;
+//     }
+
+//     console.log("berhasil")
+//   });

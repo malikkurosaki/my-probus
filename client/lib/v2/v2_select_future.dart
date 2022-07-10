@@ -21,22 +21,25 @@ class V2SelectFuture extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => Padding(
-        padding: padding ?? const EdgeInsets.symmetric(horizontal: 18),
-        child: DropdownSearch<Map>(
-          dropdownDecoratorProps: DropDownDecoratorProps(
-              dropdownSearchDecoration: InputDecoration(border: InputBorder.none, hintText: hint, labelText: hint)),
-          itemAsString: (Map u) => u['name'].toString(),
-          onChanged: (Map? result) => value.value.val = result!,
-          items: List<Map>.from(sources),
-          popupProps: PopupProps.menu(
-              searchFieldProps: TextFieldProps(
-                decoration: InputDecoration(
-                    border: InputBorder.none, hintText: "Search", fillColor: Colors.grey.shade100, filled: true),
-              ),
-              showSearchBox: true),
-          selectedItem: value.value.val.isEmpty ? null : value.value.val,
+    return Card(
+      margin: EdgeInsets.all(8),
+      child: Obx(
+        () => Padding(
+          padding: padding ?? const EdgeInsets.symmetric(horizontal: 18),
+          child: DropdownSearch<Map>(
+            dropdownDecoratorProps: DropDownDecoratorProps(
+                dropdownSearchDecoration: InputDecoration(border: InputBorder.none, hintText: hint, labelText: hint)),
+            itemAsString: (Map u) => u['name'].toString(),
+            onChanged: (Map? result) => value.value.val = result!,
+            items: List<Map>.from(sources),
+            popupProps: PopupProps.menu(
+                searchFieldProps: TextFieldProps(
+                  decoration: InputDecoration(
+                      border: InputBorder.none, hintText: "Search", fillColor: Colors.grey.shade100, filled: true),
+                ),
+                showSearchBox: true),
+            selectedItem: value.value.val.isEmpty ? null : value.value.val,
+          ),
         ),
       ),
     );

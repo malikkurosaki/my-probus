@@ -182,8 +182,8 @@ class V2IssueList extends StatelessWidget {
                           child: Text("Detail"),
                           onPressed: () async {
                             V2Val.detailControll.content.value.val = itm;
-                            V2Val.selectedIssueId.val = itm['id'];
-                            debugPrint(V2Val.selectedIssueId.val.toString());
+                            V2Val.selectedIssueId.value.val = itm['id'];
+                            debugPrint(V2Val.selectedIssueId.value.val.toString());
                             await V2Load.loadDiscutionByIssueId();
                             Get.toNamed(V2Routes.issueDetail().key);
                           },

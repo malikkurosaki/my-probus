@@ -20,7 +20,7 @@ class V2Val {
   static final listIssueByModerator = [].val("listIssueByModerator").obs;
   static final listIssueByAdmin = [].val("listIssueByAdmin").obs;
   static final issueDetailId = "".val("issueDetailId").obs;
-  static final selectedIssueId = "".val("V2Val_selectedIssueId");
+  static final selectedIssueId = "".val("V2Val_selectedIssueId").obs;
 
   static final listIssueDashboard = [].val("listIssueDashboard").obs;
   static final backupListIssueDashboard = [].val("backupListIssueDashboard").obs;
@@ -220,7 +220,7 @@ class V2HomeController {
 
   clear() {
     V2Val.listIssueDashboard.value.val = [];
-    V2Val.selectedIssueId.val = "";
+    V2Val.selectedIssueId.value.val = "";
   }
 }
 

@@ -26,6 +26,7 @@ model Users {
   Departement    Departements?    @relation(fields: [departementsId], references: [id])
   departementsId String?
   Notif          Notif[]
+  Todos          Todos[]
 }
 
 model Profiles {
@@ -57,6 +58,7 @@ model Departements {
   Positions Positions[]
   Issues    Issues[]
   Users     Users[]
+  Todos     Todos[]
 }
 
 model Roles {
@@ -210,4 +212,17 @@ model Notif {
   title     String?
   content   String?
   jenis     String?  @default("msg")
+}
+
+model Todos {
+  id             String        @id @default(uuid())
+  User           Users?        @relation(fields: [usersId], references: [id])
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  usersId        String
+  title          String?
+  content        String?
+  status         String?       @default("open")
+  departement    Departements? @relation(fields: [departementsId], references: [id])
+  departementsId String?
 }

@@ -31,6 +31,7 @@ class V2IssueCreateView extends StatelessWidget {
   final _title = "".val("V2IssueCreate_title").obs;
   final _description = "".val("V2IssueCreate_description").obs;
   final _refresh = false.obs;
+  final _imgFocusNode = FocusNode();
 
   _clearContent() async {
     _date.value.val = DateTime.now().toString();
@@ -53,6 +54,7 @@ class V2IssueCreateView extends StatelessWidget {
       isMobile: (isMobile) => Scaffold(
         body: SafeArea(
           child: Stack(
+            
             children: [
               Center(child: V2ImageWidget.logo()),
               // backdrop filter

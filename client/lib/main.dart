@@ -25,6 +25,8 @@ void main() async{
   await V2Load.propertiesAll();
   debugPrint("load properties done");
   debugPrint("run");
+  
+  
   runApp(V2MainApp());
 }
 

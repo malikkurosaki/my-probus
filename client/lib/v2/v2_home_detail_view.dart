@@ -54,9 +54,12 @@ class V2HomeDetailView extends StatelessWidget {
                         children: [
                           for (final itm in V2Val.listIssueDashboard.value.val)
                             ListTile(
-                              selected: itm['id'] == V2Val.selectedIssueId.val,
+                              selected: itm['id'] == V2Val.selectedIssueId.value.val,
                               onTap: () async {
-                                V2Val.selectedIssueId.val = itm["id"];
+
+
+                                V2Val.selectedIssueId.value.val = itm["id"];
+                                V2Val.selectedIssueId.refresh();
                                 // todo : disini harusnya bisa refresh
                                 // V2Val.homeControll.selectedIssueId.refresh();
                                 await V2Load.loadDiscutionByIssueId();

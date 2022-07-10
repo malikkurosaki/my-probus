@@ -9,12 +9,12 @@ import 'v2_val.dart';
 class V2Load {
   static Future<void> loadDiscutionByIssueId() async {
     try {
-      debugPrint("lihat lihat disini");
-      debugPrint(V2Val.selectedIssueId.val.toString());
-      // final data = await V2Api.discutionByIssueId().getByParams(V2Val.selectedIssueId.val);
-      // V2Val.chatControll.listDiscution.value.val = jsonDecode(data.body) as List<Map<String, dynamic>>;
-      // V2Val.chatControll.listDiscution.refresh();
-      // debugPrint("ambil data discution");
+      // debugPrint("lihat lihat disini");
+      // debugPrint(V2Val.selectedIssueId.value.val.toString());
+      final data = await V2Api.discutionByIssueId().getByParams(V2Val.selectedIssueId.value.val);
+      V2Val.chatControll.listDiscution.value.val = jsonDecode(data.body);
+      V2Val.chatControll.listDiscution.refresh();
+      debugPrint("ambil data discution");
     } catch (e) {
       EasyLoading.showToast(e.toString());
       throw e.toString();

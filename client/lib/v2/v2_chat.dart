@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ import 'package:my_probus/v2/v2_ismobile_widget.dart';
 import 'package:my_probus/v2/v2_storage.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:pasteboard/pasteboard.dart';
 import 'v2_api.dart';
 import 'v2_config.dart';
 import 'v2_load.dart';
@@ -24,6 +26,7 @@ class V2Chat extends StatelessWidget {
   final _scrollController = ScrollController();
   final _fokus = FocusNode();
   final _contentText = TextEditingController();
+  // final _focusImg = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -110,46 +113,92 @@ class V2Chat extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  IconButton(
-                    onPressed: () async {
-                      final data = await _singleImageUploadHandler();
-                      if (data != null) {
-                        final img = Map.from(jsonDecode(data));
-                        final con = {
-                          "content": "",
-                          "issuesId": V2Val.detailControll.content.value.val['id'],
-                          "usersId": V2Val.user.val["id"],
-                          "imagesId": img['data']['id']
-                        };
+                  RawKeyboardListener(
+                    focusNode: _fokus,
+                    child: IconButton(
+                      onPressed: () async {
+                        final data = await _singleImageUploadHandler();
+                        if (data != null) {
+                          final img = Map.from(jsonDecode(data));
+                          final con = {
+                            "content": "",
+                            "issuesId": V2Val.detailControll.content.value.val['id'],
+                            "usersId": V2Val.user.val["id"],
+                            "imagesId": img['data']['id']
+                          };
 
-                        final body = {"type": "image", "dataImage": jsonEncode(con)};
-                        final discution = await V2Api.discutionCreate().postData(body);
+                          final body = {"type": "image", "dataImage": jsonEncode(con)};
+                          final discution = await V2Api.discutionCreate().postData(body);
 
-                        V2Val.chatControll.listDiscution.value.val.add(Map.from(jsonDecode(discution.body)));
-                        V2Val.chatControll.listDiscution.refresh();
+                          V2Val.chatControll.listDiscution.value.val.add(Map.from(jsonDecode(discution.body)));
+                          V2Val.chatControll.listDiscution.refresh();
 
-                        _fokus.requestFocus();
+                          _fokus.requestFocus();
 
-                        _scrollController.animateTo(_scrollController.position.maxScrollExtent + 300,
-                            duration: Duration(milliseconds: 500), curve: Curves.ease);
+                          _scrollController.animateTo(_scrollController.position.maxScrollExtent + 300,
+                              duration: Duration(milliseconds: 500), curve: Curves.ease);
 
-                        Skt.notifWithIssue(
-                          title: "new message",
-                          content: "[ image ]",
-                          jenis: "msg",
-                        );
+                          Skt.notifWithIssue(
+                            title: "new message",
+                            content: "[ image ]",
+                            jenis: "msg",
+                          );
 
-                        debugPrint("halo disini chat image");
-                        await V2Load.loadDiscutionByIssueId();
-                      } else {
-                        EasyLoading.showToast("hemmm ...");
+                          debugPrint("halo disini chat image");
+                          await V2Load.loadDiscutionByIssueId();
+                        } else {
+                          EasyLoading.showToast("hemmm ...");
+                        }
+                      },
+                      icon: Icon(
+                        Icons.image,
+                        color: Colors.white,
+                      ),
+                    ),
+                    onKey: (x) async {
+                      if (x.isControlPressed && x.character == "v" || x.isMetaPressed && x.character == "v") {
+                        final imageBytes = await Pasteboard.image;
+                        final upload =
+                            http.MultipartRequest('POST', Uri.parse("${V2Config.host}/api/v2/upload-image-single"));
+                        if (imageBytes != null) {
+                          final name = Random().nextInt(99999999) + 11111111;
+                          upload.files
+                              .add(http.MultipartFile.fromBytes("image", imageBytes, filename: "img-$name.png"));
+                          final data = await upload.send().then((value) => value.stream.bytesToString());
+
+                          final img = Map.from(jsonDecode(data));
+                          final con = {
+                            "content": "",
+                            "issuesId": V2Val.detailControll.content.value.val['id'],
+                            "usersId": V2Val.user.val["id"],
+                            "imagesId": img['data']['id']
+                          };
+
+                          final body = {"type": "image", "dataImage": jsonEncode(con)};
+                          final discution = await V2Api.discutionCreate().postData(body);
+
+                          V2Val.chatControll.listDiscution.value.val.add(Map.from(jsonDecode(discution.body)));
+                          V2Val.chatControll.listDiscution.refresh();
+
+                          _fokus.requestFocus();
+
+                          _scrollController.animateTo(_scrollController.position.maxScrollExtent + 300,
+                              duration: Duration(milliseconds: 500), curve: Curves.ease);
+
+                          Skt.notifWithIssue(
+                            title: "new message",
+                            content: "[ image ]",
+                            jenis: "msg",
+                          );
+
+                          debugPrint("halo disini chat image");
+                          await V2Load.loadDiscutionByIssueId();
+
+                        }
                       }
                     },
-                    icon: Icon(
-                      Icons.image,
-                      color: Colors.white,
-                    ),
                   ),
+                  
                   Expanded(
                     child: TextField(
                       autofocus: true,
@@ -182,7 +231,6 @@ class V2Chat extends StatelessWidget {
                           "usersId": V2Val.user.val['id']
                           //imagesId
                         };
-                        
 
                         final body = {"type": "text", "dataText": jsonEncode(con)};
 

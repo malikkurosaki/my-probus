@@ -173,8 +173,10 @@ class V2Component {
                                 child: Text("Detail"),
                                 onPressed: () async {
                                   V2Val.detailControll.content.value.val = itm;
-                                  V2Val.selectedIssueId.val = itm['id'];
-                                  debugPrint(V2Val.selectedIssueId.val.toString());
+                                  V2Val.selectedIssueId.value.val = itm['id'];
+                                  V2Val.selectedIssueId.refresh();
+                                  
+                                  debugPrint(V2Val.selectedIssueId.value.val.toString());
                                   await V2Load.loadDiscutionByIssueId();
                                   Get.toNamed(V2Routes.issueDetail().key);
                                 },
