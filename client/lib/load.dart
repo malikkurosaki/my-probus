@@ -7,6 +7,8 @@ import 'package:http/http.dart' as http;
 import 'conn.dart';
 import '../val.dart';
 
+
+
 class Load {
   Future<Map> _pengolahMap(http.Response data) async {
     try {
