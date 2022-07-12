@@ -11,7 +11,7 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'v2/v2_config.dart';
 
 class Skt {
-  static final IO.Socket socket = IO.io("${V2Config.host}/notif");
+  static final IO.Socket socket = IO.io("http://localhost:3001/notif");
 
   // static final skt = SocketIOClient(
   //   'http://localhost:3000',
