@@ -9,6 +9,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:my_probus/config.dart';
 import 'package:my_probus/skt.dart';
 import 'package:my_probus/v2/v2_image_widget.dart';
 import 'package:my_probus/v2/v2_ismobile_widget.dart';
@@ -159,7 +160,7 @@ class V2Chat extends StatelessWidget {
                       if (x.isControlPressed && x.character == "v" || x.isMetaPressed && x.character == "v") {
                         final imageBytes = await Pasteboard.image;
                         final upload =
-                            http.MultipartRequest('POST', Uri.parse("${V2Config.host}/api/v2/upload-image-single"));
+                            http.MultipartRequest('POST', Uri.parse("${Config.host}/api/v2/upload-image-single"));
                         if (imageBytes != null) {
                           final name = Random().nextInt(99999999) + 11111111;
                           upload.files
@@ -299,7 +300,7 @@ class V2Chat extends StatelessWidget {
                           padding: const EdgeInsets.all(8.0),
                           child: itm['imagesId'] != null
                               ? CachedNetworkImage(
-                                  imageUrl: V2Config.host + "/image/" + itm['Image']['name'].toString(),
+                                  imageUrl: Config.host + "/image/" + itm['Image']['name'].toString(),
                                   fit: BoxFit.cover,
                                 )
                               : Text(itm['content'].toString()),
@@ -315,7 +316,7 @@ class V2Chat extends StatelessWidget {
       );
 
   Future<String?> _singleImageUploadHandler() async {
-    final upload = http.MultipartRequest('POST', Uri.parse("${V2Config.host}/api/v2/upload-image-single"));
+    final upload = http.MultipartRequest('POST', Uri.parse("${Config.host}/api/v2/upload-image-single"));
     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (image != null) {
       upload.files.add(http.MultipartFile.fromBytes("image", await image.readAsBytes(), filename: ".png"));

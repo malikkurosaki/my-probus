@@ -74,7 +74,7 @@ class V2SelectImage extends StatelessWidget {
                                           color: Colors.grey.shade100,
                                         ),
                                         child: CachedNetworkImage(
-                                          imageUrl: "${V2Config.host}/image/${gam['name']}",
+                                          imageUrl: "${Config.host}/image/${gam['name']}",
                                           placeholder: (context, url) =>
                                               const Center(child: const CircularProgressIndicator()),
                                           errorWidget: (context, url, error) => const Icon(Icons.error),
@@ -92,7 +92,7 @@ class V2SelectImage extends StatelessWidget {
                   onKey: (x) async {
                     if (x.isControlPressed && x.character == "v" || x.isMetaPressed && x.character == "v") {
                       final imageBytes = await Pasteboard.image;
-                      final upload = http.MultipartRequest('POST', Uri.parse("${V2Config.host}/api/v2/upload-image"));
+                      final upload = http.MultipartRequest('POST', Uri.parse("${Config.host}/api/v2/upload-image"));
                       if (imageBytes != null) {
                         final name = Random().nextInt(99999999) + 11111111;
                         upload.files.add(http.MultipartFile.fromBytes("image", imageBytes, filename: "img-$name.png"));
@@ -137,7 +137,7 @@ class V2SelectImage extends StatelessWidget {
   }
 
   Future<List?> _imageHandler() async {
-    final upload = http.MultipartRequest('POST', Uri.parse("${V2Config.host}/api/v2/upload-image"));
+    final upload = http.MultipartRequest('POST', Uri.parse("${Config.host}/api/v2/upload-image"));
     final image = await ImagePicker().pickMultiImage(maxHeight: 500, maxWidth: 500);
     if (image!.isNotEmpty) {
       for (var img in image) {

@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:my_probus/config.dart';
 import 'package:my_probus/v2/v2_api.dart';
 import 'package:my_probus/v2/v2_chat.dart';
 
@@ -120,7 +121,7 @@ class V2HomeDetailView extends StatelessWidget {
   }
 
   Future<String?> _singleImageUploadHandler() async {
-    final upload = http.MultipartRequest('POST', Uri.parse("${V2Config.host}/api/v2/upload-image-single"));
+    final upload = http.MultipartRequest('POST', Uri.parse("${Config.host}/api/v2/upload-image-single"));
     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (image != null) {
       upload.files.add(http.MultipartFile.fromBytes("image", await image.readAsBytes(), filename: ".png"));
