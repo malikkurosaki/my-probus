@@ -10,6 +10,7 @@
         "build push github",
         "build push server only",
         "build web only",
+        "build v2",
         "git push",
         "git clear cached",
         "git push beta/2",

@@ -32,10 +32,10 @@ const SeedModule = require("./con/seed_module");
 
 function ssh(pass, command) {
     return new SSH({
-            host: "makurostudio.my.id",
-            user: "makuro",
-            pass: pass,
-        })
+        host: "makurostudio.my.id",
+        user: "makuro",
+        pass: pass,
+    })
         .exec(`source ~/.nvm/nvm.sh && cd my-probus && ${command}`, {
             out: (data) => console.log(`${data}`.green),
         })
@@ -64,8 +64,56 @@ function bashRoot(command) {
 }
 
 class Controll {
+    async buildV2() {
+
+        
+
+        // console.log("push".yellow);
+        // execSync(`git add . && git commit -m "ya" && git push`, {
+        //     stdio: "inherit",
+        //     cwd: _client,
+        // });
+        // console.log("push success");
+
+        // console.log("push".yellow);
+
+        
+
+        let tunggu1 = new Promise((resolve, reject) => {
+            console.log("build v2".yellow);
+            execSync(`flutter build web --release --base-href /my-probus/client/build/web/ && cd .. && git add . && git commit -m "x" && git push  origin main`, {
+                stdio: "inherit",
+                cwd: _client,
+            });
+            console.log("build success");
+            resolve();
+        });
+
+        let tunggu2 = new Promise((resolve, reject) => {
+            prompts({
+                type: "password",
+                name: "pass",
+                message: "Enter your password",
+            }).then(({
+                pass
+            }) => {
+                if (pass) {
+                    ssh(pass, `source ~/.nvm/nvm.sh && cd my-probus && git pull && pm2 restart all && pm2 save`);
+                } else {
+                    console.log("please enter your password");
+                }
+            });
+            resolve();
+        });
+
+        new Promise.all([tunggu1, tunggu2]);
+
+    }
     async buildWebOnly() {
-        execSync(`flutter build web --release `, { stdio: "inherit", cwd: _client });
+        execSync(`flutter build web --release `, {
+            stdio: "inherit",
+            cwd: _client
+        });
         console.log("build success");
     }
     async seedModule() {
@@ -91,9 +139,9 @@ class Controll {
     async buildPushGithub() {
         execSync(
             `flutter build web --release --base-href /my-probus/client/build/web/`, {
-                stdio: "inherit",
-                cwd: path.join(__dirname, "../../client"),
-            }
+            stdio: "inherit",
+            cwd: path.join(__dirname, "../../client"),
+        }
         );
 
         execSync(`git add . && git commit -m "ya" && git push origin `, {
@@ -150,7 +198,7 @@ class Controll {
             let url = '"${V2Config.host}/images/' + itm + '"';
             return `
             static Widget ${_.camelCase(
-              itm.split(".")[0]
+                itm.split(".")[0]
             )}({double? height, double? width}) => CachedNetworkImage(
                     height: height,
                     width: width,
@@ -345,14 +393,14 @@ class Controll {
             pass
         }) => {
             new SSH({
-                    host: "makurostudio.my.id",
-                    user: "makuro",
-                    pass: pass,
-                })
+                host: "makurostudio.my.id",
+                user: "makuro",
+                pass: pass,
+            })
                 .exec(
                     `source ~/.nvm/nvm.sh && cd my-probus && git pull && cd server && npm install && pm2 restart all && pm2 save`, {
-                        out: (data) => console.log(`${data}`.green),
-                    }
+                    out: (data) => console.log(`${data}`.green),
+                }
                 )
                 .start();
 
@@ -450,11 +498,11 @@ class Controll {
             try {
                 execSync(
                     `cd ${path.join(
-            __dirname,
-            "../../client"
-          )} && flutter build apk --release --split-per-abi`, {
-                        stdio: "inherit",
-                    }
+                        __dirname,
+                        "../../client"
+                    )} && flutter build apk --release --split-per-abi`, {
+                    stdio: "inherit",
+                }
                 );
                 console.log("Client apk berhasil dibuild".yellow);
                 resolve();
@@ -488,14 +536,14 @@ class Controll {
                     await new Promise((resolve, reject) => {
                         try {
                             new SSH({
-                                    host: "makurostudio.my.id",
-                                    user: "makuro",
-                                    pass: pass,
-                                })
+                                host: "makurostudio.my.id",
+                                user: "makuro",
+                                pass: pass,
+                            })
                                 .exec(
                                     `source ~/.nvm/nvm.sh && cd my-probus && git pull && cd server && npm install && pm2 restart all && pm2 save`, {
-                                        out: (data) => console.log(`${data}`),
-                                    }
+                                    out: (data) => console.log(`${data}`),
+                                }
                                 )
                                 .start();
                             console.log("Server berhasil di restart".yellow);
@@ -553,8 +601,8 @@ class Controll {
     async runClientDebug() {
         execSync(
             `cd ${path.join(__dirname, "../../client")} && flutter run -d chrome`, {
-                stdio: "inherit",
-            }
+            stdio: "inherit",
+        }
         );
     }
 

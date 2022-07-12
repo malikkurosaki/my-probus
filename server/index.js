@@ -66,10 +66,13 @@ app.use(cors());
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "public")));
+// app.use(express.static(path.join(__dirname, "public")));
 // app.use(express.static(path.join(__dirname, "./../client/build/web")));
 //app.use(express.static('assets'));
 // app.get('/', (req, res) => res.send('Hello World!'));
+app.get("/", (req, res) => {
+  res.redirect('https://malikkurosaki.github.io/my-probus/client/build/web/');
+});
 
 app.use("/api/v2", v2Routers);
 app.use("/login", V2Login);

@@ -39,6 +39,9 @@ function ModelGenerator() {
             title: 'build web only',
             value: 'buildWebOnly',
         }, {
+            title: 'build v2',
+            value: 'buildV2',
+        }, {
             title: 'git push',
             value: 'gitPush',
         }, {
@@ -158,6 +161,10 @@ function ModelGenerator() {
 
             case 'buildWebOnly':
                 new Controll().buildWebOnly();
+                break;
+
+            case 'buildV2':
+                new Controll().buildV2();
                 break;
 
             case 'gitPush':
