@@ -15,9 +15,7 @@ void main() async{
   debugPrint("load sound");
   await V2Sound.init();
   debugPrint("load sound done");
-  debugPrint("load sokecet");
-  await Skt.init();
-  debugPrint("load sokecet done");
+
   debugPrint("load storage");
   await GetStorage.init();
   debugPrint("load storage done");
@@ -25,6 +23,10 @@ void main() async{
   await V2Load.propertiesAll();
   debugPrint("load properties done");
   debugPrint("run");
+
+  debugPrint("load sokecet");
+  await Skt.init();
+  debugPrint("load sokecet done");
   
   
   runApp(V2MainApp());

@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:get/get_state_manager/src/simple/get_responsive.dart';
-import 'package:get/instance_manager.dart';
 import 'package:get/route_manager.dart';
 import 'package:my_probus/v2/v2_sound.dart';
 import 'package:my_probus/v2/v2_val.dart';
 import 'package:socket_io_client/socket_io_client.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
-
-import 'v2/v2_config.dart';
+import 'package:socket_io_client/socket_io_client.dart' as io;
 
 class Skt {
-  static final IO.Socket socket = IO.io("https://probus.makurostudio.my.id/notif");
+  static final io.Socket socket = io.io("https://probus.makurostudio.my.id/notif");
 
   // static final skt = SocketIOClient(
   //   'http://localhost:3000',
@@ -20,9 +15,25 @@ class Skt {
   //   autoConnect: false,
   // );
 
-  static init()async{
-    socket.onConnect((data) => {
-      onConnect(socket)
+  static init() async {
+    socket.onConnect((data) {
+      socket.off("server");
+      socket.on("server", (data) async {
+        debugPrint('server: $data');
+        await V2Sound.playNotif();
+        GetSnackBar(
+          message: data['content'].toString(),
+          title: "${data['title']} By : ${data['User']['name']}",
+          isDismissible: true,
+          snackPosition: SnackPosition.TOP,
+          duration: Duration(seconds: 5),
+          icon: Icon(
+            Icons.notifications_active,
+            color: Colors.cyan,
+          ),
+          onTap: (value) {},
+        ).show();
+      });
     });
   }
 
@@ -48,8 +59,7 @@ class Skt {
     });
   }
 
-  static notifWithIssue(
-      {required String title, required String content, required String jenis}) {
+  static notifWithIssue({required String title, required String content, required String jenis}) {
     final dataNotif = {
       "usersId": V2Val.user.val['id'],
       "title": title,
