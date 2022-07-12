@@ -7,7 +7,11 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'config.dart';
 
 class Skt {
-  static final IO.Socket socket = IO.io("${Config.host}/notif");
+  static final IO.Socket socket = IO.io(
+      "${Config.host}/notif",
+      OptionBuilder().setTransports(['websocket']) // for Flutter or Dart VM
+          .setExtraHeaders({'foo': 'bar'}) // optional
+          .build());
 
   // static final skt = SocketIOClient(
   //   'http://localhost:3000',
@@ -16,10 +20,8 @@ class Skt {
   //   autoConnect: false,
   // );
 
-  static init()async{
-    socket.onConnect((data) => {
-      onConnect(socket)
-    });
+  static init() async {
+    socket.onConnect((data) => {onConnect(socket)});
   }
 
   static onConnect(socket) {
@@ -44,8 +46,7 @@ class Skt {
     });
   }
 
-  static notifWithIssue(
-      {required String title, required String content, required String jenis}) {
+  static notifWithIssue({required String title, required String content, required String jenis}) {
     final dataNotif = {
       "usersId": V2Val.user.val['id'],
       "title": title,

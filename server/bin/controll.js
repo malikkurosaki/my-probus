@@ -63,8 +63,11 @@ function bashRoot(command) {
     });
 }
 
-
 class Controll {
+    async buildWebOnly() {
+        execSync(`flutter build web --release `, { stdio: "inherit", cwd: _client });
+        console.log("build success");
+    }
     async seedModule() {
         SeedModule.deleteInser();
     }
