@@ -38,6 +38,7 @@ function ssh(pass, command) {
     })
         .exec(`source ~/.nvm/nvm.sh && cd my-probus && ${command}`, {
             out: (data) => console.log(`${data}`.green),
+
         })
         .start();
 }
@@ -98,7 +99,7 @@ class Controll {
                 pass
             }) => {
                 if (pass) {
-                    ssh(pass, `source ~/.nvm/nvm.sh && cd my-probus && git pull && pm2 restart all && pm2 save`);
+                    ssh(pass, `git pull && pm2 restart all && pm2 save`);
                 } else {
                     console.log("please enter your password");
                 }
