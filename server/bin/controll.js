@@ -106,7 +106,7 @@ class Controll {
             resolve();
         });
 
-        new Promise.all([tunggu1, tunggu2]);
+       Promise.all([tunggu1, tunggu2]);
 
     }
     async buildWebOnly() {
