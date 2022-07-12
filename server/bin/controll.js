@@ -96,7 +96,7 @@ class Controll {
             }
         );
 
-        execSync(`git add . && git commit -m "ya" && git push origin beta/2`, {
+        execSync(`git add . && git commit -m "ya" && git push origin `, {
             stdio: "inherit",
             cwd: path.join(__dirname, "../../"),
         });
