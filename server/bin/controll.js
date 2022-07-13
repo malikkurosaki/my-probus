@@ -110,6 +110,8 @@ class Controll {
 
         Promise.all([tunggu1, tunggu2]);
 
+        SetMode("dev_web");
+
     }
     async buildWebOnly() {
         execSync(`flutter build web --release `, {

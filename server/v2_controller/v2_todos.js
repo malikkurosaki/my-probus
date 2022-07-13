@@ -14,12 +14,19 @@ const create = expressAsyncHandler(async (req, res) => {
 
 const findMany = expressAsyncHandler(async (req, res) => {
 
+    const firstDate = new Date(Date.parse(req.params.date));
+    const lastDate = new Date(Date.parse(req.params.date));
+
+    let ini = new Date(lastDate.setDate(lastDate.getDate() + 1));
+
+    console.log(firstDate, ini);
+
     const crt = await prisma.todos.findMany({
         where: {
             usersId: req.params.id,
             createdAt: {
-                gte: new Date(Date.parse(req.params.date) + (24 * 60 * 60 * 1000)),
-                lte: new Date(Date.parse(req.params.date) + (24 * 60 * 60 * 1000))
+                gte: lastDate,
+                lte: lastDate
             }
         }
     });
@@ -29,12 +36,13 @@ const findMany = expressAsyncHandler(async (req, res) => {
 });
 
 const changeStatus = expressAsyncHandler(async (req, res) => {
+    const body = req.body;
     const crt = await prisma.todos.update({
         where: {
-            id: req.params.id
+            id: body.id
         },
         data: {
-            status: req.params.status
+            status: body.status
         }
     });
     res.status(201).json(crt);

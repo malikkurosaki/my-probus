@@ -48,10 +48,8 @@ class V2FormTodo extends StatelessWidget {
                         firstDate: DateTime(2000),
                         lastDate: DateTime(2050),
                         onDateChanged: (date) async {
-                          _tanggalDipilih.value.val = date.toString();
+                          _tanggalDipilih.value.val = date.toLocal().toString();
                           _tanggalDipilih.refresh();
-
-                          debugPrint(_tanggalDipilih.value.val);
 
                           await V2Load.loadTodo(_tanggalDipilih.value.val);
                         },
@@ -101,7 +99,6 @@ class V2FormTodo extends StatelessWidget {
                                     // debugPrint(body.toString());
 
                                     final kirim = await V2Api.todoCreate().postData(body);
-                                    debugPrint(kirim.body.toString());
 
                                     // clear
                                     _controllerTitle.clear();
@@ -150,10 +147,11 @@ class V2FormTodo extends StatelessWidget {
                                               children: [
                                                 Text(td['content'].toString()),
                                                 Text(td['createdAt'].toString()),
+                                                Text(td['status'].toString()),
                                               ],
                                             ),
                                             trailing: PopupMenuButton(
-                                              icon: Icon(Icons.check_box_outline_blank),
+                                              icon: td['status'] == "open"? Icon(Icons.check_box_outline_blank) : Icon(Icons.check_box),
                                               itemBuilder: (context) => [
                                                 PopupMenuItem(
                                                   value: "open",
@@ -164,6 +162,11 @@ class V2FormTodo extends StatelessWidget {
                                                   child: Text("close"),
                                                 ),
                                               ],
+                                              onSelected: (value) async {
+                                                final dataBody = {"id": td['id'], "status": value};
+                                                await V2Api.todoChangeStatus().postData(dataBody);
+                                                await V2Load.loadTodo(_tanggalDipilih.value.val);
+                                              },
                                             ),
                                           ),
                                         ),

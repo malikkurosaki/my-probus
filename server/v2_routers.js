@@ -31,6 +31,7 @@ v2Routers.post("/update-issue-status/:id", V2Issue.updateIssueStatus);
 v2Routers.get("/properties-all", V2Properties.all);
 v2Routers.post("/todo-create", V2Todos.create);
 v2Routers.get("/todo-get-all/:id/:date", V2Todos.findMany);
+v2Routers.post("/todo-change-status", V2Todos.changeStatus);
 
 module.exports = v2Routers;
 

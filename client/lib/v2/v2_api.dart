@@ -11,6 +11,7 @@ class V2Api {
   static Future < http.Response > login(Map body) => http.post(Uri.parse('${Config.host}/login'), body: body);
 
   // a1 do not remove this line
+  V2Api.todoChangeStatus(): path = '/todo-change-status/';
   V2Api.todoGetAll(): path = '/todo-get-all';
   V2Api.todoCreate(): path = '/todo-create';
   V2Api.propertiesAll(): path = '/properties-all';
