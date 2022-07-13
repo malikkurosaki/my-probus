@@ -28,9 +28,22 @@ const findMany = expressAsyncHandler(async (req, res) => {
     res.status(201).json(crt);
 });
 
+const changeStatus = expressAsyncHandler(async (req, res) => {
+    const crt = await prisma.todos.update({
+        where: {
+            id: req.params.id
+        },
+        data: {
+            status: req.params.status
+        }
+    });
+    res.status(201).json(crt);
+});
+
 const V2Todos = {
     create,
-    findMany
+    findMany,
+    changeStatus
 }
 
 module.exports = V2Todos;

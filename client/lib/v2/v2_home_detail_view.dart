@@ -1,27 +1,15 @@
-import 'dart:convert';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:my_probus/config.dart';
-import 'package:my_probus/v2/v2_api.dart';
 import 'package:my_probus/v2/v2_chat.dart';
-
-import 'package:my_probus/v2/v2_config.dart';
-import 'package:my_probus/v2/v2_future_widget.dart';
-import 'package:my_probus/v2/v2_image_widget.dart';
 import 'package:my_probus/v2/v2_ismobile_widget.dart';
 import 'package:my_probus/v2/v2_role.dart';
 import 'package:my_probus/v2/v2_routes.dart';
-import 'package:my_probus/v2/v2_status.dart';
 import 'package:my_probus/v2/v2_val.dart';
 
 import 'v2_load.dart';
-
-
 
 class V2HomeDetailView extends StatelessWidget {
   V2HomeDetailView({Key? key}) : super(key: key);
@@ -55,24 +43,20 @@ class V2HomeDetailView extends StatelessWidget {
                         children: [
                           for (final itm in V2Val.listIssueDashboard.value.val)
                             ListTile(
-                              selected: itm['id'] == V2Val.selectedIssueId.value.val,
-                              onTap: () async {
-
-
-                                V2Val.selectedIssueId.value.val = itm["id"];
-                                V2Val.selectedIssueId.refresh();
-                                // todo : disini harusnya bisa refresh
-                                // V2Val.homeControll.selectedIssueId.refresh();
-                                await V2Load.loadDiscutionByIssueId();
-                                V2Val.detailControll.content.value.val = itm;
-                                V2Val.detailControll.content.refresh();
-                              },
-                              leading: Text(itm['idx'].toString()),
-                              title: Text(itm['name'].toString()),
-                              subtitle: Text(itm['des'].toString()),
-                              trailing: V2Role().buttonStatusByRole(itm['id'])
-                           
-                            )
+                                selected: itm['id'] == V2Val.selectedIssueId.value.val,
+                                onTap: () async {
+                                  V2Val.selectedIssueId.value.val = itm["id"];
+                                  V2Val.selectedIssueId.refresh();
+                                  // todo : disini harusnya bisa refresh
+                                  // V2Val.homeControll.selectedIssueId.refresh();
+                                  await V2Load.loadDiscutionByIssueId();
+                                  V2Val.detailControll.content.value.val = itm;
+                                  V2Val.detailControll.content.refresh();
+                                },
+                                leading: Text(itm['idx'].toString()),
+                                title: Text(itm['name'].toString()),
+                                // subtitle: Text(itm['des'].toString()),
+                                trailing: V2Role().buttonStatusByRole(itm['id']))
                         ],
                       ),
                     ),
@@ -100,16 +84,14 @@ class V2HomeDetailView extends StatelessWidget {
                         },
                       ),
                     ),
-                    for( final k in V2Val.detailControll.content.value.val.keys)
-                      Builder(
-                        builder: (context) {
-                          final vl = V2Val.detailControll.content.value.val;
-                          return ListTile(
-                            title: Text(k),
-                            subtitle: Text(vl[k].toString()),
-                          );
-                        }
-                      ),
+                    for (final k in V2Val.detailControll.content.value.val.keys)
+                      Builder(builder: (context) {
+                        final vl = V2Val.detailControll.content.value.val;
+                        return ListTile(
+                          title: Text(k),
+                          subtitle: Text(vl[k].toString()),
+                        );
+                      }),
                   ],
                 ),
               ),

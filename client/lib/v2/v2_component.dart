@@ -128,7 +128,7 @@ class V2Component {
                                             Padding(
                                               padding: const EdgeInsets.all(2.0),
                                               child: Chip(
-                                                label: Text(itm['Product']['name'].toString()),
+                                                label: Text(itm['Client']['name'].toString()),
                                               ),
                                             ),
                                             (itm['IssueType']?['name'] ?? "").toString().isEmpty

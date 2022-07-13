@@ -78,7 +78,8 @@ class Controll {
 
         // console.log("push".yellow);
 
-
+        // change to mode pro
+        SetMode("pro_web");
 
         let tunggu1 = new Promise((resolve, reject) => {
             console.log("build v2".yellow);
