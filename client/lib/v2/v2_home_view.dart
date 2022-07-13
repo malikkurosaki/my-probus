@@ -36,6 +36,7 @@ class V2HomeView extends StatelessWidget {
   }
 
   Widget _drawer() => Drawer(
+        elevation: 0,
         child: ListView(
           controller: ScrollController(),
           children: [

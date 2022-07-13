@@ -6,6 +6,7 @@ const V2Module = require("./v2_controller/v2_module");
 const V2Product = require("./v2_controller/v2_product");
 const V2Properties = require("./v2_controller/v2_properties");
 const V2Status = require("./v2_controller/v2_status");
+const V2Todos = require("./v2_controller/v2_todos");
 const V2Type = require("./v2_controller/v2_type");
 const v2Routers = require("express").Router();
 
@@ -28,7 +29,8 @@ v2Routers.get("/discution-by-issue-id/:id", V2Discution.getDiscutionByIssueId);
 v2Routers.post("/discution-create", V2Discution.createDiscution);
 v2Routers.post("/update-issue-status/:id", V2Issue.updateIssueStatus);
 v2Routers.get("/properties-all", V2Properties.all);
-
+v2Routers.post("/todo-create", V2Todos.create);
+v2Routers.get("/todo-get-all/:id/:date", V2Todos.findMany);
 
 module.exports = v2Routers;
 

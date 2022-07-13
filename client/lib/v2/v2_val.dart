@@ -38,6 +38,7 @@ class V2Val {
   static final listProduct = [].val("V2Val_listProduct").obs;
   static final listClient = [].val("V2Val_listClient").obs;
 
+  static final listTodo = [].val("V2Val_listTodo").obs;
 
   clear() {
     isMobile.value.val = false;

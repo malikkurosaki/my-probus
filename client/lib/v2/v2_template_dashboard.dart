@@ -12,7 +12,10 @@ import 'v2_role.dart';
 import 'v2_val.dart';
 
 class V2TemplateDashboard extends StatelessWidget {
-  const V2TemplateDashboard({Key? key}) : super(key: key);
+  const V2TemplateDashboard({Key? key, this.header, this.body, this.footer}) : super(key: key);
+  final Widget? header;
+  final Widget? body;
+  final Widget? footer;
 
   @override
   Widget build(BuildContext context) {
@@ -68,9 +71,11 @@ class V2TemplateDashboard extends StatelessWidget {
               ],
             ),
           ),
+          header ?? Container(),
           Divider(
             color: Colors.cyan,
           ),
+          body ?? Container(),
           // Visibility(
           //   visible: !V2Role.user().isMe(),
           //   child: Column(
@@ -113,7 +118,8 @@ class V2TemplateDashboard extends StatelessWidget {
               ),
             ),
           ),
-          V2Component().listJobs(isMobile)
+          V2Component().listJobs(isMobile),
+          footer ?? Container(),
         ],
       ),
     );

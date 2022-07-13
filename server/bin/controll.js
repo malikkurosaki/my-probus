@@ -32,10 +32,10 @@ const SeedModule = require("./con/seed_module");
 
 function ssh(pass, command) {
     return new SSH({
-        host: "makurostudio.my.id",
-        user: "makuro",
-        pass: pass,
-    })
+            host: "makurostudio.my.id",
+            user: "makuro",
+            pass: pass,
+        })
         .exec(`source ~/.nvm/nvm.sh && cd my-probus && ${command}`, {
             out: (data) => console.log(`${data}`.green),
 
@@ -67,7 +67,7 @@ function bashRoot(command) {
 class Controll {
     async buildV2() {
 
-        
+
 
         // console.log("push".yellow);
         // execSync(`git add . && git commit -m "ya" && git push`, {
@@ -78,7 +78,7 @@ class Controll {
 
         // console.log("push".yellow);
 
-        
+
 
         let tunggu1 = new Promise((resolve, reject) => {
             console.log("build v2".yellow);
@@ -107,7 +107,7 @@ class Controll {
             resolve();
         });
 
-       Promise.all([tunggu1, tunggu2]);
+        Promise.all([tunggu1, tunggu2]);
 
     }
     async buildWebOnly() {
@@ -140,9 +140,9 @@ class Controll {
     async buildPushGithub() {
         execSync(
             `flutter build web --release --base-href /my-probus/client/build/web/`, {
-            stdio: "inherit",
-            cwd: path.join(__dirname, "../../client"),
-        }
+                stdio: "inherit",
+                cwd: path.join(__dirname, "../../client"),
+            }
         );
 
         execSync(`git add . && git commit -m "ya" && git push origin `, {
@@ -394,14 +394,14 @@ class Controll {
             pass
         }) => {
             new SSH({
-                host: "makurostudio.my.id",
-                user: "makuro",
-                pass: pass,
-            })
+                    host: "makurostudio.my.id",
+                    user: "makuro",
+                    pass: pass,
+                })
                 .exec(
                     `source ~/.nvm/nvm.sh && cd my-probus && git pull && cd server && npm install && pm2 restart all && pm2 save`, {
-                    out: (data) => console.log(`${data}`.green),
-                }
+                        out: (data) => console.log(`${data}`.green),
+                    }
                 )
                 .start();
 
@@ -502,8 +502,8 @@ class Controll {
                         __dirname,
                         "../../client"
                     )} && flutter build apk --release --split-per-abi`, {
-                    stdio: "inherit",
-                }
+                        stdio: "inherit",
+                    }
                 );
                 console.log("Client apk berhasil dibuild".yellow);
                 resolve();
@@ -537,14 +537,14 @@ class Controll {
                     await new Promise((resolve, reject) => {
                         try {
                             new SSH({
-                                host: "makurostudio.my.id",
-                                user: "makuro",
-                                pass: pass,
-                            })
+                                    host: "makurostudio.my.id",
+                                    user: "makuro",
+                                    pass: pass,
+                                })
                                 .exec(
                                     `source ~/.nvm/nvm.sh && cd my-probus && git pull && cd server && npm install && pm2 restart all && pm2 save`, {
-                                    out: (data) => console.log(`${data}`),
-                                }
+                                        out: (data) => console.log(`${data}`),
+                                    }
                                 )
                                 .start();
                             console.log("Server berhasil di restart".yellow);
@@ -602,8 +602,8 @@ class Controll {
     async runClientDebug() {
         execSync(
             `cd ${path.join(__dirname, "../../client")} && flutter run -d chrome`, {
-            stdio: "inherit",
-        }
+                stdio: "inherit",
+            }
         );
     }
 

@@ -52,4 +52,15 @@ class V2Load {
       throw e.toString();
     }
   }
+
+  static loadTodo(String date) async {
+    try {
+      final data = await V2Api.todoGetAll().getByParams("${V2Val.user.val['id']}/$date");
+      V2Val.listTodo.value.val = List.from(jsonDecode(data.body));
+      V2Val.listTodo.refresh();
+      debugPrint("ambil data todo");
+    } catch (e) {
+      throw e.toString();
+    }
+  }
 }
