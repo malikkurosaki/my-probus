@@ -97,9 +97,12 @@ class V2PrinstReportButton extends StatelessWidget {
       pw.Page(
         pageFormat: format,
         build: (context) {
-          return pw.ListView(
-            children: [
-                        for (final client in ini.keys)
+          return pw.ListView(children: [
+            pw.Text(
+              DateFormat('dd MMMM yyyy').format(DateTime.now()),
+              style: pw.TextStyle(font: font, fontSize: 12),
+            ),
+            for (final client in ini.keys)
               pw.Padding(
                 padding: pw.EdgeInsets.all(8.0),
                 child: pw.Column(
@@ -108,7 +111,6 @@ class V2PrinstReportButton extends StatelessWidget {
                     pw.Text(
                       client.toString(),
                       style: pw.TextStyle(
-                        fontSize: 20,
                         fontWeight: pw.FontWeight.bold,
                       ),
                     ),
@@ -117,10 +119,9 @@ class V2PrinstReportButton extends StatelessWidget {
                         crossAxisAlignment: pw.CrossAxisAlignment.start,
                         children: [
                           pw.Text(
-                            product.toString(),
+                            product.toString().toUpperCase(),
                             style: pw.TextStyle(
-                              fontSize: 16,
-                              fontWeight: pw.FontWeight.bold,
+                              color: PdfColor.fromHex('#666666'),
                             ),
                           ),
                           for (final issueType in ini[client][product].keys)
@@ -129,41 +130,98 @@ class V2PrinstReportButton extends StatelessWidget {
                               child: pw.Column(
                                 crossAxisAlignment: pw.CrossAxisAlignment.start,
                                 children: [
-                                  pw.Row(
-                                    children: [
-                                      pw.SizedBox(width: 100, child: pw.Text("Type ")),
-                                      pw.Expanded(child: pw.Text(issueType.toString())),
-                                    ],
-                                  ),
+                                  pw.Container(
+                                    decoration: pw.BoxDecoration(border: pw.Border.all(width: 0.5)),
+                                      padding: pw.EdgeInsets.all(8),
+                                      child: pw.Row(
+                                        children: [
+                                          pw.SizedBox(
+                                            width: 50,
+                                            child: pw.Text(
+                                              "Type".toUpperCase(),
+                                              style: pw.TextStyle(
+                                                fontSize: 9,
+                                                fontWeight: pw.FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                          pw.Expanded(
+                                            child: pw.Text(
+                                              issueType.toString().toUpperCase(),
+                                              style: pw.TextStyle(
+                                                fontSize: 9,
+                                                fontWeight: pw.FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      )),
                                   for (final issue in ini[client][product][issueType])
-                                    pw.Column(
-                                      crossAxisAlignment: pw.CrossAxisAlignment.start,
-                                      children: [
-                                        pw.Row(
-                                          children: [
-                                            pw.SizedBox(width: 100, child: pw.Text("Title")),
-                                            pw.Expanded(child: pw.Text(issue['name'].toString())),
-                                          ],
-                                        ),
-                                        pw.Row(
-                                          children: [
-                                            pw.SizedBox(width: 100, child: pw.Text("Description")),
-                                            pw.Expanded(child: pw.Text(issue['des'].toString())),
-                                          ],
-                                        ),
-                                      ],
+                                    pw.Container(
+                                      
+                                      decoration: pw.BoxDecoration(border: pw.Border.all(width: 0.5)),
+                                      padding: pw.EdgeInsets.all(8),
+                                      child: pw.Column(
+                                        crossAxisAlignment: pw.CrossAxisAlignment.start,
+                                        children: [
+                                          pw.Row(
+                                            children: [
+                                              pw.SizedBox(
+                                                width: 50,
+                                                child: pw.Text("Title",
+                                                    style: pw.TextStyle(
+                                                      fontSize: 9,
+                                                      color: PdfColor.fromHex('#666666'),
+                                                    )),
+                                              ),
+                                              pw.Expanded(
+                                                child: pw.Text(
+                                                  issue['name'].toString(),
+                                                  style: pw.TextStyle(
+                                                    fontSize: 9,
+                                                    color: PdfColor.fromHex('#666666'),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          pw.Row(
+                                            children: [
+                                              pw.SizedBox(
+                                                width: 50,
+                                                child: pw.Text(
+                                                  "Description",
+                                                  style: pw.TextStyle(
+                                                    fontSize: 9,
+                                                    color: PdfColor.fromHex('#666666'),
+                                                  ),
+                                                ),
+                                              ),
+                                              pw.Expanded(
+                                                child: pw.Text(
+                                                  issue['des'].toString(),
+                                                  style: pw.TextStyle(
+                                                    fontSize: 9,
+                                                    color: PdfColor.fromHex('#666666'),
+                                                    
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                 ],
                               ),
                             ),
                         ],
                       ),
-                    pw.Divider()
                   ],
                 ),
-              )
-            ]
-          );
+              ),
+              
+          ]);
           // pw.Column(
           //   crossAxisAlignment: pw.CrossAxisAlignment.start,
           //   children: [
@@ -181,7 +239,7 @@ class V2PrinstReportButton extends StatelessWidget {
           //                   "Name",
           //                   style: pw.TextStyle(
           //                     font: font,
-          //                     fontSize: 12,
+          //                     fontSize: 9,
           //                   ),
           //                 ),
           //               ),
@@ -200,7 +258,7 @@ class V2PrinstReportButton extends StatelessWidget {
           //                     "Description",
           //                     style: pw.TextStyle(
           //                       font: font,
-          //                       fontSize: 12,
+          //                       fontSize: 9,
           //                     ),
           //                   )),
           //               pw.Flexible(
@@ -220,7 +278,7 @@ class V2PrinstReportButton extends StatelessWidget {
           //                     "Type",
           //                     style: pw.TextStyle(
           //                       font: font,
-          //                       fontSize: 12,
+          //                       fontSize: 9,
           //                     ),
           //                   )),
           //               pw.Flexible(
@@ -240,7 +298,7 @@ class V2PrinstReportButton extends StatelessWidget {
           //                     "Module",
           //                     style: pw.TextStyle(
           //                       font: font,
-          //                       fontSize: 12,
+          //                       fontSize: 9,
           //                     ),
           //                   )),
           //               pw.Flexible(
@@ -260,7 +318,7 @@ class V2PrinstReportButton extends StatelessWidget {
           //                     "Product",
           //                     style: pw.TextStyle(
           //                       font: font,
-          //                       fontSize: 12,
+          //                       fontSize: 9,
           //                     ),
           //                   )),
           //               pw.Flexible(
@@ -280,7 +338,7 @@ class V2PrinstReportButton extends StatelessWidget {
           //                     "Creator",
           //                     style: pw.TextStyle(
           //                       font: font,
-          //                       fontSize: 12,
+          //                       fontSize: 9,
           //                     ),
           //                   )),
           //               pw.Flexible(
@@ -300,7 +358,7 @@ class V2PrinstReportButton extends StatelessWidget {
           //                     "Kapan",
           //                     style: pw.TextStyle(
           //                       font: font,
-          //                       fontSize: 12,
+          //                       fontSize: 9,
           //                     ),
           //                   )),
           //               pw.Flexible(
