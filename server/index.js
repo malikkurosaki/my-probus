@@ -1,7 +1,8 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 const express = require("express");
-const app = express();
+// const app = express();
+const {httpServer, app} = require('./index_https_config')
 const port = 3001;
 const cors = require("cors");
 const { api } = require("./routers");
@@ -10,10 +11,17 @@ const apiRoot = "/api/v1";
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const { Server } = require("socket.io");
-const { createServer } = require("http");
-const httpServer = createServer(app);
-const path = require("path");
+const fs = require('fs')
+// const createServer = require("https").createServer;
+// const fs = require("fs");
+// const httpServer = createServer(
+//   {
+//     key: fs.readFileSync("key.pem"),
+//     cert: fs.readFileSync("cert.pem"),
+//   },
+//   app);
 
+const path = require("path");
 const io = new Server(httpServer, {
   allowEIO3: true,
   cors: {
@@ -21,7 +29,7 @@ const io = new Server(httpServer, {
     credentials: true,
   },
 });
-const fs = require("fs");
+
 const { routeDashboard } = require("./controllers/dashboard");
 const { routeMaster } = require("./controllers/master");
 const v2Routers = require("./v2_routers");
@@ -162,35 +170,3 @@ httpServer.listen(port, () =>
   console.log(`Example app listening on port ${port}!`)
 );
 
-// app.listen(port, () => console.log(`Example app listening on port ${port}!`));
-
-// https.createServer({
-//     key: fs.readFileSync('./server/ssl/key.pem'),
-//     cert: fs.readFileSync('./server/ssl/cert.pem')
-// }, app).listen(port, () => console.log(`Example ssl app listening on port ${port}!`));
-
-// selfsigned.generate([{ name: "makuro", value: "localhost",  }], { days: 365 }, function (err, pems) {
-//     https.createServer({
-//         key: pems.private,
-//         cert: pems.cert
-//     }, app).listen(port, () => console.log(`Example app listening on port ${port}!`));
-// });
-
-// var pems = selfsigned.generate([{name: 'makuro', value: 'kurosakiblackangel@gmail.com'}], { clientCertificate: true }, function (err, pems) {
-//     // console.log(pems)
-//     // console.log(err)
-
-// });
-
-// https.createServer({
-//     key: pems.public,
-//     cert: pems.cert
-//     //  key: fs.readFileSync('server.key'),
-//     //  cert: fs.readFileSync('server.cert')
-// }, app).listen(port, () => console.log(`Example app listening on port ${port}!`));
-
-// https.createServer({
-//     key: fs.readFileSync('key.pem'),
-//     cert: fs.readFileSync('cert.pem')
-// }, app).listen(port, () => console.log(`Example app listening on port ${port}!`),);
-// openssl genrsa - out key.pem && openssl req - new - key key.pem - out csr.pem && openssl x509 - req - days 9999 -in csr.pem - signkey key.pem - out cert.pem && rm csr.pem
