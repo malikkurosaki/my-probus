@@ -22,15 +22,15 @@ class V2DashboardAdmin extends StatelessWidget {
               ),
             ),
             Text(
-              "Accept,  menerima dan akan dilanjutkan ke moderator ( user ayu)",
+              "Pending / Hold,  menahan atau membiarkan untuk beberapa waktu hingga dirasa mumengkinkan untuk dikerjakan",
               style: TextStyle(color: Colors.grey),
             ),
             Text(
-              "Reject,  menolak dan akan ditolak / sudah terselesaikan",
+              "Progress,  menerima dan akan mengerjakannya dengan segera",
               style: TextStyle(color: Colors.grey),
             ),
             Text(
-              "Approve, menerima dan akan diterima dilanjutkan ke adamin ( user ahmad )",
+              "Close, Menolak karena sudah terselesaikan tanpa penanganan khusus, atau problem telah diselesaikan dengan jalur yang berbeda",
               style: TextStyle(color: Colors.grey),
             ),
           ],
