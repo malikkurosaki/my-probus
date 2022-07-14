@@ -17,8 +17,6 @@ class V2SelectFuture extends StatelessWidget {
   final EdgeInsets? padding;
   final List sources;
 
-
-
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -30,7 +28,10 @@ class V2SelectFuture extends StatelessWidget {
             dropdownDecoratorProps: DropDownDecoratorProps(
                 dropdownSearchDecoration: InputDecoration(border: InputBorder.none, hintText: hint, labelText: hint)),
             itemAsString: (Map u) => u['name'].toString(),
-            onChanged: (Map? result) => value.value.val = result!,
+            onChanged: (Map? result) {
+              value.value.val = result!;
+              debugPrint(result.toString());
+            },
             items: List<Map>.from(sources),
             popupProps: PopupProps.menu(
                 searchFieldProps: TextFieldProps(

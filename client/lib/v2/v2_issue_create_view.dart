@@ -155,7 +155,7 @@ class V2IssueCreateView extends StatelessWidget {
                                       "issueTypesId": _type.value.val['id'],
                                       "issueStatusesId": "1",
                                       "clientsId": _client.value.val['id'],
-                                      "productsId": "1",
+                                      "productsId": _product.value.val['id'],
                                       "usersId": V2Val.user.val['id'],
                                       "departementsId": _module.value.val['id'],
                                       "dateSubmit": _date.value.val,

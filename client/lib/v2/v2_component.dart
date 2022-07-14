@@ -98,22 +98,24 @@ class V2Component {
                                                                   .format(DateTime.parse(itm['dateSubmit'].toString()))
                                                                   .toString()),
                                                             ),
-                                                            Chip(
-                                                              // daysBetween
-                                                              backgroundColor: DateTime.now()
-                                                                          .difference(DateTime.parse(
-                                                                              itm['dateSubmit'].toString()))
-                                                                          .inDays >
-                                                                      2
-                                                                  ? Colors.pink
-                                                                  : Colors.cyan,
-                                                              label: Text(
-                                                                timeago.format(
-                                                                  DateTime.parse(
-                                                                    itm['dateSubmit'],
+                                                            Expanded(
+                                                              child: Chip(
+                                                                // daysBetween
+                                                                backgroundColor: DateTime.now()
+                                                                            .difference(DateTime.parse(
+                                                                                itm['dateSubmit'].toString()))
+                                                                            .inDays >
+                                                                        2
+                                                                    ? Colors.pink
+                                                                    : Colors.cyan,
+                                                                label: Text(
+                                                                  timeago.format(
+                                                                    DateTime.parse(
+                                                                      itm['dateSubmit'],
+                                                                    ),
                                                                   ),
+                                                                  style: TextStyle(color: Colors.white),
                                                                 ),
-                                                                style: TextStyle(color: Colors.white),
                                                               ),
                                                             )
                                                           ],
@@ -128,7 +130,7 @@ class V2Component {
                                             Padding(
                                               padding: const EdgeInsets.all(2.0),
                                               child: Chip(
-                                                label: Text(itm['Client']['name'].toString()),
+                                                label: Text(itm['Product']['name'].toString()),
                                               ),
                                             ),
                                             (itm['IssueType']?['name'] ?? "").toString().isEmpty
@@ -175,7 +177,7 @@ class V2Component {
                                   V2Val.detailControll.content.value.val = itm;
                                   V2Val.selectedIssueId.value.val = itm['id'];
                                   V2Val.selectedIssueId.refresh();
-                                  
+
                                   debugPrint(V2Val.selectedIssueId.value.val.toString());
                                   await V2Load.loadDiscutionByIssueId();
                                   Get.toNamed(V2Routes.issueDetail().key);
