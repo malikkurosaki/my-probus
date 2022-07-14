@@ -102,6 +102,7 @@ class V2PrinstReportButton extends StatelessWidget {
               DateFormat('dd MMMM yyyy').format(DateTime.now()),
               style: pw.TextStyle(font: font, fontSize: 12),
             ),
+            
             for (final client in ini.keys)
               pw.Padding(
                 padding: pw.EdgeInsets.all(8.0),
