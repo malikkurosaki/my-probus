@@ -13,6 +13,7 @@ const getAll = expressAsyncHandler(async (req, res) => {
       id: true,
       name: true,
       dateSubmit: true,
+      departementsId: true,
       Client: {
         select: {
           id: true,

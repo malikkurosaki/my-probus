@@ -26,7 +26,7 @@ const V2Login = expressAsyncHandler(async (req, res) => {
         },
       },
       rolesId: true,
-      departementsId: true
+      departementsId: true,
     },
   });
 
