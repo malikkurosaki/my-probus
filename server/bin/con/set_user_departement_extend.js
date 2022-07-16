@@ -6,6 +6,7 @@ const _ = require("lodash");
 const beautify = require("js-beautify");
 const colors = require("colors");
 const prompts = require("prompts");
+const clog = require('c-log')
 
 
 const setDepartement = async () => {
@@ -45,19 +46,23 @@ const setDepartement = async () => {
         }))
     })
 
-    console.log(selectUsers, selectDepartement)
-    await prisma.users.updateMany({
-        where: {
-            id: {
-                in: selectUsers
+    if(selectUsers && selectDepartement){
+        console.log(selectUsers, selectDepartement)
+        await prisma.users.updateMany({
+            where: {
+                id: {
+                    in: selectUsers
+                }
+            },
+            data: {
+                departementsId: selectDepartement
             }
-        },
-        data: {
-            departementsId: selectDepartement
-        }
-    })
+        })
 
-    console.log("Done")
+        clog.success('Success')
+    }else{
+        clog.error('please select users and departement')
+    }
 }
 
 
