@@ -46,6 +46,18 @@ const setDepartement = async () => {
     })
 
     console.log(selectUsers, selectDepartement)
+    await prisma.users.updateMany({
+        where: {
+            id: {
+                in: selectUsers
+            }
+        },
+        data: {
+            departementsId: selectDepartement
+        }
+    })
+
+    console.log("Done")
 }
 
 

@@ -4,7 +4,7 @@
 
 - [X] desciption kebawah di detail (mbk ayu) ok
 - [X] accept tanpa harus note (dewi)} ok
-- [ ] peringatan jika sudah seminggu lebih (mbk ayu)
+- [X] peringatan jika sudah seminggu lebih (mbk ayu)
 - [ ] client list tambah dan update (pengembangan)
 - [ ] issue edit (pengembangan)
 - [ ] tambah di module INSTALL SYSTEM, REPORT , OTHER (dewi)

@@ -35,7 +35,8 @@
         "generate model",
         "generte issue type and status",
         "generate api",
-        "set user department"
+        "set user department",
+        "show user departement"
     ],
     "flutter": [
         "cupertino_icons",

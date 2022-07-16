@@ -116,6 +116,9 @@ function ModelGenerator() {
         }, {
             title: 'set user department',
             value: 'setUserDepartment',
+        }, {
+            title: 'show user departement',
+            value: 'showUserDepartement',
         }]
 
     }).then(({
@@ -265,6 +268,10 @@ function ModelGenerator() {
 
             case 'setUserDepartment':
                 new Controll().setUserDepartment();
+                break;
+
+            case 'showUserDepartement':
+                new Controll().showUserDepartement();
                 break;
 
             default:
