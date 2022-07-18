@@ -36,5 +36,8 @@ v2Routers.post("/todo-change-status", V2Todos.changeStatus);
 // delete todo
 v2Routers.delete("/todo-delete/:id", V2Todos.deleteTodo);
 
+// delete issue
+v2Routers.delete("/issue-delete/:id", V2Issue.deleteIssue);
+
 module.exports = v2Routers;
 

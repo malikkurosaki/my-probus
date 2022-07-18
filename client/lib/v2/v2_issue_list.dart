@@ -3,6 +3,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:my_probus/v2/v2_api.dart';
 import 'package:my_probus/v2/v2_ismobile_widget.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'v2_load.dart';
@@ -30,9 +31,7 @@ class V2IssueList extends StatelessWidget {
             ));
   }
 
-  Widget _item(bool isMobile) => Obx(
-    () => 
-    Wrap(
+  Widget _item(bool isMobile) => Obx(() => Wrap(
         children: [
           for (final itm in V2Val.listIssue.value.val)
             SizedBox(
@@ -64,7 +63,17 @@ class V2IssueList extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text("Id Issue"),
-                              )
+                              ),
+                              IconButton(
+                                  onPressed: () async {
+                                    final dl = await V2Api.issueDelete().deleteData(itm['id']);
+                                    debugPrint("delete issue: "+ itm['id'].toString());
+                                    await V2Load.issuegetAll();
+                                  },
+                                  icon: Icon(
+                                    Icons.delete,
+                                    color: Colors.pink,
+                                  ))
                             ],
                           ),
                           Expanded(
@@ -195,7 +204,5 @@ class V2IssueList extends StatelessWidget {
               ),
             )
         ],
-      )
-  )
-  ;
+      ));
 }

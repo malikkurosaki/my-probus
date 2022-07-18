@@ -325,6 +325,17 @@ const issueList = expressAsyncHandler(async (req, res) => {
   res.json(data);
 });
 
+
+const deleteIssue = expressAsyncHandler(async (req, res) => {
+  const issue = await prisma.issues.delete({
+    where: {
+      id: req.params.id,
+    },
+  });
+
+  res.status(200).json(issue);
+});
+
 const V2Issue = {
   create,
   getAll,
@@ -336,6 +347,7 @@ const V2Issue = {
   getIssueById,
   updateIssueStatus,
   issueList,
+  deleteIssue
 };
 
 module.exports = V2Issue;
