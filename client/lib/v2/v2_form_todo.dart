@@ -141,6 +141,20 @@ class V2FormTodo extends StatelessWidget {
                                       for (final td in V2Val.listTodo.value.val)
                                         Card(
                                           child: ListTile(
+                                            leading: IconButton(
+                                              onPressed: ()async{
+                                                try {
+                                                  final dl = await V2Api.todoDelete().deleteData(td['id']);
+                                                  debugPrint(dl.body);
+                                                  await V2Load.loadTodo(_tanggalDipilih.value.val);
+                                                } catch (e) {
+
+                                                  debugPrint(e.toString());
+                                                  
+                                                }
+                                              }, 
+                                              icon: Icon(Icons.delete, color: Colors.pink,),
+                                            ),
                                             title: Text(td['title'].toString()),
                                             subtitle: Column(
                                               crossAxisAlignment: CrossAxisAlignment.start,

@@ -15,10 +15,10 @@
 - [X] bug max 2hari red , request max 5 ( ok )
 - [X] client di item dashboard
 - [X] fitrer produt 2end
-- [ ] print nama client
-- [ ] group by client
-- [ ] prindate - module - client,  (name > title ) problem
-- [ ] tambah taggal create di report
+- [X] print nama client
+- [X] group by client
+- [X] prindate - module - client,  (name > title ) problem
+- [X] tambah taggal create di report
 
 # request 2
 
@@ -35,7 +35,7 @@
 - [ ] summary report dashboard
 - [ ] admin change status with note reason
 - [ ] waktu pengerjaan di mas ahmad estimasi
-- [ ] jika module fo dan ecomers masgun, sisanya dewi
+- [X] jika module fo dan ecomers masgun, sisanya dewi
 - [ ] mas ahmat tampilan utama bug
 - [X] tambah jam
 - [ ] tanngal form todo isi catatan atau eggal ada tandanya

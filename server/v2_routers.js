@@ -33,5 +33,8 @@ v2Routers.post("/todo-create", V2Todos.create);
 v2Routers.get("/todo-get-all/:id/:date", V2Todos.findMany);
 v2Routers.post("/todo-change-status", V2Todos.changeStatus);
 
+// delete todo
+v2Routers.delete("/todo-delete/:id", V2Todos.deleteTodo);
+
 module.exports = v2Routers;
 

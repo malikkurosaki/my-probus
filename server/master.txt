@@ -1,0 +1,2 @@
+PEGAWAI=satu, dua, tiga , empat;
+DEPARTEMENT=

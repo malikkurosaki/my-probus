@@ -48,10 +48,23 @@ const changeStatus = expressAsyncHandler(async (req, res) => {
     res.status(201).json(crt);
 });
 
+
+const deleteTodo = expressAsyncHandler(async (req, res) => {
+    const crt = await prisma.todos.delete({
+        where: {
+            id: req.params.id
+        }
+    });
+
+    console.log(`delete todo ${req.params.id}`);
+    res.status(201).json(crt);
+});
+
 const V2Todos = {
     create,
     findMany,
-    changeStatus
+    changeStatus,
+    deleteTodo
 }
 
 module.exports = V2Todos;
