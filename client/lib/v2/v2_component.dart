@@ -34,7 +34,7 @@ class V2Component {
               children: [
                 for (final itm in V2Val.listIssueDashboard.value.val)
                   Visibility(
-                    visible: itm['Departement']['id'].toString() == V2Val.user.val['departementsId'].toString(),
+                    visible: (V2Role.admin().isMe() || V2Role.moderator().isMe()) ? true:  itm['Departement']['id'].toString() == V2Val.user.val['departementsId'].toString(),
                     child: SizedBox(
                       width: Get.width / (isMobile ? 0 : 3),
                       child: Card(
@@ -44,6 +44,7 @@ class V2Component {
                           children: [
                             // Text(itm['Departement']['id'].toString() ),
                             // Text(V2Val.user.val['departementsId'].toString()),
+                            
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
