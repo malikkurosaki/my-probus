@@ -152,6 +152,7 @@ class V2FormTodo extends StatelessWidget {
                                                   debugPrint(e.toString());
                                                   
                                                 }
+                                                
                                               }, 
                                               icon: Icon(Icons.delete, color: Colors.pink,),
                                             ),
