@@ -24,9 +24,10 @@ void main() async{
   debugPrint("load properties done");
   debugPrint("run");
 
-  debugPrint("load sokecet");
-  await Skt.init();
-  debugPrint("load sokecet done");
+  debugPrint("disable loading socket");
+  // debugPrint("load sokecet");
+  // await Skt.init();
+  // debugPrint("load sokecet done");
   
   
   runApp(V2MainApp());
