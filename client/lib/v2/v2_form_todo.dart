@@ -21,10 +21,14 @@ class V2FormTodo extends StatelessWidget {
   final _controllerDescription = TextEditingController();
   final _fokusTitle = FocusNode();
 
+  _onLoad(){
+    _tanggalDipilih.value.val = DateTime.now().toLocal().toString();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return 
-    V2IsMobileWidget(
+    _onLoad();
+    return V2IsMobileWidget(
       isMobile: (isMobile) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -44,16 +48,18 @@ class V2FormTodo extends StatelessWidget {
                       DrawerHeader(
                         child: V2ImageWidget.logo(),
                       ),
-                      CalendarDatePicker(
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(2000),
-                        lastDate: DateTime(2050),
-                        onDateChanged: (date) async {
-                          _tanggalDipilih.value.val = date.toLocal().toString();
-                          _tanggalDipilih.refresh();
+                      Obx(
+                        () => CalendarDatePicker(
+                          initialDate: DateTime.parse(_tanggalDipilih.value.val),
+                          firstDate: DateTime(2000),
+                          lastDate: DateTime(2050),
+                          onDateChanged: (date) async {
+                            _tanggalDipilih.value.val = date.toLocal().toString();
+                            _tanggalDipilih.refresh();
 
-                          await V2Load.loadTodo(_tanggalDipilih.value.val);
-                        },
+                            await V2Load.loadTodo(_tanggalDipilih.value.val);
+                          },
+                        ),
                       )
                     ],
                   ),
@@ -222,19 +228,7 @@ class V2FormTodo extends StatelessWidget {
                                               alignment: Alignment.centerRight,
                                               child: Padding(
                                                 padding: const EdgeInsets.all(16),
-                                                child: IconButton(
-                                                  onPressed: () {
-                                                    Get.bottomSheet(
-                                                      Material(
-                                                        child: Text("Hola"),
-                                                      )
-                                                    );
-                                                  },
-                                                  icon: Icon(
-                                                    Icons.edit,
-                                                    color: Colors.blue,
-                                                  ),
-                                                ),
+                                                child: iconUpdate(td),
                                               ),
                                             )
                                           ],
@@ -257,4 +251,95 @@ class V2FormTodo extends StatelessWidget {
       ),
     );
   }
+
+  Widget iconUpdate(td) => IconButton(
+        onPressed: () {
+          final dateSource = td['createdAt'].toString().obs;
+          final title = TextEditingController(text: td['title']);
+          final content = TextEditingController(text: td['content']);
+
+          Get.dialog(
+            SimpleDialog(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("Edit", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    height: 200,
+                    width: 200,
+                    child: CalendarDatePicker(
+                      initialDate: DateTime.parse(dateSource.value),
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime(2050),
+                      onDateChanged: (date) async {
+                        dateSource.value = date.toLocal().toString();
+                        debugPrint(dateSource.value);
+                      },
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    controller: title,
+                    maxLength: 1200,
+                    decoration: InputDecoration(hintText: "Title", labelText: "Title"),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    controller: content,
+                    maxLength: 1200,
+                    maxLines: 10,
+                    decoration: InputDecoration(hintText: "Description", labelText: "Description"),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: MaterialButton(
+                    color: Colors.orange,
+                    onPressed: () async {
+                      final body = {
+                        "id": td['id'],
+                        "title": title.text,
+                        "content": content.text,
+                        "createdAt": dateSource.value,
+                      };
+
+                      final kirim = await V2Api.todoUpdate().postData(body);
+                      if (kirim.statusCode == 201) {
+                        _tanggalDipilih.value.val = dateSource.value;
+                        _tanggalDipilih.refresh();
+
+                        await V2Load.loadTodo(_tanggalDipilih.value.val);
+                        Get.back();
+                      }
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(10),
+                      child: Center(
+                        child: Text(
+                          "Update",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          );
+        },
+        icon: Icon(
+          Icons.edit,
+          color: Colors.blue,
+        ),
+      );
 }

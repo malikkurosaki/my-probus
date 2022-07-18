@@ -42,5 +42,8 @@ v2Routers.delete("/issue-delete/:id", V2Issue.deleteIssue);
 // list todo
 v2Routers.get("/todo-list/:date", V2Todos.listTodo);
 
+// update todo
+v2Routers.post("/todo-update", V2Todos.updateTodo);
+
 module.exports = v2Routers;
 

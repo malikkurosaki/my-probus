@@ -1,4 +1,4 @@
 
   class Config{
-    static const String host = "http://localhost:3001";
+    static const String host = "https://makurostudio.my.id:3001";
   }

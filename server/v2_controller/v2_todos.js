@@ -2,6 +2,7 @@ const PrismaClient = require('@prisma/client').PrismaClient
 const prisma = new PrismaClient();
 const expressAsyncHandler = require('express-async-handler');
 const moment = require('moment');
+const clog = require('c-log');
 
 const create = expressAsyncHandler(async (req, res) => {
     let data = req.body;
@@ -19,7 +20,7 @@ const findMany = expressAsyncHandler(async (req, res) => {
 
     let ini = new Date(lastDate.setDate(lastDate.getDate() + 1));
 
-    console.log(firstDate, ini);
+    // console.log(firstDate, ini);
 
     const crt = await prisma.todos.findMany({
         where: {
@@ -56,7 +57,7 @@ const deleteTodo = expressAsyncHandler(async (req, res) => {
         }
     });
 
-    console.log(`delete todo ${req.params.id}`);
+    // console.log(`delete todo ${req.params.id}`);
     res.status(201).json(crt);
 });
 
@@ -88,15 +89,36 @@ const listTodo = expressAsyncHandler(async (req, res) => {
         }
     });
 
+
+
     res.status(201).json(crt);
 });
+
+
+const updateTodo = expressAsyncHandler(async (req, res) => {
+
+    const data = await prisma.todos.update({
+        where: {
+            id: req.body.id
+        },
+        data: {
+            content: req.body.content,
+            title: req.body.title,
+            createdAt: new Date(Date.parse(req.body.createdAt) + (24 * 60 * 60 * 1000)),
+        },
+
+    })
+
+    res.status(201).json(data);
+})
 
 const V2Todos = {
     create,
     findMany,
     changeStatus,
     deleteTodo,
-    listTodo
+    listTodo,
+    updateTodo
 }
 
 module.exports = V2Todos;

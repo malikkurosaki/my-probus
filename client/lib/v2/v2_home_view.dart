@@ -3,23 +3,19 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:my_probus/v2/v2_home_detail_view.dart';
+import 'package:get/get.dart';
 import 'package:my_probus/v2/v2_image_widget.dart';
 import 'package:my_probus/v2/v2_ismobile_widget.dart';
+import 'package:my_probus/v2/v2_list_menu.dart';
 import 'package:my_probus/v2/v2_load.dart';
 import 'package:my_probus/v2/v2_role.dart';
-import 'package:my_probus/v2/v2_status.dart';
-import 'package:my_probus/v2/v2_list_menu.dart';
 import 'package:my_probus/v2/v2_routes.dart';
 import 'package:my_probus/v2/v2_val.dart';
-import 'package:get/get.dart';
-import 'package:timeago/timeago.dart' as timeago;
 
 class V2HomeView extends StatelessWidget {
   const V2HomeView({Key? key}) : super(key: key);
 
-   _onLoad() async {
+  _onLoad() async {
     await V2Val.homeControll.loadIssueDashboard();
     await V2Load.issuegetAll();
   }
@@ -28,11 +24,21 @@ class V2HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     _onLoad();
     return V2IsMobileWidget(
-        isMobile: (isMobile) => Scaffold(
-              body: Row(
-                children: [Visibility(visible: !isMobile, child: _drawer()), Expanded(child: V2Role().dashboardByRole)],
+      isMobile: (isMobile) => Row(
+        children: [
+          Visibility(visible: !isMobile, child: _drawer()),
+          Expanded(
+            child: Scaffold(
+              drawer: isMobile ? _drawer() : null,
+              appBar: !isMobile? null : AppBar(
+                title: Text('Home'),
               ),
-            ));
+              body: V2Role().dashboardByRole,
+            ),
+          )
+        ],
+      ),
+    );
   }
 
   Widget _drawer() => Drawer(
@@ -46,7 +52,6 @@ class V2HomeView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   V2ImageWidget.logo(),
-                  
                 ],
               ),
             ),
@@ -65,7 +70,6 @@ class V2HomeView extends StatelessWidget {
                     MaterialButton(
                       child: Text("Yes"),
                       onPressed: () {
-                        
                         V2Val().logout();
                         Get.offAllNamed(V2Routes.root().key);
                       },

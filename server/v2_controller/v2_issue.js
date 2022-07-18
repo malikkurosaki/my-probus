@@ -67,7 +67,7 @@ const create = expressAsyncHandler(async (req, res) => {
   const data = JSON.parse(req.body.data);
   const images = JSON.parse(req.body.images);
 
-  data["dateSubmit"] = new Date(Date.parse(data["dateSubmit"]));
+  data["dateSubmit"] = new Date(Date.parse(data["dateSubmit"]) + (24 * 60 * 60 * 1000));
 
   const issue = await prisma.issues.create({ data });
 
