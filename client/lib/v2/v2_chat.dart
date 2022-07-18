@@ -139,11 +139,11 @@ class V2Chat extends StatelessWidget {
                           _scrollController.animateTo(_scrollController.position.maxScrollExtent + 300,
                               duration: Duration(milliseconds: 500), curve: Curves.ease);
 
-                          Skt.notifWithIssue(
-                            title: "new message",
-                            content: "[ image ]",
-                            jenis: "msg",
-                          );
+                          // Skt.notifWithIssue(
+                          //   title: "new message",
+                          //   content: "[ image ]",
+                          //   jenis: "msg",
+                          // );
 
                           debugPrint("halo disini chat image");
                           await V2Load.loadDiscutionByIssueId();
@@ -186,11 +186,11 @@ class V2Chat extends StatelessWidget {
                           _scrollController.animateTo(_scrollController.position.maxScrollExtent + 300,
                               duration: Duration(milliseconds: 500), curve: Curves.ease);
 
-                          Skt.notifWithIssue(
-                            title: "new message",
-                            content: "[ image ]",
-                            jenis: "msg",
-                          );
+                          // Skt.notifWithIssue(
+                          //   title: "new message",
+                          //   content: "[ image ]",
+                          //   jenis: "msg",
+                          // );
 
                           debugPrint("halo disini chat image");
                           await V2Load.loadDiscutionByIssueId();
@@ -241,11 +241,11 @@ class V2Chat extends StatelessWidget {
                           V2Val.chatControll.listDiscution.value.val.add(Map.from(jsonDecode(discution.body)));
                           V2Val.chatControll.listDiscution.refresh();
 
-                          Skt.notifWithIssue(
-                            title: "new message",
-                            content: _contentText.text,
-                            jenis: "msg",
-                          );
+                          // Skt.notifWithIssue(
+                          //   title: "new message",
+                          //   content: _contentText.text,
+                          //   jenis: "msg",
+                          // );
 
                           _contentText.clear();
                           _fokus.requestFocus();

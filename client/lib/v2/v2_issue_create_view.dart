@@ -184,11 +184,11 @@ class V2IssueCreateView extends StatelessWidget {
 
                                       V2Val.homeControll.loadIssueDashboard();
                                       
-                                       Skt.notifWithIssue(
-                                        title: "new message",
-                                        content: "new Image Message",
-                                        jenis: "msg",
-                                      );
+                                      //  Skt.notifWithIssue(
+                                      //   title: "new message",
+                                      //   content: "new Image Message",
+                                      //   jenis: "msg",
+                                      // );
                                       
                                       _clearContent();
                                     }else{
