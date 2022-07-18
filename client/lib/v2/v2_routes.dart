@@ -24,6 +24,7 @@ class V2Routes {
     );
 
     // a1 do not remove this line
+    V2Routes.listTodo(): key = '/list-todo';
     V2Routes.formTodo(): key = '/form-todo';
     V2Routes.developer(): key = '/developer';
     V2Routes.issueList(): key = '/issue-list';
@@ -42,6 +43,7 @@ class V2Routes {
 
     // a2 do not remove this line
     static final all = < GetPage > [
+        V2Routes.listTodo().getPage(),
         V2Routes.formTodo().getPage(page: V2FormTodo()),
         V2Routes.developer().getPage(page: V2Developer()),
         V2Routes.issueList().getPage(page: V2IssueList()),

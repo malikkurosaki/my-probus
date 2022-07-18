@@ -23,7 +23,8 @@ class V2FormTodo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return V2IsMobileWidget(
+    return 
+    V2IsMobileWidget(
       isMobile: (isMobile) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -44,7 +45,7 @@ class V2FormTodo extends StatelessWidget {
                         child: V2ImageWidget.logo(),
                       ),
                       CalendarDatePicker(
-                        initialDate: DateTime.parse(_tanggalDipilih.value.val),
+                        initialDate: DateTime.now(),
                         firstDate: DateTime(2000),
                         lastDate: DateTime(2050),
                         onDateChanged: (date) async {
@@ -62,63 +63,75 @@ class V2FormTodo extends StatelessWidget {
                     children: [
                       SizedBox(
                         width: 500,
-                        child: Card(
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(
-                                  focusNode: _fokusTitle,
-                                  controller: _controllerTitle,
-                                  maxLength: 50,
-                                  maxLines: 1,
-                                  decoration: InputDecoration(hintText: "Title", labelText: "Totle"),
-                                ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Create New Todo",
+                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(
-                                  controller: _controllerDescription,
-                                  maxLength: 1200,
-                                  maxLines: 10,
-                                  decoration: InputDecoration(hintText: "Description", labelText: "Description"),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: MaterialButton(
-                                  color: Colors.cyan,
-                                  onPressed: () async {
-                                    final body = {
-                                      "usersId": V2Val.user.val['id'],
-                                      "title": _controllerTitle.text,
-                                      "content": _controllerDescription.text,
-                                      "createdAt": _tanggalDipilih.value.val
-                                    };
-
-                                    // debugPrint(body.toString());
-
-                                    final kirim = await V2Api.todoCreate().postData(body);
-
-                                    // clear
-                                    _controllerTitle.clear();
-                                    _controllerDescription.clear();
-
-                                    await V2Load.loadTodo(_tanggalDipilih.value.val);
-                                  },
-                                  child: Container(
-                                    padding: EdgeInsets.all(10),
-                                    child: Center(
-                                      child: Text(
-                                        "Add",
-                                        style: TextStyle(color: Colors.white),
-                                      ),
+                            ),
+                            Card(
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: TextFormField(
+                                      focusNode: _fokusTitle,
+                                      controller: _controllerTitle,
+                                      maxLength: 50,
+                                      maxLines: 1,
+                                      decoration: InputDecoration(hintText: "Title", labelText: "Title"),
                                     ),
                                   ),
-                                ),
-                              )
-                            ],
-                          ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: TextFormField(
+                                      controller: _controllerDescription,
+                                      maxLength: 1200,
+                                      maxLines: 10,
+                                      decoration: InputDecoration(hintText: "Description", labelText: "Description"),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: MaterialButton(
+                                      color: Colors.cyan,
+                                      onPressed: () async {
+                                        final body = {
+                                          "usersId": V2Val.user.val['id'],
+                                          "title": _controllerTitle.text,
+                                          "content": _controllerDescription.text,
+                                          "createdAt": _tanggalDipilih.value.val
+                                        };
+
+                                        // debugPrint(body.toString());
+
+                                        final kirim = await V2Api.todoCreate().postData(body);
+
+                                        // clear
+                                        _controllerTitle.clear();
+                                        _controllerDescription.clear();
+
+                                        await V2Load.loadTodo(_tanggalDipilih.value.val);
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.all(10),
+                                        child: Center(
+                                          child: Text(
+                                            "Add",
+                                            style: TextStyle(color: Colors.white),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       SizedBox(
@@ -128,65 +141,108 @@ class V2FormTodo extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Flexible(
-                              child: Obx(() => ListView(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          DateFormat("EEEE, dd MMMM yyyy")
-                                              .format(DateTime.parse(_tanggalDipilih.value.val)),
-                                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                              child: Obx(
+                                () => ListView(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        DateFormat("EEEE, dd MMMM yyyy")
+                                            .format(DateTime.parse(_tanggalDipilih.value.val)),
+                                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    for (final td in V2Val.listTodo.value.val)
+                                      Card(
+                                        child: Column(
+                                          children: [
+                                            ListTile(
+                                              leading: Column(
+                                                children: [
+                                                  IconButton(
+                                                    onPressed: () async {
+                                                      try {
+                                                        final dl = await V2Api.todoDelete().deleteData(td['id']);
+                                                        debugPrint(dl.body);
+                                                        await V2Load.loadTodo(_tanggalDipilih.value.val);
+                                                      } catch (e) {
+                                                        debugPrint(e.toString());
+                                                      }
+                                                    },
+                                                    icon: Icon(
+                                                      Icons.delete,
+                                                      color: Colors.pink,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              title: Text(td['title'].toString()),
+                                              subtitle: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(td['content'].toString()),
+
+                                                  // Text(td['status'].toString()),
+                                                  Row(
+                                                    children: [
+                                                      Text(
+                                                        DateFormat("dd MMMM yyyy")
+                                                            .format(DateTime.parse(td['createdAt'].toString())),
+                                                        style: TextStyle(fontSize: 12, color: Colors.grey),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                              trailing: PopupMenuButton(
+                                                icon: td['status'] == "open"
+                                                    ? Icon(Icons.check_box_outline_blank)
+                                                    : Icon(
+                                                        Icons.check_box,
+                                                        color: Colors.green,
+                                                      ),
+                                                itemBuilder: (context) => [
+                                                  PopupMenuItem(
+                                                    value: "open",
+                                                    child: Text("open"),
+                                                  ),
+                                                  PopupMenuItem(
+                                                    value: "close",
+                                                    child: Text("close"),
+                                                  ),
+                                                ],
+                                                onSelected: (value) async {
+                                                  final dataBody = {"id": td['id'], "status": value};
+                                                  await V2Api.todoChangeStatus().postData(dataBody);
+                                                  await V2Load.loadTodo(_tanggalDipilih.value.val);
+                                                },
+                                              ),
+                                            ),
+                                            Align(
+                                              alignment: Alignment.centerRight,
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(16),
+                                                child: IconButton(
+                                                  onPressed: () {
+                                                    Get.bottomSheet(
+                                                      Material(
+                                                        child: Text("Hola"),
+                                                      )
+                                                    );
+                                                  },
+                                                  icon: Icon(
+                                                    Icons.edit,
+                                                    color: Colors.blue,
+                                                  ),
+                                                ),
+                                              ),
+                                            )
+                                          ],
                                         ),
                                       ),
-                                      for (final td in V2Val.listTodo.value.val)
-                                        Card(
-                                          child: ListTile(
-                                            leading: IconButton(
-                                              onPressed: ()async{
-                                                try {
-                                                  final dl = await V2Api.todoDelete().deleteData(td['id']);
-                                                  debugPrint(dl.body);
-                                                  await V2Load.loadTodo(_tanggalDipilih.value.val);
-                                                } catch (e) {
-
-                                                  debugPrint(e.toString());
-                                                  
-                                                }
-                                                
-                                              }, 
-                                              icon: Icon(Icons.delete, color: Colors.pink,),
-                                            ),
-                                            title: Text(td['title'].toString()),
-                                            subtitle: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Text(td['content'].toString()),
-                                                Text(td['createdAt'].toString()),
-                                                Text(td['status'].toString()),
-                                              ],
-                                            ),
-                                            trailing: PopupMenuButton(
-                                              icon: td['status'] == "open"? Icon(Icons.check_box_outline_blank) : Icon(Icons.check_box),
-                                              itemBuilder: (context) => [
-                                                PopupMenuItem(
-                                                  value: "open",
-                                                  child: Text("open"),
-                                                ),
-                                                PopupMenuItem(
-                                                  value: "close",
-                                                  child: Text("close"),
-                                                ),
-                                              ],
-                                              onSelected: (value) async {
-                                                final dataBody = {"id": td['id'], "status": value};
-                                                await V2Api.todoChangeStatus().postData(dataBody);
-                                                await V2Load.loadTodo(_tanggalDipilih.value.val);
-                                              },
-                                            ),
-                                          ),
-                                        ),
-                                    ],
-                                  )),
+                                  ],
+                                ),
+                              ),
                             )
                           ],
                         ),

@@ -227,6 +227,6 @@ model Todos {
   title          String?
   content        String?
   status         String?       @default("open")
-  departement    Departements? @relation(fields: [departementsId], references: [id])
+  Departement    Departements? @relation(fields: [departementsId], references: [id])
   departementsId String?
 }

@@ -60,11 +60,43 @@ const deleteTodo = expressAsyncHandler(async (req, res) => {
     res.status(201).json(crt);
 });
 
+const listTodo = expressAsyncHandler(async (req, res) => {
+    const firstDate = new Date(Date.parse(req.params.date));
+    const lastDate = new Date(Date.parse(req.params.date));
+    const crt = await prisma.todos.findMany({
+        orderBy: {
+            User: {
+                name: 'asc'
+            }
+        },
+        where: {
+            createdAt: {
+                gte: lastDate,
+                lte: lastDate
+            }
+        },
+        select: {
+            id: true,
+            content: true,
+            createdAt: true,
+            User: {
+                select: {
+                    id: true,
+                    name: true
+                }
+            }
+        }
+    });
+
+    res.status(201).json(crt);
+});
+
 const V2Todos = {
     create,
     findMany,
     changeStatus,
-    deleteTodo
+    deleteTodo,
+    listTodo
 }
 
 module.exports = V2Todos;
