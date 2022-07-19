@@ -8,6 +8,7 @@ import 'package:my_probus/v2/v2_issue_list.dart';
 import 'package:my_probus/v2/v2_login_view.dart';
 import 'package:my_probus/v2/v2_root_view.dart';
 import 'v2_home_view.dart';
+import 'v2_list_todo.dart';
 
 
 class V2Routes {
@@ -43,7 +44,7 @@ class V2Routes {
 
     // a2 do not remove this line
     static final all = < GetPage > [
-        V2Routes.listTodo().getPage(),
+        V2Routes.listTodo().getPage(page: V2ListTodo()),
         V2Routes.formTodo().getPage(page: V2FormTodo()),
         V2Routes.developer().getPage(page: V2Developer()),
         V2Routes.issueList().getPage(page: V2IssueList()),

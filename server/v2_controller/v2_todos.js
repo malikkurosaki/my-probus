@@ -62,8 +62,10 @@ const deleteTodo = expressAsyncHandler(async (req, res) => {
 });
 
 const listTodo = expressAsyncHandler(async (req, res) => {
-    const firstDate = new Date(Date.parse(req.params.date));
-    const lastDate = new Date(Date.parse(req.params.date));
+    const tanggal = new Date(Date.parse(req.params.date) + (24 * 60 * 60 * 1000));
+
+    console.log(tanggal);
+
     const crt = await prisma.todos.findMany({
         orderBy: {
             User: {
@@ -72,14 +74,16 @@ const listTodo = expressAsyncHandler(async (req, res) => {
         },
         where: {
             createdAt: {
-                gte: lastDate,
-                lte: lastDate
+                gte: tanggal,
+                lte: tanggal
             }
         },
         select: {
             id: true,
             content: true,
             createdAt: true,
+            status: true,
+            title: true,
             User: {
                 select: {
                     id: true,
@@ -89,7 +93,8 @@ const listTodo = expressAsyncHandler(async (req, res) => {
         }
     });
 
-
+    
+    console.log(crt);
 
     res.status(201).json(crt);
 });
