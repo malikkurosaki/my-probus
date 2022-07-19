@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:my_probus/v2/v2_api.dart';
@@ -21,7 +22,7 @@ class V2FormTodo extends StatelessWidget {
   final _controllerDescription = TextEditingController();
   final _fokusTitle = FocusNode();
 
-  _onLoad(){
+  _onLoad() {
     _tanggalDipilih.value.val = DateTime.now().toLocal().toString();
   }
 
@@ -112,6 +113,11 @@ class V2FormTodo extends StatelessWidget {
                                           "content": _controllerDescription.text,
                                           "createdAt": _tanggalDipilih.value.val
                                         };
+
+                                        if (body.values.contains("")) {
+                                          EasyLoading.showError("Please fill all field");
+                                          return;
+                                        }
 
                                         // debugPrint(body.toString());
 
@@ -298,6 +304,7 @@ class V2FormTodo extends StatelessWidget {
                     decoration: InputDecoration(hintText: "Description", labelText: "Description"),
                   ),
                 ),
+                 
                 SizedBox(
                   height: 10,
                 ),
@@ -312,6 +319,11 @@ class V2FormTodo extends StatelessWidget {
                         "content": content.text,
                         "createdAt": dateSource.value,
                       };
+
+                      if (body.values.contains("")) {
+                        EasyLoading.showError("Please fill all field");
+                        return;
+                      }
 
                       final kirim = await V2Api.todoUpdate().postData(body);
                       if (kirim.statusCode == 201) {
