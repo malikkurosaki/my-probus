@@ -62,6 +62,10 @@
     {
         "name": "List Todo",
         "path": "/list-todo"
+    },
+    {
+        "name": "List History Issue",
+        "path": "/history-issue"
     }
     
 ]

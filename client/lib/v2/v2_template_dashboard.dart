@@ -76,30 +76,6 @@ class V2TemplateDashboard extends StatelessWidget {
             color: Colors.cyan,
           ),
           body ?? Container(),
-          // Visibility(
-          //   visible: !V2Role.user().isMe(),
-          //   child: Column(
-          //     crossAxisAlignment: CrossAxisAlignment.start,
-          //     children: [
-          //       Padding(
-          //         padding: const EdgeInsets.all(8.0),
-          //         child: Text(
-          //           "the issue has passed a week ago",
-          //           style: TextStyle(
-          //             fontSize: 24,
-          //           ),
-          //         ),
-          //       ),
-          //       Card(
-          //         child: Padding(
-          //           padding: const EdgeInsets.all(8.0),
-          //           child: Text("Date Is Empty"),
-          //         ),
-          //       ),
-          //       Divider(),
-          //     ],
-          //   ),
-          // ),
           Visibility(
             visible: !V2Role.user().isMe(),
             child: Padding(

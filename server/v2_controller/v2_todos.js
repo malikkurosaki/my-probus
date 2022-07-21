@@ -64,7 +64,7 @@ const deleteTodo = expressAsyncHandler(async (req, res) => {
 const listTodo = expressAsyncHandler(async (req, res) => {
     const tanggal = new Date(Date.parse(req.params.date) + (24 * 60 * 60 * 1000));
 
-    console.log(tanggal);
+    
 
     const crt = await prisma.todos.findMany({
         orderBy: {
@@ -93,8 +93,6 @@ const listTodo = expressAsyncHandler(async (req, res) => {
         }
     });
 
-    
-    console.log(crt);
 
     res.status(201).json(crt);
 });

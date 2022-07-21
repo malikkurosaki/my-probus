@@ -58,6 +58,7 @@ dependencies:
   slide_digital_clock: ^1.0.2
   pasteboard: ^0.1.1
   collection: ^1.16.0
+  sse: ^4.1.0
 
 dev_dependencies:
   flutter_test:

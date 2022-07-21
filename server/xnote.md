@@ -35,11 +35,12 @@
 - [ ] summary report dashboard
 - [ ] admin change status with note reason
 - [ ] waktu pengerjaan di mas ahmad estimasi
-- [ ] jika module fo dan ecomers masgun, sisanya dewi
+- [X] jika module fo dan ecomers masgun, sisanya dewi
 - [ ] mas ahmat tampilan utama bug
 - [X] tambah jam
 - [ ] tanngal form todo isi catatan atau eggal ada tandanya warna
 - [ ] leader reject with note
-- [ ] dahboard per leader per module
-- [ ] report fix
+- [X] dahboard per leader per module
+- [X] report fix
 - [ ] form todo tanggal default
+- [X] list todo

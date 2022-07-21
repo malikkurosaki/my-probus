@@ -37,7 +37,10 @@ class V2ListTodo extends StatelessWidget {
                 children: [
                   DrawerHeader(
                     child: Column(
-                      children: [V2ImageWidget.logo()],
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        BackButton(),
+                        V2ImageWidget.logo()],
                     ),
                   ),
                   CalendarDatePicker(

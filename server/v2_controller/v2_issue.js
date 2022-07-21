@@ -312,6 +312,15 @@ const updateIssueStatus = expressAsyncHandler(async (req, res) => {
     },
   });
 
+  await prisma.issueHistories.create({
+    data: {
+      issuesId: req.params.id,
+      usersId: data.usersId,
+      issueStatusesId: data.issueStatusesId,
+      note: data.note ?? "",
+    },
+  });
+
   res.status(200).json(issue);
 });
 

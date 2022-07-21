@@ -12,6 +12,8 @@ require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const { Server } = require("socket.io");
 const fs = require('fs')
+var SSE = require('express-sse');
+var sse = new SSE("");
 // const createServer = require("https").createServer;
 // const fs = require("fs");
 // const httpServer = createServer(
@@ -22,13 +24,13 @@ const fs = require('fs')
 //   app);
 
 const path = require("path");
-const io = new Server(httpServer, {
-  allowEIO3: true,
-  cors: {
-    origin: true,
-    credentials: true,
-  },
-});
+// const io = new Server(httpServer, {
+//   allowEIO3: true,
+//   cors: {
+//     origin: true,
+//     credentials: true,
+//   },
+// });
 
 const { routeDashboard } = require("./controllers/dashboard");
 const { routeMaster } = require("./controllers/master");
@@ -37,31 +39,31 @@ const V2Login = require("./v2_controller/v2_login");
 
 // const { routeImage } = require('./controllers/image');
 
-io.of('/notif').on("connection", (socket) => {
-  socket.on("client", async (data) => {
-    let notif = await prisma.notif.create({
-      data,
-      select: {
-        id: true,
-        title: true,
-        content: true,
-        jenis: true,
-        User: {
-          select: {
-            id: true,
-            name: true,
-          },
-        },
-      },
-    });
+// io.of('/notif').on("connection", (socket) => {
+//   socket.on("client", async (data) => {
+//     let notif = await prisma.notif.create({
+//       data,
+//       select: {
+//         id: true,
+//         title: true,
+//         content: true,
+//         jenis: true,
+//         User: {
+//           select: {
+//             id: true,
+//             name: true,
+//           },
+//         },
+//       },
+//     });
 
-    socket.emit("server", notif);
-  });
+//     socket.emit("server", notif);
+//   });
 
-  socket.on("disconnect", () => {
-    console.log("user disconnected");
-  });
-});
+//   socket.on("disconnect", () => {
+//     console.log("user disconnected");
+//   });
+// });
 
 // const { routeImage } = require('./controllers/image');
 // const fs = require('fs');
@@ -81,6 +83,16 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.redirect('https://malikkurosaki.github.io/my-probus/client/build/web/');
 });
+
+app.get('/sse', sse.init);
+
+app.get('/ini', (req, res) => {
+  sse.updateInit("apa ini");
+  
+  console.log("ini ditekan");
+  res.send('ini');
+})
+
 
 app.use("/api/v2", v2Routers);
 app.use("/login", V2Login);

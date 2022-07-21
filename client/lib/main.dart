@@ -1,17 +1,19 @@
+
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:my_probus/v2/v2_val.dart';
-import 'package:socket_io_client/socket_io_client.dart';
-
-import 'skt.dart';
 import 'v2/v2_404.dart';
 import 'v2/v2_load.dart';
 import 'v2/v2_routes.dart';
 import 'v2/v2_sound.dart';
+import 'package:http/http.dart' as http;
+import 'package:sse/client/sse_client.dart';
 
-void main() async{
+
+void main() async {
   debugPrint("load sound");
   await V2Sound.init();
   debugPrint("load sound done");
@@ -24,14 +26,13 @@ void main() async{
   debugPrint("load properties done");
   debugPrint("run");
 
+  // final sse = SseClient("http://localhost:3001/sse");
+  
 
-  // debugPrint("load sokecet");
-  // await Skt.init();
-  // debugPrint("load sokecet done");
-  
-  
   runApp(V2MainApp());
 }
+
+
 
 class V2MainApp extends StatelessWidget {
   const V2MainApp({Key? key}) : super(key: key);

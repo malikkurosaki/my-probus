@@ -1,34 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:my_probus/v2/v2_api.dart';
 import 'package:my_probus/v2/v2_image_widget.dart';
 import 'package:my_probus/v2/v2_ismobile_widget.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:get/get.dart';
 import 'package:my_probus/v2/v2_load.dart';
 import 'package:my_probus/v2/v2_val.dart';
-import 'package:pasteboard/pasteboard.dart';
 import 'v2_routes.dart';
 
 class V2FormTodo extends StatelessWidget {
   V2FormTodo({Key? key}) : super(key: key);
-  final _tanggalDipilih = DateTime.now().toString().val("V2FormTodo_tanggalDipilih").obs;
+  final _tanggalDipilih = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day)
+      .toString()
+      .val("V2FormTodo_tanggalDipilih").obs;
   final _controllerTitle = TextEditingController();
   final _controllerDescription = TextEditingController();
   final _fokusTitle = FocusNode();
 
-  _onLoad() {
-    _tanggalDipilih.value.val = DateTime.now().toLocal().toString();
-  }
 
   @override
   Widget build(BuildContext context) {
-    _onLoad();
+
     return V2IsMobileWidget(
       isMobile: (isMobile) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -16,16 +16,34 @@ import 'package:get_storage/get_storage.dart';
 import 'package:my_probus/val.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
 import 'package:soundpool/soundpool.dart';
-
+import 'package:http/http.dart' as http;
 import 'v2_models/v2_user_model.dart';
+
+const listAppLog = [
+  "login with email ada passsword",
+  "add issue by user",
+  "print report by leader",
+  "change status by leader",
+  "ability chat / commen on issue",
+  "add image by CTRL + v",
+  "dashboard personaly by leader departement",
+  "list issue globaly",
+  "add todo personaly",
+  "update  todo personaly",
+  "delete  todo personali",
+  "list todo globaly by user and date"
+];
 
 class V2LoginView extends StatelessWidget {
   V2LoginView({Key? key}) : super(key: key);
   final _email = "".val("V2LoginView_email").obs;
   final _password = "".val("V2LoginView_password").obs;
 
+  
+
   @override
   Widget build(BuildContext context) {
+    
     return V2IsMobileWidget(
       isMobile: (isMobile) => isMobile ? _mobilePart(isMobile) : _webPart(isMobile),
     );
@@ -35,13 +53,45 @@ class V2LoginView extends StatelessWidget {
         Flexible(
           child: Center(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                V2ImageWidget.logo(height: 200),
-                Container(
-                  alignment: Alignment.bottomRight,
+                Padding(
                   padding: const EdgeInsets.all(16),
-                  child: Center(child: V2Val.clock),
+                  child: V2ImageWidget.logo(height: 200),
+                ),
+                Flexible(
+                  child: Container(
+                    color: Colors.grey[100],
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "Change Log App",
+                            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.grey[600]),
+                          ),
+                        ),
+                        Flexible(
+                          child: Container(
+                            alignment: Alignment.bottomRight,
+                            padding: const EdgeInsets.all(16),
+                            child: ListView(
+                              children: [
+                                for (final ls in listAppLog)
+                                  Text(
+                                    "- $ls",
+                                    style: TextStyle(color: Colors.grey),
+                                  ),
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                 )
               ],
             ),

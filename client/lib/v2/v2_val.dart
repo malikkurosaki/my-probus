@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -86,8 +87,6 @@ class V2Val {
   );
 }
 
-
-
 class V2HomeController {
   // final listIssueDashboard = [].val("listIssueDashboard").obs;
   // final selectedIssueId = "".val("selectedIssueId").obs;
@@ -96,6 +95,22 @@ class V2HomeController {
     final body = {
       "issueStatusesId": value.toString(),
       "usersId": V2Val.user.val['id'],
+    };
+
+    final data = await V2Api.updateIssueStatus().postDataParam(issueId, body);
+    if (data.statusCode == 200) {
+      await V2Val.homeControll.loadIssueDashboard();
+      EasyLoading.showToast("Updated");
+    } else {
+      EasyLoading.showToast("Error");
+    }
+  }
+
+  _updateWithNote(Object value, String issueId, String note) async {
+    final body = {
+      "issueStatusesId": value.toString(),
+      "usersId": V2Val.user.val['id'],
+      "note": note
     };
 
     final data = await V2Api.updateIssueStatus().postDataParam(issueId, body);
@@ -125,6 +140,55 @@ class V2HomeController {
 
   Widget accepttRejectApproveButton(String issueId) => PopupMenuButton(
         onSelected: (value) async {
+          // 3 -> reject
+          if (value == "3") {
+            final reasonController = TextEditingController();
+            Get.dialog(SimpleDialog(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "Add Reason",
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: reasonController,
+                          decoration: InputDecoration(hintText: "add reason here"),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: MaterialButton(
+                            color: Colors.cyan,
+                            child: Container(
+                              padding: EdgeInsets.all(10),
+                              child: Center(
+                                child: Text(
+                                  "SAVE",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ),
+                            onPressed: ()async {
+                              await _updateWithNote(value!, issueId, reasonController.text);
+                              Get.back();
+                            }),
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ));
+            return;
+          }
+
           _update(value!, issueId);
         },
         itemBuilder: (context) => [
@@ -212,9 +276,9 @@ class V2HomeController {
 
   Future<void> loadIssueDashboard() async {
     final data = await V2Api.issueByStatusId().getByParams(V2Role().myStatusId);
-    V2Val.listIssueDashboard.value.val = List<Map>.from(jsonDecode(data.body)) ;
+    V2Val.listIssueDashboard.value.val = List<Map>.from(jsonDecode(data.body));
     V2Val.listIssueDashboard.refresh();
-    V2Val.backupListIssueDashboard.value.val =  List<Map>.from(jsonDecode(data.body));
+    V2Val.backupListIssueDashboard.value.val = List<Map>.from(jsonDecode(data.body));
 
     debugPrint("ambil data issue by ${V2Role().myRoleName}");
   }

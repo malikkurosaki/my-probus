@@ -2,6 +2,7 @@ const V2Client = require("./v2_controller/v2_client");
 const V2Discution = require("./v2_controller/v2_discution");
 const V2Image = require("./v2_controller/v2_image");
 const V2Issue = require("./v2_controller/v2_issue");
+const V2IssueHistory = require("./v2_controller/v2_issue_history");
 const V2Module = require("./v2_controller/v2_module");
 const V2Product = require("./v2_controller/v2_product");
 const V2Properties = require("./v2_controller/v2_properties");
@@ -44,6 +45,9 @@ v2Routers.get("/todo-list/:date", V2Todos.listTodo);
 
 // update todo
 v2Routers.post("/todo-update", V2Todos.updateTodo);
+
+// get issue history
+v2Routers.get("/issue-history/:statusId", V2IssueHistory.getIssueHistoryByStatus);
 
 module.exports = v2Routers;
 

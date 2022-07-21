@@ -42,9 +42,7 @@ class V2Component {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            // Text(itm['Departement']['id'].toString() ),
-                            // Text(V2Val.user.val['departementsId'].toString()),
-                            
+                         
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
@@ -166,8 +164,7 @@ class V2Component {
                                       ),
                                     ),
                                   ),
-                                  // todo : add button accept or reject
-                                  // V2Val.homeControll.acceptOrRejectButton()
+                                 
                                   V2Role().buttonStatusByRole(itm['id'])
                                 ],
                               ),
