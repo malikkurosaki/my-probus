@@ -29,6 +29,8 @@ const generate_api_extend = require("./con/generate_api_extend");
 const generateApiExtend = require("./con/generate_api_extend");
 const setUserDepartementExtend = require("./con/set_user_departement_extend");
 const SeedModule = require("./con/seed_module");
+const { uniqueId } = require("lodash");
+const colors = require('colors');
 
 function ssh(pass, command) {
     return new SSH({
@@ -107,7 +109,7 @@ class Controll {
 
         let tunggu1 = new Promise((resolve, reject) => {
             console.log("build v2".yellow);
-            execSync(`flutter build web --release --base-href /my-probus/client/build/web/ && cd .. && git add . && git commit -m "x" && git push  origin main`, {
+            execSync(`flutter build web --release --base-href /my-probus/client/build/web/ && flutter build apk --release --split-per-abi && cd .. && git add . && git commit -m "x" && git push  origin main`, {
                 stdio: "inherit",
                 cwd: _client,
             });
@@ -135,6 +137,16 @@ class Controll {
         Promise.all([tunggu1, tunggu2]);
 
         SetMode("dev_web");
+
+        const buildLog = require('./../build_log.json')
+
+        buildLog.build_date = new Date.now();
+        buildLog.build_generate_id = uniqueId()
+        buildLog.build_version = buildLog.build_version + 1
+
+        fs.writeFileSync(path.join(__dirname, './../build_log.json'), JSON.stringify(buildLog), {encoding: "utf-8"});
+
+        console.log("success".green)
 
     }
     async buildWebOnly() {

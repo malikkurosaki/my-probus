@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:my_probus/v2/v2_developer.dart';
 import 'package:my_probus/v2/v2_form_todo.dart';
-import 'package:my_probus/v2/v2_history.dart';
+import 'package:my_probus/v2/v2_issue_history.dart';
 import 'package:my_probus/v2/v2_issue_create_view.dart';
 import 'package:my_probus/v2/v2_home_detail_view.dart';
 import 'package:my_probus/v2/v2_issue_list.dart';
@@ -46,7 +46,7 @@ class V2Routes {
 
     // a2 do not remove this line
     static final all = < GetPage > [
-        V2Routes.listHistoryIssue().getPage(page: V2History()),
+        V2Routes.listHistoryIssue().getPage(page: V2IssueHistory()),
         V2Routes.listTodo().getPage(page: V2ListTodo()),
         V2Routes.formTodo().getPage(page: V2FormTodo()),
         V2Routes.developer().getPage(page: V2Developer()),

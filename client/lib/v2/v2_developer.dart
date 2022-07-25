@@ -31,7 +31,7 @@ class V2Developer extends StatelessWidget {
     }
 
     return V2IsMobileWidget(
-      isMobile: (isMobile) => ListView(
+      isMobile: (isMobile, isTablet, isDesktop) => ListView(
         children: [
           Text("data"),
           Text(JsonEncoder.withIndent("    ").convert(ini)),

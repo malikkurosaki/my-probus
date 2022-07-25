@@ -33,7 +33,7 @@ class V2Chat extends StatelessWidget {
   Widget build(BuildContext context) {
     // _onLoad();
     return V2IsMobileWidget(
-      isMobile: (isMobile) => Column(
+      isMobile: (isMobile, isTablet, isDesktop) => Column(
         children: [
           Obx(
             () => InkWell(

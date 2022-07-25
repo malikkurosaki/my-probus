@@ -14,6 +14,7 @@ const { Server } = require("socket.io");
 const fs = require('fs')
 var SSE = require('express-sse');
 var sse = new SSE("");
+const path = require('path')
 // const createServer = require("https").createServer;
 // const fs = require("fs");
 // const httpServer = createServer(
@@ -23,7 +24,6 @@ var sse = new SSE("");
 //   },
 //   app);
 
-const path = require("path");
 // const io = new Server(httpServer, {
 //   allowEIO3: true,
 //   cors: {
@@ -136,6 +136,10 @@ app.get("/images/:name", (req, res) => {
       .type("image/png")
       .sendFile("./assets/images/noimage.png", { root: __dirname });
   }
+});
+
+app.use('/build-log', (req, res) => {
+  res.sendFile(path.join(__dirname, "./build_log.json"));
 });
 
 app.use(apiRoot, async (req, res, next) => {

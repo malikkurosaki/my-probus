@@ -1,17 +1,14 @@
-
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:my_probus/mts.dart';
+import 'package:my_probus/v2/v2_image_widget.dart';
+
 import 'v2/v2_404.dart';
 import 'v2/v2_load.dart';
 import 'v2/v2_routes.dart';
 import 'v2/v2_sound.dart';
-import 'package:http/http.dart' as http;
-import 'package:sse/client/sse_client.dart';
-
 
 void main() async {
   debugPrint("load sound");
@@ -27,12 +24,27 @@ void main() async {
   debugPrint("run");
 
   // final sse = SseClient("http://localhost:3001/sse");
-  
 
-  runApp(V2MainApp());
+  runApp(Mts.isMts ? MaintenancePage() : V2MainApp());
 }
 
+class MaintenancePage extends StatelessWidget {
+  const MaintenancePage({Key? key}) : super(key: key);
 
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: V2ImageWidget.mts(),
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 class V2MainApp extends StatelessWidget {
   const V2MainApp({Key? key}) : super(key: key);

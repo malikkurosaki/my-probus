@@ -20,7 +20,7 @@ class V2TemplateDashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return V2IsMobileWidget(
-      isMobile: (isMobile) => ListView(
+      isMobile: (isMobile, isTablet, isDesktop) => ListView(
         controller: ScrollController(),
         children: [
           Padding(

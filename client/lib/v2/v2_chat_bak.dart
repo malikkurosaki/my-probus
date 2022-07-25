@@ -71,7 +71,7 @@ class _V2ChatBakState extends State<V2ChatBak2> {
       builder: (context, snapshot) => snapshot.connectionState != ConnectionState.done?
       Text("loading ...")
       : V2IsMobileWidget(
-                isMobile: (isMobile) => Column(
+                isMobile: (isMobile, isTablet , isDesktop) => Column(
                   children: [
                     InkWell(
                       onTap: () => setState(() {

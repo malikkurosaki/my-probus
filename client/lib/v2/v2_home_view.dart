@@ -24,7 +24,7 @@ class V2HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     _onLoad();
     return V2IsMobileWidget(
-      isMobile: (isMobile) => Row(
+      isMobile: (isMobile, isTablet, isDesktop) => Row(
         children: [
           Visibility(visible: !isMobile, child: _drawer()),
           Expanded(

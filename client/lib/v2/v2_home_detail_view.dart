@@ -24,7 +24,7 @@ class V2HomeDetailView extends StatelessWidget {
   Widget build(BuildContext context) {
     _loadAwal();
     return V2IsMobileWidget(
-      isMobile: (isMobile) => Row(
+      isMobile: (isMobile, isTablet, isDesktop) => Row(
         children: [
           Visibility(
             visible: !isMobile,

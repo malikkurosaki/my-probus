@@ -51,165 +51,220 @@ class V2IssueCreateView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return V2IsMobileWidget(
-      isMobile: (isMobile) => Scaffold(
-        body: SafeArea(
-          child: Stack(
-            
-            children: [
-              Center(child: V2ImageWidget.logo()),
-              // backdrop filter
-              BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                child: Container(
-                  color: Colors.black.withOpacity(0.5),
+      isMobile: (isMobile, isTablet, isDesktop) => Scaffold(
+        body: Column(
+          children: [
+            Row(
+              children: [
+                BackButton(
+                  onPressed: () => Get.offNamed(V2Routes.home().key),
                 ),
-              ),
-              Center(
-                child: Material(
-                  child: SizedBox(
-                    width: isMobile ? double.infinity :720,
-                    child: Obx(() => _refresh.value
-                        ? ListView()
-                        : ListView(
-                            controller: ScrollController(keepScrollOffset: false),
+              ],
+            ),
+            Flexible(
+              child: Row(
+                children: [
+                  // Center(child: V2ImageWidget.logo()),
+                  // // backdrop filter
+                  // BackdropFilter(
+                  //   filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                  //   child: Container(
+                  //     color: Colors.black.withOpacity(0.5),
+                  //   ),
+                  // ),
+                  Visibility(
+                    visible: !isMobile,
+                    child: Drawer(
+                      elevation: 0,
+                      child: ListView(
+                        children: [
+                          DrawerHeader(
+                              child: Column(
                             children: [
-                              MaterialButton(
-                                  child: Text("Clear content"),
-                                  onPressed: () {
-                                    _clearContent();
-                                  }),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  "Create Issue",
-                                  style: TextStyle(
-                                    fontSize: isMobile ? 30 : 40,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-
-                              // select date
-                              V2SelectDate(value: _date),
-
-                              V2SelectImage(values: _image),
-
-                              // select type
-                              // _selectFuture(V2Api.type().getData(), "Select Type"),
-                              V2SelectFuture(hint: "Select Type", sources: V2Val.listType.value.val, value: _type),
-
-                              // select client
-                              // _selectFuture(V2Api.client().getData(), "Select Client"),
-                              V2SelectFuture(hint: "Select Client ", sources: V2Val.listClient.value.val, value: _client),
-
-                              // select product
-                              // _selectFuture(V2Api.products().getData(), "Select Product"),
-                              V2SelectFuture(
-                                  hint: "Select Product", sources: V2Val.listProduct.value.val, value: _product),
-
-                              // module
-                              // _selectFuture(V2Api.modules().getData(), "Select Module"),
-                              V2SelectFuture(hint: "Select Module", sources: V2Val.listModule.value.val, value: _module),
-
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 18),
-                                child: TextFormField(
-                                  onChanged: (value) => _title.value.val = value,
-                                  controller: TextEditingController(text: _title.value.val),
-                                  maxLength: 120,
-                                  maxLines: 1,
-                                  decoration: InputDecoration(
-                                    hintText: "Title",
-                                    label: Text("Title"),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 18),
-                                child: TextFormField(
-                                  onChanged: (value) => _description.value.val = value,
-                                  controller: TextEditingController(text: _description.value.val),
-                                  maxLength: 5000,
-                                  maxLines: 10,
-                                  decoration: InputDecoration(
-                                    hintText: "Description",
-                                    label: Text("Description"),
-                                  ),
-                                ),
-                              ),
-                              ListTile(
-                                title: MaterialButton(
-                                  color: Colors.cyan,
-                                  child: Container(
-                                      padding: EdgeInsets.all(10),
-                                      child: Text(
-                                        "Create",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                        ),
-                                      )),
-                                  onPressed: () async {
-                                    final data = {
-                                      "name": _title.value.val,
-                                      "des": _description.value.val,
-                                      "issueTypesId": _type.value.val['id'],
-                                      "issueStatusesId": "1",
-                                      "clientsId": _client.value.val['id'],
-                                      "productsId": _product.value.val['id'],
-                                      "usersId": V2Val.user.val['id'],
-                                      "departementsId": _module.value.val['id'],
-                                      "dateSubmit": _date.value.val,
-                                    };
-                                    final body = {
-                                      "data": jsonEncode(data),
-                                      "images": jsonEncode(_image.value.val),
-                                    };
-
-                                    if (body.values.contains("")) {
-                                      Get.dialog(AlertDialog(
-                                        title: Text("Isi Semua Jangan Ada Yang Kosong Ya ..."),
-                                        content: V2ImageWidget.kecewa(),
-                                        actions: [MaterialButton(child: Text("OK"), onPressed: () => Get.back())],
-                                      ));
-                                      return;
-                                    }
-
-                                    final issue = await V2Api.issueCreate().postData(body);
-                                    if (issue.statusCode == 200) {
-                                      await Get.dialog(AlertDialog(
-                                        title: Text("Terimakasih Atas Kontribusinya"),
-                                        content: V2ImageWidget.jempol(height: 200),
-                                        actions: [MaterialButton(child: Text("OK"), onPressed: () => Get.back())],
-                                      ));
-
-                                      V2Val.homeControll.loadIssueDashboard();
-                                      
-                                      //  Skt.notifWithIssue(
-                                      //   title: "new message",
-                                      //   content: "new Image Message",
-                                      //   jenis: "msg",
-                                      // );
-                                      
-                                      _clearContent();
-                                    }else{
-                                      EasyLoading.showError(issue.body.toString());
-                                    }
-                                  },
-                                ),
-                              )
+                              V2ImageWidget.logo(),
                             ],
                           )),
+                          ListTile(
+                            leading: Icon(Icons.clear_all_outlined, color: Colors.cyan),
+                            title: Text("Clear Content"),
+                            onTap: () => _clearContent(),
+                          )
+                        ],
+                      ),
+                    ),
                   ),
-                ),
+                  Expanded(
+                    child: Obx(
+                      () => _refresh.value
+                          ? ListView()
+                          : Card(
+                            color: Colors.grey[100],
+                            child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      padding: EdgeInsets.all(10),
+                                      child: ListView(
+                                        controller: ScrollController(keepScrollOffset: false),
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              "Create Issue",
+                                              style: TextStyle(
+                                                fontSize: isMobile ? 30 : 40,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                          
+                                          // select date
+                                          V2SelectDate(value: _date),
+                          
+                                          V2SelectImage(values: _image),
+                          
+                                          // select type
+                                          // _selectFuture(V2Api.type().getData(), "Select Type"),
+                                          V2SelectFuture(
+                                              hint: "Select Type", sources: V2Val.listType.value.val, value: _type),
+                          
+                                          // select client
+                                          // _selectFuture(V2Api.client().getData(), "Select Client"),
+                                          V2SelectFuture(
+                                              hint: "Select Client ",
+                                              sources: V2Val.listClient.value.val,
+                                              value: _client),
+                          
+                                          // select product
+                                          // _selectFuture(V2Api.products().getData(), "Select Product"),
+                                          V2SelectFuture(
+                                              hint: "Select Product",
+                                              sources: V2Val.listProduct.value.val,
+                                              value: _product),
+                          
+                                          // module
+                                          // _selectFuture(V2Api.modules().getData(), "Select Module"),
+                                          V2SelectFuture(
+                                              hint: "Select Module", sources: V2Val.listModule.value.val, value: _module),
+                          
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(horizontal: 18),
+                                            child: TextFormField(
+                                              onChanged: (value) => _title.value.val = value,
+                                              controller: TextEditingController(text: _title.value.val),
+                                              maxLength: 120,
+                                              maxLines: 1,
+                                              decoration: InputDecoration(
+                                                hintText: "Title",
+                                                label: Text("Title"),
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(horizontal: 18),
+                                            child: TextFormField(
+                                              onChanged: (value) => _description.value.val = value,
+                                              controller: TextEditingController(text: _description.value.val),
+                                              maxLength: 5000,
+                                              maxLines: 10,
+                                              decoration: InputDecoration(
+                                                hintText: "Description",
+                                                label: Text("Description"),
+                                              ),
+                                            ),
+                                          ),
+                                          ListTile(
+                                            title: MaterialButton(
+                                              color: Colors.cyan,
+                                              child: Container(
+                                                  padding: EdgeInsets.all(10),
+                                                  child: Text(
+                                                    "Create",
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                    ),
+                                                  )),
+                                              onPressed: () async {
+                                                final data = {
+                                                  "name": _title.value.val,
+                                                  "des": _description.value.val,
+                                                  "issueTypesId": _type.value.val['id'],
+                                                  "issueStatusesId": "1",
+                                                  "clientsId": _client.value.val['id'],
+                                                  "productsId": _product.value.val['id'],
+                                                  "usersId": V2Val.user.val['id'],
+                                                  "departementsId": _module.value.val['id'],
+                                                  "dateSubmit": _date.value.val,
+                                                };
+                                                final body = {
+                                                  "data": jsonEncode(data),
+                                                  "images": jsonEncode(_image.value.val),
+                                                };
+                          
+                                                if (body.values.contains("")) {
+                                                  Get.dialog(AlertDialog(
+                                                    title: Text("Isi Semua Jangan Ada Yang Kosong Ya ..."),
+                                                    content: V2ImageWidget.kecewa(),
+                                                    actions: [
+                                                      MaterialButton(child: Text("OK"), onPressed: () => Get.back())
+                                                    ],
+                                                  ));
+                                                  return;
+                                                }
+                          
+                                                final issue = await V2Api.issueCreate().postData(body);
+                                                if (issue.statusCode == 200) {
+                                                  await Get.dialog(AlertDialog(
+                                                    title: Text("Terimakasih Atas Kontribusinya"),
+                                                    content: V2ImageWidget.jempol(height: 200),
+                                                    actions: [
+                                                      MaterialButton(child: Text("OK"), onPressed: () => Get.back())
+                                                    ],
+                                                  ));
+                          
+                                                  V2Val.homeControll.loadIssueDashboard();
+                          
+                                                  //  Skt.notifWithIssue(
+                                                  //   title: "new message",
+                                                  //   content: "new Image Message",
+                                                  //   jenis: "msg",
+                                                  // );
+                          
+                                                  _clearContent();
+                                                } else {
+                                                  EasyLoading.showError(issue.body.toString());
+                                                }
+                                              },
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  
+                                ],
+                              ),
+                          ),
+                    ),
+                  ),
+                  Visibility(
+                    visible: isDesktop,
+                    child: Drawer(
+                      elevation: 0,
+                      child: ListView(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text("Note"),
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+                ],
               ),
-              Align(
-                alignment: Alignment.topLeft,
-                child: BackButton(
-                  onPressed: () => Get.toNamed(V2Routes.home().key),
-                ),
-              )
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

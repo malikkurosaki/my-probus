@@ -31,14 +31,14 @@ class V2Menu {
   // a2 do not remove this line
   static final all = [
     V2Menu.dashboard().menuItem(onTap: () => EasyLoading.showToast("dashboard")),
-    V2Menu.issueLaps().menuItem(),
     V2Menu.creteIssue().menuItem(onTap: () => Get.toNamed(V2Routes.createIssue().key)),
     V2Menu.issueHistories().menuItem(onTap: () => Get.toNamed(V2Routes.listHistoryIssue().key)),
+    V2Menu.issueList().menuItem(onTap: () => Get.toNamed(V2Routes.issueList().key)),
     V2Menu.formTodo().menuItem(onTap: () => Get.toNamed(V2Routes.formTodo().key)),
     V2Menu.listTodo().menuItem(onTap: () => Get.toNamed(V2Routes.listTodo().key)),
+    V2Menu.issueLaps().menuItem(),
     V2Menu.issueSubmission().menuItem(),
     V2Menu.issueDetail().menuItem(),
-    V2Menu.issueList().menuItem(onTap: () => Get.toNamed(V2Routes.issueList().key)),
     V2Menu.absensi().menuItem(),
     V2Menu.formCuti().menuItem(),
     V2Menu.formIzin().menuItem(),
