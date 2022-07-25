@@ -140,7 +140,7 @@ class Controll {
 
         const buildLog = require('./../build_log.json')
 
-        buildLog.build_date = new Date.now();
+        buildLog.build_date = Date.now().toLocaleString();
         buildLog.build_generate_id = uniqueId()
         buildLog.build_version = buildLog.build_version + 1
 
