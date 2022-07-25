@@ -136,7 +136,7 @@ class Controll {
 
         Promise.all([tunggu1, tunggu2]);
 
-        SetMode("dev_web");
+        // SetMode("dev_web");
 
         const buildLog = require('./../build_log.json')
 

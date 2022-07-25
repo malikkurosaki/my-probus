@@ -8,7 +8,7 @@ class V2ImageWidget {
         height: height,
         width: width,
         imageUrl: "${V2Config.host}/images/android_download.png",
-        fit: BoxFit.cover,
+        fit: BoxFit.contain,
         placeholder: (context, url) => const Center(
           child: CircularProgressIndicator(),
         ),
@@ -22,7 +22,7 @@ class V2ImageWidget {
         height: height,
         width: width,
         imageUrl: "${V2Config.host}/images/chat-bg-v2.png",
-        fit: BoxFit.cover,
+        fit: BoxFit.contain,
         placeholder: (context, url) => const Center(
           child: CircularProgressIndicator(),
         ),
@@ -36,7 +36,7 @@ class V2ImageWidget {
         height: height,
         width: width,
         imageUrl: "${V2Config.host}/images/chat-bg.png",
-        fit: BoxFit.cover,
+        fit: BoxFit.contain,
         placeholder: (context, url) => const Center(
           child: CircularProgressIndicator(),
         ),
@@ -51,7 +51,7 @@ class V2ImageWidget {
         height: height,
         width: width,
         imageUrl: "${V2Config.host}/images/contribution.png",
-        fit: BoxFit.cover,
+        fit: BoxFit.contain,
         placeholder: (context, url) => const Center(
           child: CircularProgressIndicator(),
         ),
@@ -66,7 +66,7 @@ class V2ImageWidget {
         height: height,
         width: width,
         imageUrl: "${V2Config.host}/images/dashboard.png",
-        fit: BoxFit.cover,
+        fit: BoxFit.contain,
         placeholder: (context, url) => const Center(
           child: CircularProgressIndicator(),
         ),
@@ -80,7 +80,7 @@ class V2ImageWidget {
         height: height,
         width: width,
         imageUrl: "${V2Config.host}/images/form.png",
-        fit: BoxFit.cover,
+        fit: BoxFit.contain,
         placeholder: (context, url) => const Center(
           child: CircularProgressIndicator(),
         ),
@@ -94,7 +94,7 @@ class V2ImageWidget {
         height: height,
         width: width,
         imageUrl: "${V2Config.host}/images/jempol.png",
-        fit: BoxFit.cover,
+        fit: BoxFit.contain,
         placeholder: (context, url) => const Center(
           child: CircularProgressIndicator(),
         ),
@@ -108,7 +108,7 @@ class V2ImageWidget {
         height: height,
         width: width,
         imageUrl: "${V2Config.host}/images/kecewa.png",
-        fit: BoxFit.cover,
+        fit: BoxFit.contain,
         placeholder: (context, url) => const Center(
           child: CircularProgressIndicator(),
         ),
@@ -122,7 +122,7 @@ class V2ImageWidget {
         height: height,
         width: width,
         imageUrl: "${V2Config.host}/images/kosong.png",
-        fit: BoxFit.cover,
+        fit: BoxFit.contain,
         placeholder: (context, url) => const Center(
           child: CircularProgressIndicator(),
         ),
@@ -136,7 +136,7 @@ class V2ImageWidget {
         height: height,
         width: width,
         imageUrl: "${V2Config.host}/images/login.png",
-        fit: BoxFit.cover,
+        fit: BoxFit.contain,
         placeholder: (context, url) => const Center(
           child: CircularProgressIndicator(),
         ),
@@ -150,7 +150,7 @@ class V2ImageWidget {
         height: height,
         width: width,
         imageUrl: "${V2Config.host}/images/logo.png",
-        fit: BoxFit.cover,
+        fit: BoxFit.contain,
         placeholder: (context, url) => const Center(
           child: CircularProgressIndicator(),
         ),
@@ -164,7 +164,7 @@ class V2ImageWidget {
         height: height,
         width: width,
         imageUrl: "${V2Config.host}/images/logout.png",
-        fit: BoxFit.cover,
+        fit: BoxFit.contain,
         placeholder: (context, url) => const Center(
           child: CircularProgressIndicator(),
         ),
@@ -178,7 +178,7 @@ class V2ImageWidget {
         height: height,
         width: width,
         imageUrl: "${V2Config.host}/images/mts.jpg",
-        fit: BoxFit.cover,
+        fit: BoxFit.contain,
         placeholder: (context, url) => const Center(
           child: CircularProgressIndicator(),
         ),
@@ -192,7 +192,7 @@ class V2ImageWidget {
         height: height,
         width: width,
         imageUrl: "${V2Config.host}/images/no-image.png",
-        fit: BoxFit.cover,
+        fit: BoxFit.contain,
         placeholder: (context, url) => const Center(
           child: CircularProgressIndicator(),
         ),
@@ -206,7 +206,7 @@ class V2ImageWidget {
         height: height,
         width: width,
         imageUrl: "${V2Config.host}/images/noimage.png",
-        fit: BoxFit.cover,
+        fit: BoxFit.contain,
         placeholder: (context, url) => const Center(
           child: CircularProgressIndicator(),
         ),
@@ -220,7 +220,7 @@ class V2ImageWidget {
         height: height,
         width: width,
         imageUrl: "${V2Config.host}/images/petunjuk.png",
-        fit: BoxFit.cover,
+        fit: BoxFit.contain,
         placeholder: (context, url) => const Center(
           child: CircularProgressIndicator(),
         ),
@@ -234,7 +234,7 @@ class V2ImageWidget {
         height: height,
         width: width,
         imageUrl: "${V2Config.host}/images/profile.png",
-        fit: BoxFit.cover,
+        fit: BoxFit.contain,
         placeholder: (context, url) => const Center(
           child: CircularProgressIndicator(),
         ),
@@ -248,7 +248,7 @@ class V2ImageWidget {
         height: height,
         width: width,
         imageUrl: "${V2Config.host}/images/tos.png",
-        fit: BoxFit.cover,
+        fit: BoxFit.contain,
         placeholder: (context, url) => const Center(
           child: CircularProgressIndicator(),
         ),

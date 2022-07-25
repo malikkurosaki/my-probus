@@ -1,14 +1,1 @@
-{
-    "name": "my probus",
-    "description": "my probus",
-    "version": "1.0",
-    "build_id": "sadsfdkmjhgjkacsd765rtfg3hjr876tyghjads",
-    "build_name": "alpha",
-    "build_type": "release",
-    "build_date": "2020-01-01",
-    "build_branch": "main",
-    "build_version": "1.0",
-    "build_generate_id": "1",
-    "author": "makuro",
-    "company": "probus"
-}
+{"name":"my probus","description":"my probus","version":"1.0","build_id":"sadsfdkmjhgjkacsd765rtfg3hjr876tyghjads","build_name":"alpha","build_type":"release","build_date":"1,658,719,519,843","build_branch":"main","build_version":"1.01","build_generate_id":"1","author":"makuro","company":"probus"}
