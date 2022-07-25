@@ -25843,11 +25843,11 @@ at4:function at4(a){this.a=a},
 at3:function at3(){},
 at1:function at1(){},
 at2:function at2(){},
-b53(a){return A.ve(new A.at6(),B.c1,B.ed,null,"http://localhost:3001/images/chat-bg-v2.png",100,100,new A.at7(),a)},
-b54(a){return A.ve(new A.at8(),B.c1,B.ed,a,"http://localhost:3001/images/jempol.png",100,100,new A.at9(),null)},
-b55(){return A.ve(new A.ata(),B.c1,B.ed,null,"http://localhost:3001/images/kecewa.png",100,100,new A.atb(),null)},
-b56(a){return A.ve(new A.atc(),B.c1,B.ed,a,"http://localhost:3001/images/login.png",100,100,new A.atd(),null)},
-z6(a){return A.ve(new A.ate(),B.c1,B.ed,a,"http://localhost:3001/images/logo.png",100,100,new A.atf(),null)},
+b53(a){return A.ve(new A.at6(),B.c1,B.ed,null,"https://makurostudio.my.id:3001/images/chat-bg-v2.png",100,100,new A.at7(),a)},
+b54(a){return A.ve(new A.at8(),B.c1,B.ed,a,"https://makurostudio.my.id:3001/images/jempol.png",100,100,new A.at9(),null)},
+b55(){return A.ve(new A.ata(),B.c1,B.ed,null,"https://makurostudio.my.id:3001/images/kecewa.png",100,100,new A.atb(),null)},
+b56(a){return A.ve(new A.atc(),B.c1,B.ed,a,"https://makurostudio.my.id:3001/images/login.png",100,100,new A.atd(),null)},
+z6(a){return A.ve(new A.ate(),B.c1,B.ed,a,"https://makurostudio.my.id:3001/images/logo.png",100,100,new A.atf(),null)},
 at7:function at7(){},
 at6:function at6(){},
 at9:function at9(){},
@@ -94519,7 +94519,7 @@ A.Xm.prototype={
 E(a,b){return new A.hN(new A.atM(this),null)},
 aoQ(a){var s,r,q=null,p=A.z6(200),o=A.V("Change Log App",q,q,q,A.bs(q,q,B.bZ,q,q,q,q,q,q,q,q,24,q,B.T,q,q,!0,q,q,q,q,q,q,q,q),q,q),n=t.p,m=A.b([],n)
 for(s=0;s<13;++s){r=B.Mi[s]
-m.push(A.V("- "+r,q,q,q,new A.E(!0,B.aL,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q),q,q))}return A.bk(A.b([new A.cN(1,B.af,A.bU(A.b_(A.b([new A.ar(B.eq,p,q),new A.cN(1,B.af,A.aN(q,A.b_(A.b([new A.ar(B.q,o,q),new A.cN(1,B.af,A.aN(B.Ac,A.eb(!0,m,q,q,!1),B.k,q,q,q,q,q,q,B.eq,q,q,q),q),A.bk(A.b([new A.wf(A.ol(A.cq("http://localhost:3001/build-log",0,q),q),new A.atL(),q,t.dy),this.Ow()],n),B.r,B.n,B.m)],n),B.L,B.n,B.m,B.t),B.k,B.b5,q,q,q,q,q,B.q,q,q,q),q)],n),B.L,B.n,B.aH,B.t),q,q),q),this.QO(a)],n),B.L,B.n,B.m)},
+m.push(A.V("- "+r,q,q,q,new A.E(!0,B.aL,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q),q,q))}return A.bk(A.b([new A.cN(1,B.af,A.bU(A.b_(A.b([new A.ar(B.eq,p,q),new A.cN(1,B.af,A.aN(q,A.b_(A.b([new A.ar(B.q,o,q),new A.cN(1,B.af,A.aN(B.Ac,A.eb(!0,m,q,q,!1),B.k,q,q,q,q,q,q,B.eq,q,q,q),q),A.bk(A.b([new A.wf(A.ol(A.cq("https://makurostudio.my.id:3001/build-log",0,q),q),new A.atL(),q,t.dy),this.Ow()],n),B.r,B.n,B.m)],n),B.L,B.n,B.m,B.t),B.k,B.b5,q,q,q,q,q,B.q,q,q,q),q)],n),B.L,B.n,B.aH,B.t),q,q),q),this.QO(a)],n),B.L,B.n,B.m)},
 Ow(){var s=null,r=A.aHr(B.aL,1),q=A.k9(8)
 return A.ku(!1,!0,A.aN(s,A.bk(A.b([A.V("Get Android",s,s,s,A.bs(s,s,B.bZ,s,s,s,s,s,s,s,s,16,s,s,s,s,!0,s,s,s,s,s,s,s,s),s,s),A.eC(B.GG,B.jx,40)],t.p),B.r,B.n,B.aH),B.k,s,s,new A.bF(s,s,r,q,s,s,B.a1),s,s,s,B.q,s,s,s),s,!0,s,s,s,s,s,s,s,s,s,s,new A.atH(),s,s,s,s,s,s)},
 QO(a){var s,r,q,p,o,n,m,l=this,k=null

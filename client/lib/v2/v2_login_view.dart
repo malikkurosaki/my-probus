@@ -5,6 +5,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:my_probus/config.dart';
 import 'package:my_probus/v2/v2_api.dart';
 import 'package:my_probus/v2/v2_config.dart';
 import 'package:my_probus/v2/v2_image_widget.dart';
@@ -95,7 +96,7 @@ class V2LoginView extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               FutureBuilder<http.Response>(
-                                future: http.get(Uri.parse("${V2Config.host}/build-log")),
+                                future: http.get(Uri.parse("${Config.host}/build-log")),
                                 builder: (context, snapshot) {
                                   if (snapshot.hasData) {
                                     final data = json.decode(snapshot.data!.body);
