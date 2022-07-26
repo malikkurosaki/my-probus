@@ -4,6 +4,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:intl/intl.dart';
 import 'package:my_probus/v2/v2_api.dart';
 import 'package:my_probus/v2/v2_image_widget.dart';
@@ -186,7 +187,11 @@ class V2ListTodo extends StatelessWidget {
               firstDate: DateTime(2000),
               lastDate: DateTime(2050),
               onDateChanged: (date) async {
+
+                EasyLoading.showInfo("loading ...");
                 await _loadData(date.toString());
+                EasyLoading.dismiss();
+                
               },
               currentDate: DateTime.now(),
             )

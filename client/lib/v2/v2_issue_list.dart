@@ -120,9 +120,13 @@ class V2IssueList extends StatelessWidget {
                                 ),
                                 IconButton(
                                     onPressed: () async {
+
+                                      EasyLoading.showInfo("Loading...");
                                       final dl = await V2Api.issueDelete().deleteData(itm['id']);
                                       debugPrint("delete issue: " + itm['id'].toString());
                                       await V2Load.issuegetAll();
+                                      EasyLoading.dismiss();
+
                                     },
                                     icon: Icon(
                                       Icons.delete,
@@ -247,11 +251,15 @@ class V2IssueList extends StatelessWidget {
                           textColor: Colors.cyan,
                           child: Text("Detail"),
                           onPressed: () async {
+
+                            EasyLoading.showInfo("Loading...");
                             V2Val.detailControll.content.value.val = itm;
                             V2Val.selectedIssueId.value.val = itm['id'];
                             debugPrint(V2Val.selectedIssueId.value.val.toString());
                             await V2Load.loadDiscutionByIssueId();
                             Get.toNamed(V2Routes.issueDetail().key);
+                            EasyLoading.dismiss();
+
                           },
                         ),
                       ],

@@ -185,6 +185,8 @@ class V2IssueCreateView extends StatelessWidget {
                                                     ),
                                                   )),
                                               onPressed: () async {
+                                                EasyLoading.showInfo("loading ...");
+
                                                 final data = {
                                                   "name": _title.value.val,
                                                   "des": _description.value.val,
@@ -231,6 +233,8 @@ class V2IssueCreateView extends StatelessWidget {
                                                   // );
                           
                                                   _clearContent();
+
+                                                  EasyLoading.dismiss();
                                                 } else {
                                                   EasyLoading.showError(issue.body.toString());
                                                 }

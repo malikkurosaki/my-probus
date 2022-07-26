@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:intl/intl.dart';
 import 'package:my_probus/v2/v2_api.dart';
@@ -53,8 +54,14 @@ class V2IssueHistory extends StatelessWidget {
                             ListTile(
                               title: Text(ls['name'].toString().toUpperCase()),
                               onTap: () async {
+
+                                
+                                EasyLoading.showInfo("loading...");
                                 final data = await V2Api.issueHistory().getByParams(ls['id'].toString());
                                 _listHistory.assignAll(List.from(jsonDecode(data.body)));
+                                EasyLoading.dismiss();
+
+
                               },
                             ),
                         ],

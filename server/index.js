@@ -36,6 +36,7 @@ const { routeDashboard } = require("./controllers/dashboard");
 const { routeMaster } = require("./controllers/master");
 const v2Routers = require("./v2_routers");
 const V2Login = require("./v2_controller/v2_login");
+const V2DevRoutes = require("./v2_dev_routes");
 
 // const { routeImage } = require('./controllers/image');
 
@@ -92,6 +93,8 @@ app.get('/ini', (req, res) => {
   console.log("ini ditekan");
   res.send('ini');
 })
+
+app.use(V2DevRoutes);
 
 
 app.use("/api/v2", v2Routers);

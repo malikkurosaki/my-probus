@@ -23,7 +23,7 @@ class V2ImageWidget {
         height: height,
         width: width,
         imageUrl: "${Config.host}/images/chat-bg-v2.png",
-        fit: BoxFit.contain,
+        fit: BoxFit.cover,
         placeholder: (context, url) => const Center(
           child: CircularProgressIndicator(),
         ),

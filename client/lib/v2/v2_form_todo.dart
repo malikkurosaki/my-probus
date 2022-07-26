@@ -439,9 +439,13 @@ class V2FormTodo extends StatelessWidget {
                             ),
                           ],
                           onSelected: (value) async {
+
+                            EasyLoading.showInfo("Loading...");
                             final dataBody = {"id": td['id'], "status": value};
                             await V2Api.todoChangeStatus().postData(dataBody);
                             await V2Load.loadTodo(_tanggalDipilih.value.val);
+                            EasyLoading.dismiss();
+
                           },
                         ),
                       ),
@@ -545,6 +549,7 @@ class V2FormTodo extends StatelessWidget {
                   child: MaterialButton(
                     color: Colors.orange,
                     onPressed: () async {
+                      EasyLoading.showInfo("Loading...");
                       final body = {
                         "id": td['id'],
                         "title": title.text,
@@ -569,6 +574,8 @@ class V2FormTodo extends StatelessWidget {
                       } else {
                         EasyLoading.showError("Failed to update");
                       }
+
+                      EasyLoading.dismiss();
                     },
                     child: Container(
                       padding: EdgeInsets.all(10),

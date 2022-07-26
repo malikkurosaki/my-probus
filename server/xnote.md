@@ -39,9 +39,16 @@
 - [ ] mas ahmat tampilan utama bug
 - [X] tambah jam
 - [ ] tanngal form todo isi catatan atau eggal ada tandanya warna
-- [ ] leader reject with note
+- [X] leader reject with note
 - [X] dahboard per leader per module
 - [X] report fix
-- [ ] form todo tanggal default
+- [X] form todo tanggal default
 - [X] list todo
+
+### request 5
+
 - [ ] web ke mbk dewi dan guntur sekedar tahu
+- [ ] Leader bisa merubah status issue dr user
+- [ ] Perubahan kesalahan pilihan  modul oleh user bisa di edit oleh leader
+- [ ] Isu list tambahkan filter status
+- [ ] Chat di tambahkan keteranga level user, tanggal dan jam dan di live kan biar chat otomatis masuk (td masih hrs refresh)

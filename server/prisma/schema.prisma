@@ -31,6 +31,8 @@ model Users {
   departementsId String?
   Notif          Notif[]
   Todos          Todos[]
+
+  Jabatan Jabatan[]
 }
 
 model Profiles {
@@ -229,4 +231,10 @@ model Todos {
   status         String?       @default("open")
   Departement    Departements? @relation(fields: [departementsId], references: [id])
   departementsId String?
+}
+
+model Jabatan {
+  id    String  @id @default(uuid())
+  name  String
+  Users Users[]
 }
