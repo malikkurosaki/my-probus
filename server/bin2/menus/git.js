@@ -10,11 +10,25 @@ const colors = require('colors');
 const PrismaClient = require('@prisma/client').PrismaClient;
 const prisma = new PrismaClient();
 const cLog = require('c-log');
+const { exec } = require('child_process');
 
 
 
-function push(){
-    execSync(`git add . && git commit -m "ya" && git push origin main `, {stdio: 'inherit', cwd: path.join(__dirname, './../../../')})
+async function push() {
+    // let nama = execSync(`git add . && git commit -m "ya" && git push origin main `, { stdio: 'inherit', cwd: path.join(__dirname, './../../../') })
+
+
+    let branch = await new Promise((resolve, reject) => {
+
+        let ini = exec('git branch');
+        ini.stdout.on('data', (data) => {
+            let b= `${data}`.match(/\*\s(.*)/)[1]
+            resolve(b)
+        });
+    })
+
+    execSync(`git add . && git commit -m "ya" && git push origin ${branch}`, { stdio: 'inherit', cwd: path.join(__dirname, './../../../') })
+
 }
 
 const lsMenu = [{
