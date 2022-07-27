@@ -12,8 +12,6 @@ const prisma = new PrismaClient();
 const cLog = require('c-log');
 const { exec } = require('child_process');
 
-
-
 async function push() {
     // let nama = execSync(`git add . && git commit -m "ya" && git push origin main `, { stdio: 'inherit', cwd: path.join(__dirname, './../../../') })
 
@@ -30,6 +28,7 @@ async function push() {
     execSync(`git add . && git commit -m "ya" && git push origin ${branch}`, { stdio: 'inherit', cwd: path.join(__dirname, './../../../') })
 
 }
+
 
 const lsMenu = [{
     name: "push",

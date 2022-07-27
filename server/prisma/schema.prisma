@@ -15,24 +15,30 @@ datasource db {
 }
 
 model Users {
-  id             String           @id @default(uuid())
-  name           String
-  email          String
-  password       String
-  Profiles       Profiles?
-  Issues         Issues[]
-  Discussion     Discussion[]
-  Images         Images[]
-  Role           Roles?           @relation(fields: [rolesId], references: [id])
-  rolesId        String?
-  AuthToken      AuthToken[]
-  IssueHistory   IssueHistories[]
-  Departement    Departements?    @relation(fields: [departementsId], references: [id])
-  departementsId String?
-  Notif          Notif[]
-  Todos          Todos[]
+  id              String            @id @default(uuid())
+  name            String
+  email           String
+  password        String
+  Profiles        Profiles?
+  Issues          Issues[]
+  Discussion      Discussion[]
+  Images          Images[]
+  Role            Roles?            @relation(fields: [rolesId], references: [id])
+  rolesId         String?
+  AuthToken       AuthToken[]
+  IssueHistory    IssueHistories[]
+  Departement     Departements?     @relation(fields: [departementsId], references: [id])
+  departementsId  String?
+  Notif           Notif[]
+  Todos           Todos[]
+  Jabatan         Jabatan[]
+  UserDepartement UserDepartement[]
+}
 
-  Jabatan Jabatan[]
+model UserDepartement {
+  id         String         @id @default(uuid())
+  User       Users[]
+  Departement Departements[]
 }
 
 model Profiles {
@@ -59,12 +65,13 @@ model Positions {
 }
 
 model Departements {
-  id        String      @id @default(uuid())
-  name      String
-  Positions Positions[]
-  Issues    Issues[]
-  Users     Users[]
-  Todos     Todos[]
+  id              String            @id @default(uuid())
+  name            String
+  Positions       Positions[]
+  Issues          Issues[]
+  Users           Users[]
+  Todos           Todos[]
+  UserDepartement UserDepartement[]
 }
 
 model Roles {

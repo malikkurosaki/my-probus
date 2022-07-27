@@ -4,6 +4,10 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:json_table/json_table.dart';
 import 'package:my_probus/config.dart';
+import 'package:my_probus/v2/v2_dev_departement.dart';
+import 'package:my_probus/v2/v2_dev_issue_status.dart';
+import 'package:my_probus/v2/v2_dev_issue_type.dart';
+import 'package:my_probus/v2/v2_dev_role.dart';
 import 'package:my_probus/v2/v2_ismobile_widget.dart';
 import 'package:my_probus/v2/v2_routes.dart';
 import 'package:my_probus/v2/v2_val.dart';
@@ -35,7 +39,7 @@ class V2DevUser extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
-                              width: isMobile? double.infinity: 500,
+                              width: isMobile ? double.infinity : 500,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -125,21 +129,16 @@ class V2DevUser extends StatelessWidget {
   }
 }
 
-class V2DevDevelopment extends StatelessWidget{
+class V2DevDevelopment extends StatelessWidget {
   const V2DevDevelopment({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
-       
-      ],
-
+      children: [],
     );
   }
-
 }
-
 
 class V2Developer extends StatelessWidget {
   V2Developer({Key? key}) : super(key: key);
@@ -147,7 +146,10 @@ class V2Developer extends StatelessWidget {
 
   final _listMenu = [
     {"name": "user", "target": V2DevUser()},
-    {"name": "jabatan", "target": Text("ini targetnya2")}
+    {"name": "issue type", "target": V2DevIssueType()},
+    {"name": "issue status", "target": V2DevIssueStatus()},
+    {"name": "departement", "target": V2DevDepartement()},
+    {"name": "role", "target": V2DevRole()}
   ];
 
   @override

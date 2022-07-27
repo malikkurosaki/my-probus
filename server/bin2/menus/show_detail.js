@@ -15,7 +15,7 @@ let tablesName = Object.keys(prisma).map(e => {
     return {
         name: e
     }
-});
+}).filter(e => !e.name.includes('_'));
 
 prompts({
     type: "select",
