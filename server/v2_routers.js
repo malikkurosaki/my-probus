@@ -49,6 +49,9 @@ v2Routers.post("/todo-update", V2Todos.updateTodo);
 // get issue history
 v2Routers.get("/issue-history/:statusId", V2IssueHistory.getIssueHistoryByStatus);
 
+// get issue by departement id : query
+v2Routers.get("/issue-by-departement-id", V2Issue.getIssueByDepartementId);
+
 
 module.exports = v2Routers;
 

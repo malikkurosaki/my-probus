@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/instance_manager.dart';
 import 'package:get/get.dart';
+import 'package:my_probus/v2/v2_role.dart';
 import 'package:my_probus/v2/v2_routes.dart';
 
 class V2Menu {
@@ -47,7 +48,7 @@ class V2Menu {
     V2Menu.productStore().menuItem(),
     V2Menu.listClient().menuItem(),
     V2Menu.listProject().menuItem(),
-    V2Menu.developer().menuItem(onTap: () => Get.toNamed(V2Routes.developer().key)),
+    V2Role.leader().isMe() ? V2Menu.developer().menuItem(onTap: () => Get.toNamed(V2Routes.developer().key)) : SizedBox.shrink(),
   ];
 
   Widget menuItem({VoidCallback? onTap}) => ListTile(

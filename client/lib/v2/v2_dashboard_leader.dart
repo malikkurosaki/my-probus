@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:my_probus/v2/v2_api.dart';
 import 'package:my_probus/v2/v2_template_dashboard.dart';
 import 'package:get/get.dart';
+import 'package:my_probus/v2/v2_val.dart';
 
 class V2DashboardLeader extends StatelessWidget {
   const V2DashboardLeader({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // Text(V2Val.user.val.toString()),
         Flexible(
           child: V2TemplateDashboard(
             body: Container(

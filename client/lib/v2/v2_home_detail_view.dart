@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:my_probus/config.dart';
 import 'package:my_probus/v2/v2_chat.dart';
+import 'package:my_probus/v2/v2_component.dart';
 import 'package:my_probus/v2/v2_ismobile_widget.dart';
 import 'package:my_probus/v2/v2_role.dart';
 import 'package:my_probus/v2/v2_routes.dart';
@@ -71,36 +72,15 @@ class V2HomeDetailView extends StatelessWidget {
           Obx(
             () => Visibility(
               visible: V2Val.detailControll.showDetail.value.val,
-              child: Drawer(
-                elevation: 0,
-                child: ListView(
-                  children: [
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: CloseButton(
-                        onPressed: () {
-                          V2Val.detailControll.showDetail.value.val = false;
-                          V2Val.detailControll.showDetail.refresh();
-                        },
-                      ),
-                    ),
-                    for (final k in V2Val.detailControll.content.value.val.keys)
-                      Builder(builder: (context) {
-                        final vl = V2Val.detailControll.content.value.val;
-                        return ListTile(
-                          title: Text(k),
-                          subtitle: Text(vl[k].toString()),
-                        );
-                      }),
-                  ],
-                ),
-              ),
+              child: V2Component().detailKanan(),
             ),
           )
         ],
       ),
     );
   }
+
+  
 
   Future<String?> _singleImageUploadHandler() async {
     final upload = http.MultipartRequest('POST', Uri.parse("${Config.host}/api/v2/upload-image-single"));

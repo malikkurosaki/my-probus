@@ -153,84 +153,86 @@ class V2IssueList extends StatelessWidget {
                                         color: Colors.grey.shade600,
                                       ),
                                     ),
-                                    Wrap(
-                                      children: [
-                                        (itm['dateSubmit'] ?? "").toString().isEmpty
-                                            ? SizedBox.shrink()
-                                            : Padding(
-                                                padding: const EdgeInsets.all(2.0),
-                                                child: Chip(
-                                                    padding: const EdgeInsets.all(2.0),
-                                                    label: Row(
-                                                      mainAxisSize: MainAxisSize.min,
-                                                      children: [
-                                                        Padding(
-                                                          padding: const EdgeInsets.all(8.0),
-                                                          child: Text(DateFormat('dd/MM/yyyy')
-                                                              .format(DateTime.parse(itm['dateSubmit'].toString()))
-                                                              .toString()),
-                                                        ),
-                                                        Chip(
-                                                          // daysBetween
-                                                          backgroundColor: DateTime.now()
-                                                                      .difference(
-                                                                          DateTime.parse(itm['dateSubmit'].toString()))
-                                                                      .inDays >
-                                                                  2
-                                                              ? Colors.pink
-                                                              : Colors.cyan,
-                                                          label: Text(
-                                                            timeago.format(
-                                                              DateTime.parse(
-                                                                itm['dateSubmit'],
-                                                              ),
-                                                            ),
-                                                            style: TextStyle(color: Colors.white),
+                                    Flexible(
+                                      child: Wrap(
+                                        children: [
+                                          (itm['dateSubmit'] ?? "").toString().isEmpty
+                                              ? SizedBox.shrink()
+                                              : Padding(
+                                                  padding: const EdgeInsets.all(2.0),
+                                                  child: Chip(
+                                                      padding: const EdgeInsets.all(2.0),
+                                                      label: Row(
+                                                        mainAxisSize: MainAxisSize.min,
+                                                        children: [
+                                                          Padding(
+                                                            padding: const EdgeInsets.all(8.0),
+                                                            child: Text(DateFormat('dd/MM/yyyy')
+                                                                .format(DateTime.parse(itm['dateSubmit'].toString()))
+                                                                .toString()),
                                                           ),
-                                                        )
-                                                      ],
-                                                    )),
-                                              ),
-                                        // todo : disini error
-                                        Padding(
-                                          padding: const EdgeInsets.all(2),
-                                          child: Chip(
-                                            label: Text((itm['Departement']?['name'] ?? "modul ...").toString()),
-                                          ),
-                                        ),
-
-                                        // todo : disini error juga
-                                        Padding(
-                                          padding: const EdgeInsets.all(2.0),
-                                          child: Chip(
-                                            label: Text((itm['Product']?['name'] ?? "product ...").toString()),
-                                          ),
-                                        ),
-
-                                        // todo : disini error
-                                        (itm['IssueType']?['name'] ?? "").toString().isEmpty
-                                            ? SizedBox.shrink()
-                                            : Padding(
-                                                padding: const EdgeInsets.all(2.0),
-                                                child: Chip(
-                                                  backgroundColor: itm['IssueType']?['name'].toString() == "bug"
-                                                      ? Colors.orange
-                                                      : Colors.grey.shade100,
-                                                  label: Text((itm['IssueType']?['name'] ?? "").toString()),
+                                                          Chip(
+                                                            // daysBetween
+                                                            backgroundColor: DateTime.now()
+                                                                        .difference(
+                                                                            DateTime.parse(itm['dateSubmit'].toString()))
+                                                                        .inDays >
+                                                                    2
+                                                                ? Colors.pink
+                                                                : Colors.cyan,
+                                                            label: Text(
+                                                              timeago.format(
+                                                                DateTime.parse(
+                                                                  itm['dateSubmit'],
+                                                                ),
+                                                              ),
+                                                              style: TextStyle(color: Colors.white),
+                                                            ),
+                                                          )
+                                                        ],
+                                                      )),
                                                 ),
-                                              ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(2.0),
-                                          child: Chip(
-                                            label: Text((itm['CreatedBy']?['name'] ?? "Create By ...").toString()),
+                                          // todo : disini error
+                                          Padding(
+                                            padding: const EdgeInsets.all(2),
+                                            child: Chip(
+                                              label: Text((itm['Departement']?['name'] ?? "modul ...").toString()),
+                                            ),
                                           ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(2.0),
-                                          child: Chip(
-                                              label: Text((itm['IssuesStatus']?['name'] ?? "status ...").toString())),
-                                        )
-                                      ],
+                                    
+                                          // todo : disini error juga
+                                          Padding(
+                                            padding: const EdgeInsets.all(2.0),
+                                            child: Chip(
+                                              label: Text((itm['Product']?['name'] ?? "product ...").toString()),
+                                            ),
+                                          ),
+                                    
+                                          // todo : disini error
+                                          (itm['IssueType']?['name'] ?? "").toString().isEmpty
+                                              ? SizedBox.shrink()
+                                              : Padding(
+                                                  padding: const EdgeInsets.all(2.0),
+                                                  child: Chip(
+                                                    backgroundColor: itm['IssueType']?['name'].toString() == "bug"
+                                                        ? Colors.orange
+                                                        : Colors.grey.shade100,
+                                                    label: Text((itm['IssueType']?['name'] ?? "").toString()),
+                                                  ),
+                                                ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(2.0),
+                                            child: Chip(
+                                              label: Text((itm['CreatedBy']?['name'] ?? "Create By ...").toString()),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(2.0),
+                                            child: Chip(
+                                                label: Text((itm['IssuesStatus']?['name'] ?? "status ...").toString())),
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),

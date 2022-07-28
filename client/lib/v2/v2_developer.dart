@@ -4,6 +4,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:json_table/json_table.dart';
 import 'package:my_probus/config.dart';
+import 'package:my_probus/v2/v2_dev_client.dart';
 import 'package:my_probus/v2/v2_dev_departement.dart';
 import 'package:my_probus/v2/v2_dev_issue_status.dart';
 import 'package:my_probus/v2/v2_dev_issue_type.dart';
@@ -14,120 +15,10 @@ import 'package:my_probus/v2/v2_val.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
 import 'package:get/get.dart';
+import 'v2_dev_user.dart';
 import 'v2_image_widget.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
-
-class V2DevUser extends StatelessWidget {
-  const V2DevUser({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return V2IsMobileWidget(
-      isMobile: (isMobile, isTablet, isDesktop) {
-        return ListView(
-          controller: ScrollController(),
-          children: [
-            FutureBuilder<http.Response>(
-              future: http.get(Uri.parse(Config.host + '/dev-user')),
-              builder: ((context, snapshot) {
-                final edit = "".obs;
-                return !snapshot.hasData
-                    ? Container()
-                    : Obx(
-                        () => Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              width: isMobile ? double.infinity : 500,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Card(
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                          child: TextFormField(
-                                            decoration: InputDecoration(
-                                              border: InputBorder.none,
-                                              fillColor: Colors.grey[200],
-                                              filled: true,
-                                              hintText: 'type here add user',
-                                            ),
-                                          ),
-                                        ),
-                                        MaterialButton(child: Text('Add'), onPressed: () {})
-                                      ],
-                                    ),
-                                  ),
-                                  for (final itm in jsonDecode((snapshot.data!.body)))
-                                    edit.value == itm['id']
-                                        ? Card(
-                                            elevation: 10,
-                                            child: Row(
-                                              children: [
-                                                Expanded(
-                                                  child: Column(
-                                                    children: [
-                                                      Padding(
-                                                        padding: const EdgeInsets.all(8.0),
-                                                        child: TextFormField(
-                                                          decoration: InputDecoration(
-                                                            border: InputBorder.none,
-                                                            fillColor: Colors.grey[200],
-                                                            filled: true,
-                                                          ),
-                                                          controller: TextEditingController(text: itm['name']),
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding: const EdgeInsets.all(8.0),
-                                                        child: TextFormField(
-                                                          decoration: InputDecoration(
-                                                            border: InputBorder.none,
-                                                            fillColor: Colors.grey[200],
-                                                            filled: true,
-                                                          ),
-                                                          controller: TextEditingController(text: itm['email']),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                Column(
-                                                  children: [
-                                                    MaterialButton(child: Text('Save'), onPressed: () {}),
-                                                    MaterialButton(
-                                                        child: Text('Cansel'),
-                                                        onPressed: () {
-                                                          edit.value = '';
-                                                        })
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          )
-                                        : ListTile(
-                                            title: Text(itm['name']),
-                                            subtitle: Text(itm['email']),
-                                            onTap: () {
-                                              edit.value = itm['id'];
-                                            },
-                                          )
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-              }),
-            )
-          ],
-        );
-      },
-    );
-  }
-}
 
 class V2DevDevelopment extends StatelessWidget {
   const V2DevDevelopment({Key? key}) : super(key: key);
@@ -146,10 +37,11 @@ class V2Developer extends StatelessWidget {
 
   final _listMenu = [
     {"name": "user", "target": V2DevUser()},
+    {"name": "departement", "target": V2DevDepartement()},
+    {"name": "role", "target": V2DevRole()},
+    {"name": "Client", "target": V2DevClient()},
     {"name": "issue type", "target": V2DevIssueType()},
     {"name": "issue status", "target": V2DevIssueStatus()},
-    {"name": "departement", "target": V2DevDepartement()},
-    {"name": "role", "target": V2DevRole()}
   ];
 
   @override

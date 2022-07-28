@@ -5,6 +5,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'v2_api.dart';
 import 'v2_val.dart';
+import 'package:http/http.dart' as http;
 
 class V2Load {
   static Future<void> loadDiscutionByIssueId() async {
@@ -41,8 +42,13 @@ class V2Load {
     }
   }
 
+  static Future<void> listIssueDashboard()async {
+    //final data = await V2Api.issueByDepartementId().getByQuery("departementId=${V2Val.user.val['departementsId']}");
+  }
+
   static Future<void> issuegetAll() async {
     try {
+     
       final data = await V2Api.issueGetAll().getData();
       V2Val.listIssue.value.val = List.from(jsonDecode(data.body));
       V2Val.listIssue.refresh();

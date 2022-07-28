@@ -1,15 +1,11 @@
 import 'dart:convert';
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:my_probus/v2/v2_api.dart';
-import 'package:my_probus/v2/v2_chat.dart';
 import 'package:my_probus/v2/v2_role.dart';
 import 'package:my_probus/v2/v2_status.dart';
-import 'package:my_probus/val.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
 
 class V2Val {
@@ -24,6 +20,7 @@ class V2Val {
   static final selectedIssueId = "".val("V2Val_selectedIssueId").obs;
 
   static final listIssueDashboard = [].val("listIssueDashboard").obs;
+
   static final backupListIssueDashboard = [].val("backupListIssueDashboard").obs;
 
   static final homeControll = V2HomeController();
@@ -41,7 +38,7 @@ class V2Val {
 
   static final listTodo = [].val("V2Val_listTodo").obs;
 
-  clear() {
+  clear() async {
     isMobile.value.val = false;
     hasLogin.value.val = false;
     user.val = {};
@@ -50,6 +47,19 @@ class V2Val {
     listIssueByLeader.value.val = [];
     listIssueByModerator.value.val = [];
     issueDetailId.value.val = "";
+
+    // listType.value.val = [];
+    // listStatus.value.val = [];
+    // listRole.value.val = [];
+    // listUser.value.val = [];
+    // listIssue.value.val = [];
+    // listModule.value.val = [];
+    // listProduct.value.val = [];
+    // listClient.value.val = [];
+
+    // await GetStorage().erase();
+
+    debugPrint("clear data");
   }
 
   logout() {
@@ -107,11 +117,7 @@ class V2HomeController {
   }
 
   _updateWithNote(Object value, String issueId, String note) async {
-    final body = {
-      "issueStatusesId": value.toString(),
-      "usersId": V2Val.user.val['id'],
-      "note": note
-    };
+    final body = {"issueStatusesId": value.toString(), "usersId": V2Val.user.val['id'], "note": note};
 
     final data = await V2Api.updateIssueStatus().postDataParam(issueId, body);
     if (data.statusCode == 200) {
@@ -176,7 +182,7 @@ class V2HomeController {
                                 ),
                               ),
                             ),
-                            onPressed: ()async {
+                            onPressed: () async {
                               await _updateWithNote(value!, issueId, reasonController.text);
                               Get.back();
                             }),
@@ -275,7 +281,11 @@ class V2HomeController {
   // }
 
   Future<void> loadIssueDashboard() async {
-    final data = await V2Api.issueByStatusId().getByParams(V2Role().myStatusId);
+    // final data = await V2Api.issueByStatusId().getByParams(V2Role().myStatusId);
+    final depId = V2Val.user.val['departementsId'];
+    final statusId = V2Role().myStatusId;
+
+    final data = await V2Api.issueByDepartementId().getByQuery('depId=$depId&statusId=$statusId');
     V2Val.listIssueDashboard.value.val = List<Map>.from(jsonDecode(data.body));
     V2Val.listIssueDashboard.refresh();
     V2Val.backupListIssueDashboard.value.val = List<Map>.from(jsonDecode(data.body));

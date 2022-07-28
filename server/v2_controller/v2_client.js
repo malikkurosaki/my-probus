@@ -4,7 +4,11 @@ const expressAsyncHandler = require("express-async-handler");
 const v2ClientRoute = require("express").Router();
 
 const clientGetAll = expressAsyncHandler(async (req, res) => {
-  const clients = await prisma.clients.findMany();
+  const clients = await prisma.clients.findMany({
+    orderBy: {
+      name: "desc"
+    }
+  });
   res.status(200).json(clients);
 });
 
@@ -18,6 +22,8 @@ const getIdByName = expressAsyncHandler(async (req, res) => {
 })
 
 
-const V2Client = {clientGetAll, getIdByName};
+
+
+const V2Client = { clientGetAll, getIdByName };
 
 module.exports = V2Client;

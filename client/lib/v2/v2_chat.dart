@@ -11,6 +11,7 @@ import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:my_probus/config.dart';
 import 'package:my_probus/skt.dart';
+import 'package:my_probus/v2/v2_component.dart';
 import 'package:my_probus/v2/v2_image_widget.dart';
 import 'package:my_probus/v2/v2_ismobile_widget.dart';
 import 'package:my_probus/v2/v2_storage.dart';
@@ -38,8 +39,16 @@ class V2Chat extends StatelessWidget {
           Obx(
             () => InkWell(
               onTap: () {
-                V2Val.detailControll.showDetail.value.val = true;
-                V2Val.detailControll.showDetail.refresh();
+                if (isDesktop) {
+                  V2Val.detailControll.showDetail.value.val = true;
+                  V2Val.detailControll.showDetail.refresh();
+                } else {
+                  Get.bottomSheet(
+                    V2Component().detailKanan(),
+                    isScrollControlled: true,
+                    enableDrag: true,
+                  );
+                }
               },
               child: Container(
                 color: Colors.cyan,
@@ -194,12 +203,10 @@ class V2Chat extends StatelessWidget {
 
                           debugPrint("halo disini chat image");
                           await V2Load.loadDiscutionByIssueId();
-
                         }
                       }
                     },
                   ),
-                  
                   Expanded(
                     child: TextField(
                       autofocus: true,

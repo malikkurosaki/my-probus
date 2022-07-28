@@ -345,6 +345,32 @@ const deleteIssue = expressAsyncHandler(async (req, res) => {
   res.status(200).json(issue);
 });
 
+
+// get list issue by departement id
+const getIssueByDepartementId = expressAsyncHandler(async (req, res) => {
+  const query = req.query;
+  const issue = await prisma.issues.findMany({
+    where: {
+      departementsId: query.depId??undefined,
+      issueStatusesId: query.statusId??undefined,
+    },
+    include: {
+      Departement: true,
+      CreatedBy: true,
+      Client: true,
+      IssuesStatus: true,
+      IssueType: true,
+      Product: true,
+    }
+
+  });
+
+  res.status(200).json(issue);
+
+})
+
+
+
 const V2Issue = {
   create,
   getAll,
@@ -356,7 +382,8 @@ const V2Issue = {
   getIssueById,
   updateIssueStatus,
   issueList,
-  deleteIssue
+  deleteIssue,
+  getIssueByDepartementId,
 };
 
 module.exports = V2Issue;
