@@ -33,12 +33,16 @@ model Users {
   Todos           Todos[]
   Jabatan         Jabatan[]
   UserDepartement UserDepartement[]
+  createdAt       DateTime?         @default(now())
+  updatedAt       DateTime?         @updatedAt
 }
 
 model UserDepartement {
-  id         String         @id @default(uuid())
-  User       Users[]
+  id          String         @id @default(uuid())
+  User        Users[]
   Departement Departements[]
+  createdAt   DateTime?      @default(now())
+  updatedAt   DateTime?      @updatedAt
 }
 
 model Profiles {
@@ -54,6 +58,8 @@ model Profiles {
   positionsId String?    @unique
   Role        Roles?     @relation(fields: [rolesId], references: [id])
   rolesId     String?
+  createdAt   DateTime?  @default(now())
+  updatedAt   DateTime?  @updatedAt
 }
 
 model Positions {
@@ -62,6 +68,8 @@ model Positions {
   Profiles       Profiles?
   Departement    Departements? @relation(fields: [departementsId], references: [id])
   departementsId String?
+  createdAt      DateTime?     @default(now())
+  updatedAt      DateTime?     @updatedAt
 }
 
 model Departements {
@@ -72,6 +80,8 @@ model Departements {
   Users           Users[]
   Todos           Todos[]
   UserDepartement UserDepartement[]
+  createdAt       DateTime?         @default(now())
+  updatedAt       DateTime?         @updatedAt
 }
 
 model Roles {
@@ -80,6 +90,8 @@ model Roles {
   description String?
   Profiles    Profiles[]
   Users       Users[]
+  createdAt   DateTime?  @default(now())
+  updatedAt   DateTime?  @updatedAt
 }
 
 model Issues {
@@ -132,6 +144,8 @@ model Images {
   Users      Users?       @relation(fields: [usersId], references: [id])
   usersId    String?
   Discussion Discussion[]
+  createdAt  DateTime?    @default(now())
+  updatedAt  DateTime?    @updatedAt
 }
 
 model Discussion {
@@ -148,9 +162,11 @@ model Discussion {
 }
 
 model IssueTypes {
-  id     String   @id @default(uuid())
-  name   String
-  Issues Issues[]
+  id        String    @id @default(uuid())
+  name      String
+  Issues    Issues[]
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
 }
 
 model IssueStatuses {
@@ -158,6 +174,8 @@ model IssueStatuses {
   name         String
   Issues       Issues[]
   IssueHistory IssueHistories[]
+  createdAt    DateTime?        @default(now())
+  updatedAt    DateTime?        @updatedAt
 }
 
 model Clients {
@@ -168,30 +186,38 @@ model Clients {
   address       String?
   Issues        Issues[]
   ContacPersons ContactPersons[]
+  createdAt     DateTime?        @default(now())
+  updatedAt     DateTime?        @updatedAt
 }
 
 model ContactPersons {
-  id        String   @id @default(uuid())
+  id        String    @id @default(uuid())
   name      String
   email     String?
   phone     String?
   address   String?
-  Client    Clients? @relation(fields: [clientsId], references: [id])
+  Client    Clients?  @relation(fields: [clientsId], references: [id])
   clientsId String?
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
 }
 
 model Products {
-  id     String   @id @default(uuid())
-  name   String
-  Issues Issues[]
+  id        String    @id @default(uuid())
+  name      String
+  Issues    Issues[]
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
 }
 
 model IssuePriorities {
-  id     String   @id @default(uuid())
-  name   String
-  value  Int
-  des    String?
-  Issues Issues[]
+  id        String    @id @default(uuid())
+  name      String
+  value     Int
+  des       String?
+  Issues    Issues[]
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
 }
 
 // model IssueAssigneds {
@@ -241,7 +267,9 @@ model Todos {
 }
 
 model Jabatan {
-  id    String  @id @default(uuid())
-  name  String
-  Users Users[]
+  id        String    @id @default(uuid())
+  name      String
+  Users     Users[]
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
 }

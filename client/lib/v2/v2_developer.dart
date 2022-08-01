@@ -8,6 +8,7 @@ import 'package:my_probus/v2/v2_dev_client.dart';
 import 'package:my_probus/v2/v2_dev_departement.dart';
 import 'package:my_probus/v2/v2_dev_issue_status.dart';
 import 'package:my_probus/v2/v2_dev_issue_type.dart';
+import 'package:my_probus/v2/v2_dev_jabatan.dart';
 import 'package:my_probus/v2/v2_dev_role.dart';
 import 'package:my_probus/v2/v2_ismobile_widget.dart';
 import 'package:my_probus/v2/v2_routes.dart';
@@ -36,12 +37,34 @@ class V2Developer extends StatelessWidget {
   final _index = 0.val("index").obs;
 
   final _listMenu = [
-    {"name": "user", "target": V2DevUser()},
-    {"name": "departement", "target": V2DevDepartement()},
-    {"name": "role", "target": V2DevRole()},
-    {"name": "Client", "target": V2DevClient()},
-    {"name": "issue type", "target": V2DevIssueType()},
-    {"name": "issue status", "target": V2DevIssueStatus()},
+    {
+      "name": "user",
+      "target": V2DevUser(),
+    },
+    {
+      "name": "departement",
+      "target": V2DevDepartement(),
+    },
+    {
+      "name": "role",
+      "target": V2DevRole(),
+    },
+    {
+      "name": "Client",
+      "target": V2DevClient(),
+    },
+    {
+      "name": "issue type",
+      "target": V2DevIssueType(),
+    },
+    {
+      "name": "issue status",
+      "target": V2DevIssueStatus(),
+    },
+    {
+      "name": "jabatan",
+      "target": V2DevJabatan(),
+    },
   ];
 
   @override

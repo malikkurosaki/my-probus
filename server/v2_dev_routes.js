@@ -9,13 +9,25 @@ const V2DevUser = require("./v2_controller/v2_dev_user");
 const V2DevRoutes = require("express").Router();
 
 // user get all
-V2DevRoutes.get('/dev-user', V2DevUser.getAll )
+V2DevRoutes.get('/dev-user', V2DevUser.getAll)
+
+// dev user create
+V2DevRoutes.post('/dev-user', V2DevUser.create)
 
 // jabatan get all
-V2DevRoutes.get('/dev-jabatan', V2DevJabatan.getAll )
+V2DevRoutes.get('/dev-jabatan', V2DevJabatan.getAll)
+
+// dev jabatan create
+V2DevRoutes.post('/dev-jabatan', V2DevJabatan.create)
+
+// dev jabatan update
+V2DevRoutes.put('/dev-jabatan/:id', V2DevJabatan.update)
+
+// dev jabatan delete
+V2DevRoutes.delete('/dev-jabatan/:id', V2DevJabatan.hapus)
 
 // issue type
-V2DevRoutes.get('/dev-issue-type', V2DevIssueType.getAll )
+V2DevRoutes.get('/dev-issue-type', V2DevIssueType.getAll)
 
 // issue status get all
 V2DevRoutes.get('/dev-issue-status', V2DevIssueStatus.getAll)
