@@ -14,6 +14,9 @@ V2DevRoutes.get('/dev-user', V2DevUser.getAll)
 // dev user create
 V2DevRoutes.post('/dev-user', V2DevUser.create)
 
+// dev set user jabatan
+V2DevRoutes.post('/dev-user-jabatan', V2DevUser.setUserJabatan);
+
 // jabatan get all
 V2DevRoutes.get('/dev-jabatan', V2DevJabatan.getAll)
 
@@ -40,6 +43,9 @@ V2DevRoutes.put('/dev-departement/:id', V2DevDepartement.update)
 
 // departement create
 V2DevRoutes.post('/dev-departement', V2DevDepartement.create)
+
+// set jabatandepartement
+V2DevRoutes.post('/dev-jabatan-departement', V2DevJabatan.setJabatanDepartement)
 
 // role
 V2DevRoutes.get('/dev-role', V2DevRole.getAll)

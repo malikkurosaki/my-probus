@@ -9,11 +9,12 @@ const getAll = expressAsyncHandler(async (req, res) => {
         orderBy: {
             createdAt: "desc"
         },
-        select: {
-            id: true,
-            name: true,
-            email: true,
-            password: true
+        include: {
+            UserJabatan: {
+                include: {
+                    Jabatan: true
+                }
+            }
         }
     });
     res.status(200).json(users);
@@ -49,10 +50,43 @@ const create = expressAsyncHandler(async (req, res) => {
     res.status(201).json(data);
 })
 
+const setUserJabatan = expressAsyncHandler(async (req, res) => {
+    const body = req.body;
+    const user = await prisma.userJabatan.findFirst({
+        where: {
+            usersId: body.usersId,
+            jabatansId: body.jabatansId
+        },
+    })
+
+    console.log(user)
+
+    if(user){
+        let delUser = await prisma.userJabatan.delete({
+            where: {
+                id: user.id
+            }
+        })
+
+        res.status(201).send(delUser);
+    }else{
+        let setuser = await prisma.userJabatan.create({
+            data: {
+                jabatansId: body.jabatansId,
+                usersId: body.usersId
+            }
+        })
+
+        res.status(201).send(setuser);
+    }
+
+})
+
 const V2DevUser = {
     getAll,
     updateUser,
-    create
+    create,
+    setUserJabatan
 };
 
 

@@ -38,6 +38,9 @@ class V2Val {
 
   static final listTodo = [].val("V2Val_listTodo").obs;
 
+  // user jabatan departement
+  static final userJabatanDepartement = {}.val("V2Val_userJabatanDepartement");
+
   clear() async {
     isMobile.value.val = false;
     hasLogin.value.val = false;
@@ -285,7 +288,7 @@ class V2HomeController {
     final depId = V2Val.user.val['departementsId'];
     final statusId = V2Role().myStatusId;
 
-    final data = await V2Api.issueByDepartementId().getByQuery('depId=$depId&statusId=$statusId');
+    final data = await V2Api.issueByDepartementId().getByQuery('depId=$depId&statusId=$statusId&userId=${V2Val.user.val['id']}');
     V2Val.listIssueDashboard.value.val = List<Map>.from(jsonDecode(data.body));
     V2Val.listIssueDashboard.refresh();
     V2Val.backupListIssueDashboard.value.val = List<Map>.from(jsonDecode(data.body));

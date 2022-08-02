@@ -348,10 +348,45 @@ const deleteIssue = expressAsyncHandler(async (req, res) => {
 
 // get list issue by departement id
 const getIssueByDepartementId = expressAsyncHandler(async (req, res) => {
+
+  let listDepartement = [];
+  const user = await prisma.users.findUnique({
+    where: {
+      id: `${req.query.userId}`
+    },
+    select: {
+      UserJabatan: {
+        include: {
+          Jabatan: {
+            include: {
+              JabatanDepartement: {
+                select: {
+                  departementsId: true,
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  })
+
+  try {
+    listDepartement = user['UserJabatan'].map(item => item.Jabatan['JabatanDepartement'].filter(item => item.departementsId != null).map(e => e['departementsId'])).flat();
+  } catch (error) {
+    console.log("eh error")
+  }
+
+
   const query = req.query;
   const issue = await prisma.issues.findMany({
     where: {
-      departementsId: query.depId??undefined,
+      Departement: {
+        id: {
+          in: listDepartement
+        }
+      },
+      // departementsId: query.depId??undefined,
       issueStatusesId: query.statusId??undefined,
     },
     include: {

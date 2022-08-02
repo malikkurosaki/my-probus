@@ -9,6 +9,7 @@ const V2Properties = require("./v2_controller/v2_properties");
 const V2Status = require("./v2_controller/v2_status");
 const V2Todos = require("./v2_controller/v2_todos");
 const V2Type = require("./v2_controller/v2_type");
+const V2Users = require("./v2_controller/v2_user");
 const v2Routers = require("express").Router();
 
 // a1 do not delete this line
@@ -51,6 +52,10 @@ v2Routers.get("/issue-history/:statusId", V2IssueHistory.getIssueHistoryByStatus
 
 // get issue by departement id : query
 v2Routers.get("/issue-by-departement-id", V2Issue.getIssueByDepartementId);
+
+// user get all
+v2Routers.get("/user-get-all/:id", V2Users.getAll);
+
 
 
 module.exports = v2Routers;

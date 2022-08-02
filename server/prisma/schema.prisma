@@ -35,6 +35,17 @@ model Users {
   UserDepartement UserDepartement[]
   createdAt       DateTime?         @default(now())
   updatedAt       DateTime?         @updatedAt
+  UserJabatan     UserJabatan[]
+}
+
+model UserJabatan {
+  id         String    @id @default(uuid())
+  Users      Users?    @relation(fields: [usersId], references: [id])
+  usersId    String?
+  Jabatan    Jabatan?  @relation(fields: [jabatansId], references: [id])
+  jabatansId String?
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
 }
 
 model UserDepartement {
@@ -73,15 +84,16 @@ model Positions {
 }
 
 model Departements {
-  id              String            @id @default(uuid())
-  name            String
-  Positions       Positions[]
-  Issues          Issues[]
-  Users           Users[]
-  Todos           Todos[]
-  UserDepartement UserDepartement[]
-  createdAt       DateTime?         @default(now())
-  updatedAt       DateTime?         @updatedAt
+  id                 String               @id @default(uuid())
+  name               String
+  Positions          Positions[]
+  Issues             Issues[]
+  Users              Users[]
+  Todos              Todos[]
+  UserDepartement    UserDepartement[]
+  createdAt          DateTime?            @default(now())
+  updatedAt          DateTime?            @updatedAt
+  JabatanDepartement JabatanDepartement[]
 }
 
 model Roles {
@@ -272,4 +284,18 @@ model Jabatan {
   Users     Users[]
   createdAt DateTime? @default(now())
   updatedAt DateTime? @updatedAt
+
+  JabatanDepartement JabatanDepartement[]
+  UserJabatan        UserJabatan[]
+}
+
+model JabatanDepartement {
+  id             String        @id @default(uuid())
+  Jabatan        Jabatan?      @relation(fields: [jabatansId], references: [id])
+  jabatansId     String?
+  Departement    Departements? @relation(fields: [departementsId], references: [id])
+  departementsId String?
+  isSelected     Boolean?      @default(false)
+  createdAt      DateTime?     @default(now())
+  updatedAt      DateTime?     @updatedAt
 }

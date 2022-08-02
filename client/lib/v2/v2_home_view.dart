@@ -1,9 +1,11 @@
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:my_probus/config.dart';
 import 'package:my_probus/v2/v2_image_widget.dart';
 import 'package:my_probus/v2/v2_ismobile_widget.dart';
 import 'package:my_probus/v2/v2_list_menu.dart';
@@ -12,6 +14,7 @@ import 'package:my_probus/v2/v2_role.dart';
 import 'package:my_probus/v2/v2_routes.dart';
 import 'package:my_probus/v2/v2_val.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:http/http.dart' as http;
 
 const notifInfo = """
 # LEADER
@@ -38,6 +41,11 @@ class V2HomeView extends StatelessWidget {
   V2HomeView({Key? key}) : super(key: key);
   final _updateNotif = "".val('updateNotif');
   final _updateNotifNomber = "update_002";
+
+  _loadUserJabatan() async {
+    final data = await http.get(Uri.parse('${Config.host}/api/v2/user-get-all/${V2Val.user.val['id']}'));
+    if (data.statusCode == 200) V2Val.userJabatanDepartement.val.assignAll(jsonDecode((data.body)));
+  }
 
   _onLoad() async {
     await V2Val.homeControll.loadIssueDashboard();
@@ -81,7 +89,6 @@ class V2HomeView extends StatelessWidget {
                 onPressed: () {
                   _updateNotif.val = _updateNotifNomber;
                   Get.back();
-
                 })
           ],
         ),
@@ -93,6 +100,7 @@ class V2HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     _onLoad();
     _updateNotification();
+    _loadUserJabatan();
     return V2IsMobileWidget(
       isMobile: (isMobile, isTablet, isDesktop) => Row(
         children: [
