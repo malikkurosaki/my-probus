@@ -15,4 +15,4 @@ const cLog = require('c-log');
 const branchName = execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
 console.log(`branchName: ${branchName}`.green);
 
-execSync(`git add . && git commit -m "$(date)" && git push origin ${branchName}`);
+execSync(`git add . && git commit -m "$(date)" && git push origin ${branchName}`, { stdio: 'inherit' , cwd: path.join(__dirname, '../../../')});
