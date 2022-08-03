@@ -6,14 +6,15 @@ const {httpServer, app} = require('./index_https_config')
 const port = 3001;
 const cors = require("cors");
 const { api } = require("./routers");
-const { routeLogin } = require("./controllers/login");
+// const { routeLogin } = require("./controllers/login");
 const apiRoot = "/api/v1";
-require("dotenv").config();
-const jwt = require("jsonwebtoken");
-const { Server } = require("socket.io");
+// require("dotenv").config();
+// const jwt = require("jsonwebtoken");
+// const { Server } = require("socket.io");
 const fs = require('fs')
-var SSE = require('express-sse');
-var sse = new SSE("");
+// var SSE = require('express-sse');
+// var sse = new SSE("");
+
 const path = require('path')
 // const createServer = require("https").createServer;
 // const fs = require("fs");
@@ -77,8 +78,8 @@ app.use(cors());
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "public")));
-// app.use(express.static(path.join(__dirname, "./../client/build/web")));
+// app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "./../client/build/web")));
 //app.use(express.static('assets'));
 // app.get('/', (req, res) => res.send('Hello World!'));
 // app.get("/", (req, res) => {
@@ -86,17 +87,16 @@ app.use(express.static(path.join(__dirname, "public")));
 //   // res.redirect('https://malikkurosaki.github.io/my-probus/client/build/web/');
 // });
 
-app.get('/sse', sse.init);
+// app.get('/sse', sse.init);
 
-app.get('/ini', (req, res) => {
-  sse.updateInit("apa ini");
+// app.get('/ini', (req, res) => {
+//   sse.updateInit("apa ini");
   
-  console.log("ini ditekan");
-  res.send('ini');
-})
+//   console.log("ini ditekan");
+//   res.send('ini');
+// })
 
 app.use(V2DevRoutes);
-
 
 app.use("/api/v2", v2Routers);
 app.use("/login", V2Login);
