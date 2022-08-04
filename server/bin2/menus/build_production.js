@@ -11,10 +11,6 @@ const PrismaClient = require('@prisma/client').PrismaClient;
 const prisma = new PrismaClient();
 const cLog = require('c-log');
 
-const template = `
-  class Config{
-    static const String host = "https://my.probussystem.com:3001";
-  }
-`
-
-fs.writeFileSync(path.join(__dirname, './../../../client/lib/config.dart'), beautify(template, { indent_size: 2 }));
+let branch = execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
+execSync(`flutter build web --release && flutter build apk --release --split-per-abi`, { stdio: 'inherit' , cwd: path.join(__dirname, './../../../client')});
+execSync(`git add . && git commit -m "$(date)" && git push origin ${branch}`, { stdio: 'inherit' , cwd: path.join(__dirname, './../../../')});
