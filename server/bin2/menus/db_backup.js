@@ -24,6 +24,6 @@ let db = {
 }
 
 // mysql dump to dump.sql
-execSync(`mysqldump -u ${db.user} -p${db.password} -h ${db.host} -P ${db.port} ${db.database} > dump.sql`, { stdio: 'inherit', cwd: path.resolve(__dirname, '../../') });
+execSync(`mysqldump -u ${db.user} -p${db.password} -h ${db.host} -P ${db.port} ${db.database} > myprobus.sql`, { stdio: 'inherit', cwd: path.resolve(__dirname, '../../') });
 
 
