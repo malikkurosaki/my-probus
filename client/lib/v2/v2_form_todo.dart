@@ -14,16 +14,14 @@ import 'v2_routes.dart';
 
 class V2FormTodo extends StatelessWidget {
   V2FormTodo({Key? key}) : super(key: key);
-  final _tanggalDipilih = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day)
-      .toString()
-      .val("V2FormTodo_tanggalDipilih")
-      .obs;
+  final _tanggalDipilih = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).toString().obs;
   final _controllerTitle = TextEditingController();
   final _controllerDescription = TextEditingController();
   final _fokusTitle = FocusNode();
 
   @override
   Widget build(BuildContext context) {
+    debugPrint("form todo");
     return V2IsMobileWidget(
       isMobile: (isMobile, isTablet, isDesktop) => Scaffold(
         appBar: isMobile
@@ -57,175 +55,10 @@ class V2FormTodo extends StatelessWidget {
                     visible: !isMobile,
                     child: _drawerKiri(),
                   ),
-                  Expanded(child: _listTodo(isMobile)
-                      // ListView(
-                      //   children: [
-                      //     Padding(
-                      //       padding: const EdgeInsets.all(8.0),
-                      //       child: Text(
-                      //         "Create New Todo",
-                      //         style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                      //       ),
-                      //     ),
-                      //     Card(
-                      //       child: Column(
-                      //         children: [
-                      //           Padding(
-                      //             padding: const EdgeInsets.all(8.0),
-                      //             child: TextFormField(
-                      //               focusNode: _fokusTitle,
-                      //               controller: _controllerTitle,
-                      //               maxLength: 50,
-                      //               maxLines: 1,
-                      //               decoration: InputDecoration(hintText: "Title", labelText: "Title"),
-                      //             ),
-                      //           ),
-                      //           Padding(
-                      //             padding: const EdgeInsets.all(8.0),
-                      //             child: TextFormField(
-                      //               controller: _controllerDescription,
-                      //               maxLength: 1200,
-                      //               maxLines: 10,
-                      //               decoration: InputDecoration(hintText: "Description", labelText: "Description"),
-                      //             ),
-                      //           ),
-                      //           Padding(
-                      //             padding: const EdgeInsets.all(8.0),
-                      //             child: MaterialButton(
-                      //               color: Colors.cyan,
-                      //               onPressed: () async {
-                      //                 final body = {
-                      //                   "usersId": V2Val.user.val['id'],
-                      //                   "title": _controllerTitle.text,
-                      //                   "content": _controllerDescription.text,
-                      //                   "createdAt": _tanggalDipilih.value.val
-                      //                 };
-
-                      //                 if (body.values.contains("")) {
-                      //                   EasyLoading.showError("Please fill all field");
-                      //                   return;
-                      //                 }
-
-                      //                 // debugPrint(body.toString());
-
-                      //                 final kirim = await V2Api.todoCreate().postData(body);
-
-                      //                 // clear
-                      //                 _controllerTitle.clear();
-                      //                 _controllerDescription.clear();
-
-                      //                 await V2Load.loadTodo(_tanggalDipilih.value.val);
-                      //               },
-                      //               child: Container(
-                      //                 padding: EdgeInsets.all(10),
-                      //                 child: Center(
-                      //                   child: Text(
-                      //                     "Add",
-                      //                     style: TextStyle(color: Colors.white),
-                      //                   ),
-                      //                 ),
-                      //               ),
-                      //             ),
-                      //           )
-                      //         ],
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
-                      ),
+                  Expanded(child: _listTodo(isMobile)),
                   Visibility(
                     visible: isDesktop,
-                    child: Drawer(elevation: 0, child: _createTodo(isMobile)
-                        // Obx(
-                        //   () => ListView(
-                        //     children: [
-                        //       Padding(
-                        //         padding: const EdgeInsets.all(8.0),
-                        //         child: Text(
-                        //           DateFormat("EEEE, dd MMMM yyyy").format(DateTime.parse(_tanggalDipilih.value.val)),
-                        //           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                        //         ),
-                        //       ),
-                        //       for (final td in V2Val.listTodo.value.val)
-                        //         Card(
-                        //           child: Column(
-                        //             children: [
-                        //               ListTile(
-                        //                 leading: Column(
-                        //                   children: [
-                        //                     IconButton(
-                        //                       onPressed: () async {
-                        //                         try {
-                        //                           final dl = await V2Api.todoDelete().deleteData(td['id']);
-                        //                           debugPrint(dl.body);
-                        //                           await V2Load.loadTodo(_tanggalDipilih.value.val);
-                        //                         } catch (e) {
-                        //                           debugPrint(e.toString());
-                        //                         }
-                        //                       },
-                        //                       icon: Icon(
-                        //                         Icons.delete,
-                        //                         color: Colors.pink,
-                        //                       ),
-                        //                     ),
-                        //                   ],
-                        //                 ),
-                        //                 title: Text(td['title'].toString()),
-                        //                 subtitle: Column(
-                        //                   crossAxisAlignment: CrossAxisAlignment.start,
-                        //                   children: [
-                        //                     Text(td['content'].toString()),
-
-                        //                     // Text(td['status'].toString()),
-                        //                     Row(
-                        //                       children: [
-                        //                         Text(
-                        //                           DateFormat("dd MMMM yyyy")
-                        //                               .format(DateTime.parse(td['createdAt'].toString())),
-                        //                           style: TextStyle(fontSize: 12, color: Colors.grey),
-                        //                         ),
-                        //                       ],
-                        //                     ),
-                        //                   ],
-                        //                 ),
-                        //                 trailing: PopupMenuButton(
-                        //                   icon: td['status'] == "open"
-                        //                       ? Icon(Icons.check_box_outline_blank)
-                        //                       : Icon(
-                        //                           Icons.check_box,
-                        //                           color: Colors.green,
-                        //                         ),
-                        //                   itemBuilder: (context) => [
-                        //                     PopupMenuItem(
-                        //                       value: "open",
-                        //                       child: Text("open"),
-                        //                     ),
-                        //                     PopupMenuItem(
-                        //                       value: "close",
-                        //                       child: Text("close"),
-                        //                     ),
-                        //                   ],
-                        //                   onSelected: (value) async {
-                        //                     final dataBody = {"id": td['id'], "status": value};
-                        //                     await V2Api.todoChangeStatus().postData(dataBody);
-                        //                     await V2Load.loadTodo(_tanggalDipilih.value.val);
-                        //                   },
-                        //                 ),
-                        //               ),
-                        //               Align(
-                        //                 alignment: Alignment.centerRight,
-                        //                 child: Padding(
-                        //                   padding: const EdgeInsets.all(16),
-                        //                   child: iconUpdate(td),
-                        //                 ),
-                        //               )
-                        //             ],
-                        //           ),
-                        //         ),
-                        //     ],
-                        //   ),
-                        // ),
-                        ),
+                    child: Drawer(elevation: 0, child: _createTodo(isMobile)),
                   )
                 ],
               ),
@@ -237,12 +70,21 @@ class V2FormTodo extends StatelessWidget {
   }
 
   Widget _createTodo(isMobile) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
               "Create New Todo",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+          ),
+          Visibility(
+            visible: isMobile,
+            child: SizedBox(
+              width: 360,
+              height: 360,
+              child: LimitedBox(child: _selectDate()),
             ),
           ),
           Card(
@@ -292,7 +134,7 @@ class V2FormTodo extends StatelessWidget {
                         _controllerTitle.clear();
                         _controllerDescription.clear();
 
-                        await V2Load.loadTodo(_tanggalDipilih.value.val);
+                        await V2Load.loadTodo(_tanggalDipilih.value);
                         EasyLoading.dismiss();
                         EasyLoading.showSuccess("Success");
                       } else {
@@ -321,25 +163,17 @@ class V2FormTodo extends StatelessWidget {
         color: Colors.grey[100],
         child: Obx(
           () => ListView(
+            controller: ScrollController(),
             children: [
               Row(
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      DateFormat("EEEE, dd MMMM yyyy").format(DateTime.parse(_tanggalDipilih.value.val)),
+                      DateFormat("EEEE, dd MMMM yyyy").format(DateTime.parse(_tanggalDipilih.value)),
                       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                   ),
-                  // Visibility(
-                  //   visible: isMobile,
-                  //   child: IconButton(
-                  //     onPressed: (){
-
-                  //     },
-                  //     icon: Icon(Icons.add_circle, color: Colors.cyan,)
-                  //   ),
-                  // )
                 ],
               ),
               for (final td in V2Val.listTodo.value.val)
@@ -356,7 +190,8 @@ class V2FormTodo extends StatelessWidget {
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: Text("Delete Content",
+                                      child: Text(
+                                        "Delete Content",
                                         style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                                       ),
                                     ),
@@ -381,7 +216,7 @@ class V2FormTodo extends StatelessWidget {
                                               try {
                                                 final dl = await V2Api.todoDelete().deleteData(td['id']);
                                                 debugPrint(dl.body);
-                                                await V2Load.loadTodo(_tanggalDipilih.value.val);
+                                                await V2Load.loadTodo(_tanggalDipilih.value);
                                                 EasyLoading.showSuccess("Success");
                                               } catch (e) {
                                                 debugPrint(e.toString());
@@ -409,8 +244,6 @@ class V2FormTodo extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(td['content'].toString()),
-
-                            // Text(td['status'].toString()),
                             Row(
                               children: [
                                 Text(
@@ -439,13 +272,11 @@ class V2FormTodo extends StatelessWidget {
                             ),
                           ],
                           onSelected: (value) async {
-
                             EasyLoading.showInfo("Loading...");
                             final dataBody = {"id": td['id'], "status": value};
                             await V2Api.todoChangeStatus().postData(dataBody);
-                            await V2Load.loadTodo(_tanggalDipilih.value.val);
+                            await V2Load.loadTodo(_tanggalDipilih.value);
                             EasyLoading.dismiss();
-
                           },
                         ),
                       ),
@@ -467,26 +298,28 @@ class V2FormTodo extends StatelessWidget {
   Drawer _drawerKiri() => Drawer(
         elevation: 0,
         child: ListView(
+          controller: ScrollController(),
           children: [
             DrawerHeader(
               child: V2ImageWidget.logo(),
             ),
-            Obx(
-              () => CalendarDatePicker(
-                initialDate: DateTime.parse(_tanggalDipilih.value.val),
-                firstDate: DateTime(2000),
-                lastDate: DateTime(2050),
-                onDateChanged: (date) async {
-                  _tanggalDipilih.value.val = date.toLocal().toString();
-                  _tanggalDipilih.refresh();
-
-                  EasyLoading.showInfo("Loading...");
-                  await V2Load.loadTodo(_tanggalDipilih.value.val);
-                  EasyLoading.dismiss();
-                },
-              ),
-            )
+            _selectDate(),
           ],
+        ),
+      );
+
+  Widget _selectDate() => Obx(
+        () => CalendarDatePicker(
+          initialDate: DateTime.parse(_tanggalDipilih.value),
+          firstDate: DateTime(2000),
+          lastDate: DateTime(2050),
+          onDateChanged: (date) async {
+            _tanggalDipilih.value = date.toLocal().toString();
+
+            EasyLoading.showInfo("Loading...");
+            await V2Load.loadTodo(_tanggalDipilih.value);
+            EasyLoading.dismiss();
+          },
         ),
       );
 
@@ -564,11 +397,10 @@ class V2FormTodo extends StatelessWidget {
 
                       final kirim = await V2Api.todoUpdate().postData(body);
                       if (kirim.statusCode == 201) {
-                        _tanggalDipilih.value.val = dateSource.value;
-                        _tanggalDipilih.refresh();
+                        _tanggalDipilih.value = dateSource.value;
 
                         EasyLoading.showInfo("Success");
-                        await V2Load.loadTodo(_tanggalDipilih.value.val);
+                        await V2Load.loadTodo(_tanggalDipilih.value);
 
                         Get.back();
                       } else {
