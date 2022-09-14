@@ -14,8 +14,6 @@ const apiRoot = "/api/v1";
 const fs = require('fs')
 // var SSE = require('express-sse');
 // var sse = new SSE("");
-
-
 const path = require('path')
 // const createServer = require("https").createServer;
 // const fs = require("fs");
@@ -33,6 +31,8 @@ const path = require('path')
 //     credentials: true,
 //   },
 // });
+
+app.use(cors());
 
 const { routeDashboard } = require("./controllers/dashboard");
 const { routeMaster } = require("./controllers/master");
@@ -74,8 +74,6 @@ const V2DevRoutes = require("./v2_dev_routes");
 // var selfsigned = require('selfsigned');
 // var attrs = [{ name: 'makuro', value: 'google.com' }];
 // var pems = selfsigned.generate(attrs, { days: 365 });
-
-app.use(cors());
 
 
 app.use(express.urlencoded({ extended: true }));

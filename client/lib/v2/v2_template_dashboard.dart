@@ -104,12 +104,18 @@ class V2TemplateDashboard extends StatelessWidget {
                       ),
                       onPressed: () {
                         final source = <Map>[...V2Val.listIssueDashboard.value.val];
+
+                        if (source.isEmpty) {
+                          EasyLoading.showToast("bukannya kosong ?");
+                          return;
+                        }
+
                         List<String> rowHeader = [...source[0].keys];
                         List<List<dynamic>> rows = [];
                         rows.add(rowHeader);
                         for (final itm in source) {
                           final anakan = [];
-                          for(final itm2 in itm.values){
+                          for (final itm2 in itm.values) {
                             anakan.add(itm2);
                           }
                           rows.add(anakan);
