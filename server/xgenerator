@@ -1,0 +1,21 @@
+#!/usr/bin/env node
+const fs = require('fs');
+const path = require('path');
+const _ = require('lodash');
+
+const pt = path.join(__dirname, "./xprobus");
+const target = fs.readFileSync(pt).toString();
+
+let listHasil = [];
+const apa = target.match(/function.*\(/g);
+for(let itm of apa){
+    const name = itm.replace(/function\s+/g, "").replace(/\(/g, "");
+    listHasil.push(name);
+}
+
+const getListMenu = target.match(/.*listMenu[\s\S]+\]/g)
+const hasil = target.replace(/.*listMenu[\s\S]+\]/g, `const listMenu = ${JSON.stringify(listHasil)}`);
+
+fs.writeFileSync(pt, hasil);
+console.log('generate complete');
+

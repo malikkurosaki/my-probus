@@ -13,8 +13,10 @@ const createServer = require("https").createServer;
 // /etc/letsencrypt/live/my.probussystem.com/privkey.pem;
 
 const httpServer = createServer({
-    key: fs.readFileSync("/etc/letsencrypt/live/my.probussystem.com/privkey.pem"),
-    cert: fs.readFileSync("/etc/letsencrypt/live/my.probussystem.com/fullchain.pem"),
+    // key: fs.readFileSync("/etc/letsencrypt/live/my.probussystem.com/privkey.pem"),
+    // cert: fs.readFileSync("/etc/letsencrypt/live/my.probussystem.com/fullchain.pem"),
+    key: "./key.pem",
+    cert: "./cert.pem"
 },
     app);
 

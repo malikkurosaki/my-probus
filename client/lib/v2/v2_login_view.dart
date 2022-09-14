@@ -111,41 +111,41 @@ class V2LoginView extends StatelessWidget {
                   ),
                 ),
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  FutureBuilder<http.Response>(
-                    future: http.get(Uri.parse("${Config.host}/build-log")),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        final data = json.decode(snapshot.data!.body);
-                        return Wrap(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                'Version: ${data['version']}',
-                                style: TextStyle(color: Colors.grey),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text("Build Version: ${data['build_version']}",
-                                  style: TextStyle(color: Colors.grey)),
-                            ),
+              // Row(
+              //   crossAxisAlignment: CrossAxisAlignment.center,
+              //   children: [
+              //     FutureBuilder<http.Response>(
+              //       future: http.get(Uri.parse("${Config.host}/build-log")),
+              //       builder: (context, snapshot) {
+              //         if (snapshot.hasData) {
+              //           final data = json.decode(snapshot.data!.body);
+              //           return Wrap(
+              //             children: [
+              //               Padding(
+              //                 padding: const EdgeInsets.all(8.0),
+              //                 child: Text(
+              //                   'Version: ${data['version']}',
+              //                   style: TextStyle(color: Colors.grey),
+              //                 ),
+              //               ),
+              //               Padding(
+              //                 padding: const EdgeInsets.all(8.0),
+              //                 child: Text("Build Version: ${data['build_version']}",
+              //                     style: TextStyle(color: Colors.grey)),
+              //               ),
       
-                            // https://github.com/malikkurosaki/my-probus/raw/main/client/build/app/outputs/apk/release/app-arm64-v8a-release.apk
-                          ],
-                        );
-                      }
+              //               // https://github.com/malikkurosaki/my-probus/raw/main/client/build/app/outputs/apk/release/app-arm64-v8a-release.apk
+              //             ],
+              //           );
+              //         }
       
-                      return Text("");
-                    },
-                  ),
-                  _downloadApp()
+              //         return Text("");
+              //       },
+              //     ),
+              //     _downloadApp()
                  
-                ],
-              )
+              //   ],
+              // )
             ],
           ),
         ),

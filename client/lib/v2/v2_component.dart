@@ -36,7 +36,7 @@ class V2Component {
               for (final itm in V2Val.listIssueDashboard.value.val)
                 SizedBox(
                   width: Get.width / (isMobile ? 0 : 3),
-                  height: 250,
+                  height: 300,
                   child: Card(
                     elevation: 0,
                     child: Column(

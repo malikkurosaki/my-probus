@@ -1,0 +1,40 @@
+#!/usr/bin/env node
+const _ = require('lodash');
+const path = require('path');
+const prompts = require('prompts');
+const exec = require('child_process').execSync;
+
+const listMenu = ["runClinet","runServer","commandClient","gitPush"];
+prompts({
+    type: "autocomplete",
+    name: "menu",
+    message: "pilih menunya",
+    choices: listMenu.map(e => {
+        return {
+            title: _.startCase(e),
+            value: e
+        }
+    })
+}).then(({ menu }) => {
+    if (!menu) return console.log("ok, gak apa apa");
+    eval(`${menu}();`);
+})
+
+function runClinet() {
+    const exec = require('child_process').execSync;
+    exec(`flutter run -d chrome`, { stdio: "inherit", cwd: path.join(__dirname, "./../client") });
+    console.log("run client completed");
+
+}
+
+function runServer() {
+    require(`child_process`).execSync(`nodemon index.js`, { stdio: "inherit" })
+}
+
+function commandClient() {
+    console.log("hahahah");
+}
+
+function gitPush() {
+    exec(`git add . && git commit -m "update download" && git push origin myprobus`, { stdio: "inherit", cwd: path.join(__dirname, "./../") })
+}

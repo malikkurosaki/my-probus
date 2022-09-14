@@ -1,3 +1,7 @@
+import 'dart:convert';
+import 'dart:html';
+
+import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -89,11 +93,44 @@ class V2TemplateDashboard extends StatelessWidget {
                     ),
                   ),
                   V2FilterDashboardButton(),
-                  V2PrinstReportButton()
+                  V2PrinstReportButton(),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: MaterialButton(
+                      color: Colors.blue,
+                      child: Text(
+                        "Download",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () {
+                        final source = <Map>[...V2Val.listIssueDashboard.value.val];
+                        List<String> rowHeader = [...source[0].keys];
+                        List<List<dynamic>> rows = [];
+                        rows.add(rowHeader);
+                        for (final itm in source) {
+                          final anakan = [];
+                          for(final itm2 in itm.values){
+                            anakan.add(itm2);
+                          }
+                          rows.add(anakan);
+                        }
+
+                        String csv = const ListToCsvConverter().convert(rows);
+                        final bytes = utf8.encode(csv);
+
+                        final content = base64Encode(bytes);
+                        final data =
+                            AnchorElement(href: "data:application/octet-stream;charset=utf-16le;base64,$content")
+                              ..setAttribute("download", "file.csv")
+                              ..click();
+                      },
+                    ),
+                  )
                 ],
               ),
             ),
           ),
+          // Text(V2Val.listIssueDashboard.value.val.toString()),
           V2Component().listJobs(isMobile),
           footer ?? Container(),
         ],

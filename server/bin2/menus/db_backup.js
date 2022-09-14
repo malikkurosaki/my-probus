@@ -13,7 +13,6 @@ const cLog = require('c-log');
 const { Prisma } = require('@prisma/client');
 
 
-
 let dbPreff = process.env.DATABASE_URL.match(/^mysql:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/(.+)$/).slice(1, 6).join(' ').split(' ');
 let db = {
     user: dbPreff[0],

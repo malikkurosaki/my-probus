@@ -1,8 +1,8 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 const express = require("express");
-// const app = express();
-const {httpServer, app} = require('./index_https_config')
+const app = express();
+// const { httpServer, app } = require('./index_https_config')
 const port = 3001;
 const cors = require("cors");
 const { api } = require("./routers");
@@ -93,7 +93,7 @@ app.use(express.static(path.join(__dirname, "./../client/build/web")));
 
 // app.get('/ini', (req, res) => {
 //   sse.updateInit("apa ini");
-  
+
 //   console.log("ini ditekan");
 //   res.send('ini');
 // })
@@ -187,8 +187,12 @@ app.use(apiRoot, async (req, res, next) => {
 });
 
 app.use(apiRoot, api);
+app.listen(port, () => {
+  console.log(`Server started on port ${port})
+  `);
+});
 
-httpServer.listen(port, () =>
-  console.log(`Example app listening on port ${port}!`)
-);
+// httpServer.listen(port, () =>
+//   console.log(`Example app listening on port ${port}!`)
+// );
 
