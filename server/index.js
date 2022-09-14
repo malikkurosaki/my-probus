@@ -75,7 +75,6 @@ const V2DevRoutes = require("./v2_dev_routes");
 // var attrs = [{ name: 'makuro', value: 'google.com' }];
 // var pems = selfsigned.generate(attrs, { days: 365 });
 
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 // app.use(express.static(path.join(__dirname, "public")));
