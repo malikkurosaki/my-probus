@@ -4,7 +4,7 @@ const path = require('path');
 const prompts = require('prompts');
 const exec = require('child_process').execSync;
 
-const listMenu = ["runClinet","runServer","commandClient","gitPush"];
+const listMenu = ["runClinet","runServer","commandClient","gitPush","flutterBuildWeb"];
 prompts({
     type: "autocomplete",
     name: "menu",
@@ -37,4 +37,8 @@ function commandClient() {
 
 function gitPush() {
     exec(`git add . && git commit -m "update download" && git push origin myprobus`, { stdio: "inherit", cwd: path.join(__dirname, "./../") })
+}
+
+function flutterBuildWeb(){
+    exec(`flutter build web --release`, {stdio: "inherit", cwd: path.join(__dirname, "./../client")});
 }
