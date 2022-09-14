@@ -1,4 +1,4 @@
 class Config {
   static
-  const String host = "http://localhost:3001";
+  const String host = "https://my.probussystem.com";
 }
